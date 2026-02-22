@@ -1,0 +1,540 @@
+/* ================= HEADER / NAV ================= */
+.siteHeader{
+  margin-top: 14px;
+}
+
+/* Top bar */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  min-height: 56px;
+  padding: 10px 0;
+
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(6px);
+}
+
+/* Brand */
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  min-height: 38px;
+
+  text-decoration:none;
+  color: var(--text);
+}
+
+.brand:focus-visible{
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.brand__mark{
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+
+  border: 2px solid var(--line);
+  border-radius: 8px;
+
+  display:grid;
+  place-items:center;
+
+  font-weight: 900;
+  color: var(--royal-deep);
+  background: #fff;
+  box-shadow: 0 10px 18px rgba(0,0,0,.05);
+}
+
+.brand__text{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Menu button (right) */
+.menuBtn{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+
+  min-height: 38px;
+  padding: 0 12px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  cursor:pointer;
+  color: var(--text);
+
+  transition: background .18s ease, transform .18s ease, border-color .18s ease;
+}
+
+.menuBtn:hover{
+  background: rgba(13, 27, 58, .06);
+  border-color: rgba(13, 27, 58, .12);
+  transform: translateY(-1px);
+}
+
+.menuBtn:active{ transform: translateY(0); }
+
+.menuBtn:focus-visible{
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.menuBtn__label{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Hamburger icon */
+.menuBtn__icon{
+  width: 18px;
+  height: 12px;
+  position: relative;
+}
+
+/* three lines */
+.menuBtn__icon::before,
+.menuBtn__icon::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height: 2px;
+  background: var(--line);
+  border-radius: 999px;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.menuBtn__icon::before{ top: 0; }
+.menuBtn__icon::after{ bottom: 0; }
+
+.menuBtn__icon span{
+  position:absolute;
+  left:0;
+  right:0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 2px;
+  background: var(--line);
+  border-radius: 999px;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+.menuBtn.isOpen .menuBtn__icon::before{ transform: translateY(5px) rotate(45deg); }
+.menuBtn.isOpen .menuBtn__icon::after{ transform: translateY(-5px) rotate(-45deg); }
+.menuBtn.isOpen .menuBtn__icon span{ opacity: 0; }
+
+/* ================= OVERLAY ================= */
+.menuOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  opacity: 0;
+
+  transition: opacity .22s ease, background .22s ease;
+  z-index: 1000;
+}
+
+.menuOverlay.isOpen{
+  opacity: 1;
+  background: rgba(8, 15, 32, .28);
+  pointer-events: auto;
+}
+
+/* ================= PANEL (RIGHT) ================= */
+.menuPanel{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(920px, 100%);
+  height: 100%;
+
+  background:
+    radial-gradient(closest-side at 20% 10%, rgba(202,163,58,.14), transparent 60%),
+    linear-gradient(180deg, #e9f2ff 0%, #d6e7ff 100%);
+
+  border-left: 2px solid rgba(13,27,58,.20);
+  box-shadow: -20px 0 50px rgba(0,0,0,.12);
+
+  transform: translateX(18px);
+  opacity: 0;
+
+  transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .2s ease;
+
+  padding: 26px 28px;
+}
+
+.menuPanel.isOpen{
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Top row inside panel */
+.menuTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(13,27,58,.12);
+}
+
+.menuTop__title{
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+
+  border-left: 3px solid rgba(13,27,58,.22);
+  padding-left: 10px;
+
+  color: rgba(13,27,58,.80);
+}
+
+
+/* ===== ICON ROW (top of panel) ===== */
+.menuIcons{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+
+  padding: 14px 0 6px;
+}
+
+.menuIcon{
+  width: 34px;
+  height: 34px;
+
+  display:grid;
+  place-items:center;
+
+  border: 2px solid rgba(13,27,58,.20);
+  background: rgba(255,255,255,.55);
+  border-radius: 10px;
+
+  text-decoration:none;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.menuIcon img{
+  width: 18px;
+  height: 18px;
+  display:block;
+}
+
+.menuIcon:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.78);
+  border-color: rgba(13,27,58,.32);
+  box-shadow: 0 10px 18px rgba(0,0,0,.10);
+}
+
+.menuIcon:active{
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.menuIcon:focus-visible{
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+
+.closeBtn{
+  background: transparent;
+  border: 1px solid rgba(13,27,58,.14);
+  border-radius: 10px;
+
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+
+  cursor:pointer;
+  padding: 8px 12px;
+
+  transition: background .18s ease, transform .18s ease;
+}
+
+.closeBtn:hover{
+  background: rgba(13,27,58,.06);
+  transform: translateY(-1px);
+}
+
+.closeBtn:active{ transform: translateY(0); }
+
+.closeBtn:focus-visible{
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* ================= LINKS + DESCRIPTIONS ================= */
+
+/* Make both columns align by rows */
+.menuGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items:start;
+  padding-top: 22px;
+}
+
+/* Left column: links */
+.menuLinks{
+  display:grid;
+  gap: 20px;
+}
+
+.menuLinks a{
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 900;
+  text-decoration:none;
+
+  color: rgba(13,27,58,.92);
+  letter-spacing: -0.5px;
+
+  line-height: 1;
+  padding: 6px 0;
+
+  transition: transform .18s ease, color .18s ease;
+}
+
+.menuLinks a:hover{
+  transform: translateX(4px);
+  color: rgba(13,27,58,1);
+}
+
+.menuLinks a.isActive{
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 10px;
+  text-decoration-thickness: 4px;
+}
+
+/* Right column: descriptions */
+.menuDesc{
+  display:grid;
+  gap: 36px;          /* match menuLinks gap */
+  padding-top: 12px;  /* optical alignment */
+}
+
+.menuDesc__hint{
+  font-size: 15px;
+  line-height: 1.45;  /* slightly tighter so it matches link rhythm */
+  color: rgba(13,27,58,.72);
+
+  /* match the link row height */
+  padding: 12px 0;
+}
+
+/* ================= LINK CASCADE ANIMATION ================= */
+
+/* initial hidden state */
+.menuLinks a,
+.menuDesc__hint{
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* animate when panel opens */
+.menuPanel.isOpen .menuLinks a,
+.menuPanel.isOpen .menuDesc__hint{
+  animation: menuFadeUp .5s ease forwards;
+}
+
+.menuPanel.isOpen .menuLinks a:nth-child(1){ animation-delay: .05s; }
+.menuPanel.isOpen .menuLinks a:nth-child(2){ animation-delay: .10s; }
+.menuPanel.isOpen .menuLinks a:nth-child(3){ animation-delay: .15s; }
+.menuPanel.isOpen .menuLinks a:nth-child(4){ animation-delay: .20s; }
+.menuPanel.isOpen .menuLinks a:nth-child(5){ animation-delay: .25s; }
+
+.menuPanel.isOpen .menuDesc__hint:nth-child(1){ animation-delay: .10s; }
+.menuPanel.isOpen .menuDesc__hint:nth-child(2){ animation-delay: .15s; }
+.menuPanel.isOpen .menuDesc__hint:nth-child(3){ animation-delay: .20s; }
+.menuPanel.isOpen .menuDesc__hint:nth-child(4){ animation-delay: .25s; }
+.menuPanel.isOpen .menuDesc__hint:nth-child(5){ animation-delay: .30s; }
+
+@keyframes menuFadeUp{
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tablet and below: single column menu, hide descriptions */
+@media (max-width: 720px){
+  .menuGrid{ grid-template-columns: 1fr; }
+  .menuDesc{ display:none; }
+}
+
+/* =========================
+   MOBILE VIEWPORT (<= 520px)
+   tuned for iPhone 14 Pro Max-ish (430px)
+========================= */
+@media (max-width: 520px){
+
+  /* Overlay should never scroll sideways */
+  .menuOverlay{
+    overflow: hidden;
+  }
+
+  .menuPanel{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    /* 👇 leave a small gap on the left */
+    width: calc(100% - 128px);
+    max-width: calc(100vw - 32px);
+
+    height: 100dvh;
+
+    box-sizing: border-box;
+
+    padding: 16px;
+    padding-top: calc(16px + env(safe-area-inset-top));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+
+    /* restore slide feel */
+    transform: translateX(16px);
+    transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .2s ease;
+
+    border-left: 1px solid rgba(13,27,58,.12);
+    box-shadow: -14px 0 40px rgba(0,0,0,.18);
+  }
+
+  .menuPanel.isOpen{
+    transform: translateX(0);
+    
+  }
+
+  .menuOverlay.isOpen{
+  background: rgba(8, 15, 32, .40);
+}
+
+  /* Sticky header row so CLOSE is always reachable */
+  .menuTop{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+
+  /* slightly tighter + more “native” */
+  padding: 10px 14px;
+  margin-left: -16px;
+  margin-right: -16px;
+
+  background: rgba(233, 242, 255, .88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(13,27,58,.10);
+}
+
+  /* close button sizing */
+  .closeBtn{
+  padding: 6px 10px;
+  font-size: 11px;
+  border-radius: 999px;
+  border-color: rgba(13,27,58,.16);
+  background: rgba(255,255,255,.55);
+}
+.closeBtn:active{ transform: scale(.98); }
+
+  /* icon row tweaks */
+.menuIcons{
+  padding: 10px 0 6px;
+  gap: 10px;
+}
+
+.menuIcon{
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.60);
+  border-color: rgba(13,27,58,.18);
+}
+
+.menuIcon:active{
+  transform: scale(.98);
+  box-shadow: none;
+}
+
+  .menuIcon img{
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* links: big but mobile-safe */
+  .menuLinks{
+    gap: 12px !important;
+  }
+
+ .menuLinks a{
+  font-size: clamp(28px, 9vw, 42px);
+  line-height: 0.98;
+  letter-spacing: -0.6px;
+
+  /* tap target without feeling huge */
+  padding: 6px 0;
+}
+
+.menuLinks a.isActive{
+  text-underline-offset: 6px;
+  text-decoration-thickness: 3px;
+}
+
+  /* make the content area scrollable if needed */
+  .menuGrid{
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    /* leave room for top header + icons */
+    max-height: calc(100dvh - 160px) !important;
+
+    padding-bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+  }
+
+  /* tighten the main navbar a bit on phones */
+  .nav{
+    min-height: 52px !important;
+    padding: 8px 0 !important;
+  }
+
+  .brand__text,
+  .menuBtn__label{
+    font-size: 11px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .menuBtn{
+    padding: 0 10px !important;
+    gap: 8px !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .menuOverlay,
+  .menuPanel,
+  .menuLinks a,
+  .menuBtn,
+  .closeBtn{
+    transition: none !important;
+  }
+}

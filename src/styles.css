@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.css (append at the bottom) */
+:root{
+  /* Base */
+  --bg:#f8f9fc;                 /* soft white, easier on eyes */
+  --text:#000000;               /* deep navy text */
+  --muted:#4f566b;              /* cool gray-blue */
+
+  /* Lines / borders */
+  --line:#0d1b3a;               /* dark royal border */
+
+  /* Primary blue */
+  --royal:#182f68;              /* main royal blue */
+  --royal-deep:#0f1f4a;         /* hero / dark surfaces */
+  --royal-soft:#dfe6ff;         /* hover / soft bg */
+
+  /* Gold accent */
+  --gold:#caa33a;               /* main gold */
+  --gold-soft:#f4d98b;          /* highlight gold */
+  --gold-deep:#8b6b1f;          /* darker accent */
+
+  /* Buttons / nav */
+  --navlink:var(--royal);
+  --accent:var(--royal);
+  --accentText:#ffffff;
+  --cta:var(--gold);
+
+  /* Hero section */
+  --hero-bg: var(--royal-deep);
+  --hero-text: #f5f7ff;
+  --hero-muted: rgba(245,247,255,.75);
+  --hero-accent: var(--gold);
+
+  /* Grid overlay */
+  --grid: rgba(255, 255, 255, 0.192);
+}
+
+
+a:hover{
+  color: var(--gold);
+}
+body{
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.h-serif{
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+/* Utility: subtle underline accent */
+.u-accent{
+  color: var(--hero-accent);
+}

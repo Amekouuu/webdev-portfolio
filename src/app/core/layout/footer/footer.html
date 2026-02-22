@@ -1,0 +1,26 @@
+<footer class="siteFooter" aria-label="Site footer">
+  <div class="siteFooter__container">
+    <div class="siteFooter__inner">
+      <div class="siteFooter__credit">
+        <span class="siteFooter__dot" aria-hidden="true"></span>
+
+        <div class="siteFooter__creditText">
+          <span class="siteFooter__copy">© {{ year }} | Micko Q. Alberto</span>
+          <span class="siteFooter__sub">IT Student | Web Dev | SEO-Focused</span>
+        </div>
+      </div>
+
+      <nav class="siteFooter__links" aria-label="Footer links">
+        <a
+          *ngFor="let s of socials"
+          class="siteFooter__chip"
+          [href]="s.href"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ s.label }} <span class="siteFooter__arrow" aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</footer>

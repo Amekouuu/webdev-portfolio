@@ -1,0 +1,27 @@
+<article class="pc">
+  <div class="pc__img">
+    <img
+      *ngIf="project.images.length"
+      [src]="project.images[0].src"
+      [alt]="project.images[0].alt"
+      class="pc__imgEl"
+      loading="lazy"
+      decoding="async"
+    />
+    <span *ngIf="!project.images.length">Image Placeholder</span>
+  </div>
+
+  <div class="pc__body">
+    <h3 class="pc__title">{{ project.name }}</h3>
+    <p class="pc__desc">{{ project.description }}</p>
+
+    <ul class="pc__tools" aria-label="Tools used">
+      <li *ngFor="let t of project.tools">{{ t }}</li>
+    </ul>
+
+    <div class="pc__actions">
+      <a class="pc__btn" [href]="project.liveUrl" target="_blank" rel="noopener">Live Demo</a>
+      <a class="pc__btn pc__btn--ghost" [href]="project.repoUrl" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</article>

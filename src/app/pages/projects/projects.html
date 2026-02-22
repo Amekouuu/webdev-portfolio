@@ -1,0 +1,59 @@
+<section class="projects">
+  <app-section-header
+    title="Projects"
+    subtitle="Selected web dev and SEO-focused work — built and documented for real-world use."
+  ></app-section-header>
+
+  <div class="projects__grid" role="list">
+    <article class="pCard" role="listitem" *ngFor="let p of projects">
+      <a
+        class="pCard__media"
+        [href]="p.liveUrl || p.repoUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          [src]="p.images.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
+          [alt]="p.images.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+
+      <div class="pCard__body">
+        <div class="pCard__top">
+          <h3 class="pCard__name">{{ p.name }}</h3>
+          <span class="pCard__meta" *ngIf="p.tag">{{ p.tag }}</span>
+        </div>
+
+        <p class="pCard__desc">{{ p.description }}</p>
+
+        <ul class="pCard__chips" *ngIf="p.tools.length">
+          <li *ngFor="let t of p.tools">{{ t }}</li>
+        </ul>
+
+        <div class="pCard__actions">
+          <a
+            *ngIf="p.repoUrl"
+            class="btnLink btnLink--ghost"
+            [href]="p.repoUrl"
+            target="_blank"
+            rel="noopener"
+          >
+            GitHub
+          </a>
+
+          <a
+            *ngIf="p.liveUrl"
+            class="btnLink btnLink--solid"
+            [href]="p.liveUrl"
+            target="_blank"
+            rel="noopener"
+          >
+            Live Demo
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

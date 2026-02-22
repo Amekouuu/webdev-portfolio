@@ -1,0 +1,204 @@
+<!-- about.html -->
+<section class="about">
+  <div class="aboutGrid">
+    <!-- LEFT: sticky profile -->
+    <aside class="sidebar" aria-label="Profile sidebar">
+
+      <!-- ✅ Header moved into sidebar (same area as profile card) -->
+      <header class="about__header about__header--sidebar">
+        <h1 class="about__title about__title--sidebar">{{ title }}</h1>
+        <p class="about__subtitle about__subtitle--sidebar">{{ subtitle }}</p>
+      </header>
+
+      <div class="profileCard">
+        <div class="profileCard__imgWrap" aria-hidden="true">
+          <img
+            class="profileCard__img"
+            src="assets/images/about-profile-transparent.png"
+            alt="Profile photo"
+          />
+        </div>
+
+        <div class="profileCard__meta">
+          <div class="profileCard__name">{{ profile.name }}</div>
+          <div class="profileCard__role">{{ profile.role }}</div>
+        </div>
+
+        <div class="profileCard__socials" aria-label="Social links">
+          <a
+            class="socialBtn"
+            *ngFor="let s of socials"
+            [href]="s.url"
+            target="_blank"
+            rel="noopener"
+            [attr.aria-label]="s.label"
+            [title]="s.label"
+          >
+            <img
+              class="socialBtn__iconImg"
+              [src]="s.iconSrc"
+              [alt]="s.iconAlt"
+            />
+          </a>
+        </div>
+
+        <div class="facts" aria-label="Quick facts">
+          <div class="fact" *ngFor="let f of quickFacts">
+            <span class="fact__label">{{ f.label }}</span>
+            <span class="fact__value">{{ f.value }}</span>
+          </div>
+        </div>
+
+        <div class="chips" aria-label="Currently learning">
+          <span class="chip" *ngFor="let c of chips">{{ c }}</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: content -->
+    <main class="content" aria-label="About content">
+      <!-- Intro card -->
+      <section class="panel">
+        <span class="kicker">A Quick Intro</span>
+        <h2 class="panel__title">For starters</h2>
+
+        <p class="panel__lead" *ngFor="let line of bioLines">{{ line }}</p>
+
+        <!-- ✅ Jump buttons (reliable in Angular) -->
+        <nav class="jump" aria-label="Jump links">
+          <button class="jump__btn" type="button" (click)="scrollTo('how')">
+            How I Work
+          </button>
+        </nav>
+      </section>
+
+      <!-- Mini grid -->
+      <section class="miniGrid" aria-label="Now and next">
+        <article class="miniCard">
+          <h3 class="miniCard__title">Now</h3>
+          <p class="miniCard__body">
+            Building Angular UI and improving page experience using Lighthouse,
+            clean component structure, and responsive layouts.
+          </p>
+        </article>
+
+        <article class="miniCard">
+          <h3 class="miniCard__title">Next</h3>
+          <p class="miniCard__body">
+            Going deeper into Technical SEO (schema, internal linking, and
+            audits) while tightening performance and accessibility.
+          </p>
+        </article>
+
+        <article class="miniCard">
+          <h3 class="miniCard__title">My vibe</h3>
+          <p class="miniCard__body">
+            I like simple UI, readable code, and real-world projects where I can
+            ship improvements fast and iterate.
+          </p>
+        </article>
+      </section>
+
+      <!-- Highlights -->
+      <section class="featureGrid" aria-label="Highlights">
+        <article class="featureCard" *ngFor="let s of sections">
+          <div class="featureCard__text">
+            <span class="kicker">Highlight</span>
+            <p></p>
+            <h3 class="featureCard__title">{{ s.heading }}</h3>
+            <p class="featureCard__body">{{ s.body }}</p>
+          </div>
+
+          <img
+            *ngIf="s.type === 'image'"
+            [src]="s.imageUrl"
+            alt=""
+            class="featureCard__img"
+          />
+        </article>
+      </section>
+
+      <!-- How I Work -->
+      <section id="how" class="panel" aria-label="How I work">
+        <span class="kicker">Approach</span>
+        <div class="panel__head">
+          <h2 class="panel__title">How I Work</h2>
+          <p class="panel__sub">
+            Simple process, clean output, SEO-aware decisions.
+          </p>
+        </div>
+
+        <div class="howWork__grid">
+          <article class="howWork__card">
+            <h3>User &amp; Intent-Focused</h3>
+            <p>I design and optimize with real users and search behavior in mind.</p>
+          </article>
+
+          <article class="howWork__card">
+            <h3>Attention to Detail</h3>
+            <p>From spacing and hierarchy to metadata and content structure.</p>
+          </article>
+
+          <article class="howWork__card">
+            <h3>Open to Ideas</h3>
+            <p>I appreciate input from peers to see things from a different view.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Skills + Certs -->
+      <section class="panel" aria-label="Skills and certifications">
+        <span class="kicker">Toolkit</span>
+
+        <div class="skillsCertLayout">
+          <section id="skills" class="skills" aria-label="Tech skills">
+            <h2 class="skills__title">Tech Skills</h2>
+            <p class="skills__sub">
+              Focused on simple UI, front-end development, and practical
+              SEO/performance basics.
+            </p>
+
+            <div class="skills__grid">
+              <div class="skill" *ngFor="let sk of skills">
+                <div class="skill__icon" aria-hidden="true">
+                  {{ sk.iconText }}
+                </div>
+
+                <div class="skill__meta">
+                  <div class="skill__top">
+                    <span class="skill__name">{{ sk.name }}</span>
+                    <span class="skill__pct">{{ sk.level }}%</span>
+                  </div>
+
+                  <div
+                    class="bar"
+                    role="progressbar"
+                    [attr.aria-valuenow]="sk.level"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    <div class="bar__fill" [style.width.%]="sk.level"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="certs" class="certs" aria-label="Certifications">
+            <h2 class="certs__title">Certifications</h2>
+
+            <ul class="certs__list">
+              <li *ngFor="let c of certs">
+                <strong>{{ c.name }}</strong> — {{ c.issuer }}
+                <span class="muted"> {{ certMeta(c) }}</span>
+                <a class="link" [href]="c.url" target="_blank" rel="noopener">
+                  View
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+</section>

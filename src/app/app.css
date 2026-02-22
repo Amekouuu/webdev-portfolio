@@ -1,0 +1,143 @@
+.shell{
+  max-width: 75%;
+  margin: 0 auto;
+  padding: 0 18px 24px;
+}
+
+.main{
+  padding: 14px 0 0;
+}
+
+/* =========================================================
+   GLOBAL PAGE SHELL (reusable)
+   Use inside .shell > .main
+   ========================================================= */
+
+.page{
+  padding: 18px 0 60px;
+  animation: pageFade .25s ease both;
+}
+
+@keyframes pageFade{
+  from{ opacity: 0; transform: translateY(4px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.page__grid{
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.page__grid > *{ min-width: 0; }
+
+.pageIntro{
+  padding: 10px 4px;
+}
+
+.pageIntro__title{
+  margin: 0 0 10px;
+  font-size: 44px;
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -0.8px;
+}
+
+.pageIntro__rule{
+  display: block;
+  width: 220px;
+  height: 2px;
+  background: var(--royal);
+  margin: 14px 0 18px;
+  transform-origin: left;
+  animation: ruleIn .35s ease both;
+}
+
+@keyframes ruleIn{
+  from{ transform: scaleX(.7); opacity: .4; }
+  to{ transform: scaleX(1); opacity: 1; }
+}
+
+.pageIntro__blurb{
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 360px;
+}
+
+.pageCard{
+  position: relative;
+  background: var(--hero-bg);
+  border: 2px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  padding: 22px;
+  color: var(--hero-text);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 18px 40px rgba(0,0,0,.28);
+  overflow: hidden;
+  transition: transform .16s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.pageCard:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 22px 46px rgba(0,0,0,.30);
+  border-color: rgba(255,255,255,.14);
+}
+
+.pageCard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 10%, rgba(255,255,255,.08), transparent 55%),
+    radial-gradient(circle at 70% 35%, rgba(202,163,58,.08), transparent 60%);
+  pointer-events:none;
+}
+
+.pageCard > *{ position: relative; z-index: 1; }
+
+/* Optional shared headings inside right card */
+.cardHead{ margin-bottom: 14px; }
+
+.cardHead__title{
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+}
+
+.cardHead__hint{
+  margin: 0;
+  font-size: 12px;
+  opacity: .8;
+  max-width: 360px;
+}
+
+@media (max-width: 900px){
+  .page__grid{ grid-template-columns: 1fr; gap: 22px; }
+  .pageIntro__title{ font-size: 38px; }
+  .pageIntro__rule{ width: 180px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 520px){
+  .shell{
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;        /* remove the “framed” padding */
+  }
+
+  .main{
+    padding: 0;        /* optional: lets pages control their own padding */
+  }
+}

@@ -1,0 +1,92 @@
+<header class="siteHeader">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" routerLink="/" aria-label="Go to Home">
+      <span class="brand__mark" aria-hidden="true">△</span>
+      <span class="brand__text">Micko</span>
+    </a>
+
+    <!-- Right side menu trigger -->
+    <button
+      #menuBtn
+      class="menuBtn"
+      [class.isOpen]="isOpen"  
+      type="button"
+      (click)="toggle()"
+      [attr.aria-expanded]="isOpen"
+      aria-controls="menuPanel"
+    >
+      <span class="menuBtn__label">MENU</span>
+
+      <!-- ✅ change icon to include a middle bar span -->
+      <span class="menuBtn__icon" aria-hidden="true">
+        <span></span>
+      </span>
+    </button>
+  </nav>
+
+  <!-- Overlay menu -->
+  <div
+    class="menuOverlay"
+    [class.isOpen]="isOpen"
+    (mousedown)="onBackdropClick($event)"
+    [attr.aria-hidden]="!isOpen"
+  >
+    <section
+      id="menuPanel"
+      class="menuPanel"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+      [class.isOpen]="isOpen"
+    >
+      <div class="menuTop">
+        <div class="menuTop__left">
+          <span class="menuTop__title">Menu</span>
+        </div>
+
+        <button class="closeBtn" type="button" (click)="close()" aria-label="Close menu">
+          CLOSE
+        </button>
+      </div>
+
+<div class="menuIcons">
+
+  <a class="menuIcon" href="https://github.com/Amekouuu" target="_blank" rel="noopener">
+    <img src="assets/images/icons/github.png" alt="" />
+  </a>
+
+  <a class="menuIcon" href="https://www.linkedin.com/in/micko-alberto-b49906316/" target="_blank" rel="noopener">
+    <img src="assets/images/icons/linkedin.png" alt="" />
+  </a>
+
+  <a class="menuIcon" href="mailto:mqalberto12@gmail.com">
+    <img src="assets/images/icons/google.png" alt="" />
+  </a>
+
+</div>
+
+
+
+
+      <div class="menuGrid">
+        <!-- Left: big links -->
+        <div class="menuLinks">
+          <a routerLink="/" (click)="close()" routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">
+            Home
+          </a>
+          <a routerLink="/about" (click)="close()" routerLinkActive="isActive">About</a>
+          <a routerLink="/projects" (click)="close()" routerLinkActive="isActive">Projects</a>
+          <a routerLink="/contact" (click)="close()" routerLinkActive="isActive">Contact</a>
+        </div>
+
+        <!-- Right: descriptions (placeholders) -->
+        <div class="menuDesc" aria-hidden="true">
+          <p><span class="menuDesc__hint">Back to the home page.</span></p>
+          <p><span class="menuDesc__hint">A little about me and my background.</span></p>
+          <p><span class="menuDesc__hint">Selected work and project details.</span></p>
+          <p><span class="menuDesc__hint">Send me a message.</span></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</header>

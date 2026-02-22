@@ -1,0 +1,170 @@
+<section class="contact">
+  <div class="contact__grid">
+
+    <aside class="contact__info" aria-label="Contact details">
+  <h1 class="contact__headline">
+    Let’s talk<br />about it
+  </h1>
+
+  <span class="contact__rule" aria-hidden="true"></span>
+
+  <p class="contact__blurb">
+    For collaborations, freelance work, or inquiries—reach out using the form or my socials below.
+  </p>
+
+  <!-- Socials -->
+  <div class="infoCard" aria-label="Social links">
+    <div class="infoCard__head">
+      <h3 class="infoCard__title">Socials</h3>
+      <p class="infoCard__hint">I reply fastest on weekdays.</p>
+    </div>
+
+    <div class="follow__links" aria-label="Social links">
+      <a *ngFor="let s of socials"
+         class="socialPill"
+         [href]="s.href"
+         target="_blank"
+         rel="noopener">
+        {{ s.label }}
+        <span class="socialArrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Active Hours -->
+  <div class="infoCard" aria-label="Active hours">
+    <div class="infoCard__head">
+      <h3 class="infoCard__title">Active hours</h3>
+      <p class="infoCard__hint">Philippines time (GMT+8)</p>
+    </div>
+
+    <div class="hours">
+      <div class="hours__row">
+        <span class="hours__label">Mon–Fri</span>
+        <span class="hours__value">10:00 AM – 4:00 PM</span>
+      </div>
+      <div class="hours__row">
+        <span class="hours__label">Weekend</span>
+        <span class="hours__value">Limited / 1:00 PM - 5:00 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional: Location (keep if you like) -->
+  <div class="infoCard" aria-label="Location">
+    <div class="infoCard__head">
+      <h3 class="infoCard__title">Location</h3>
+      <p class="infoCard__hint">For local projects & meetups</p>
+    </div>
+
+    <div class="hours">
+      <div class="hours__row">
+        <span class="hours__label">Based in</span>
+        <span class="hours__value">Mabalacat City, Pampanga</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+    <!-- RIGHT: Form card -->
+    <section class="contact__card" aria-label="Send a message">
+      <header class="cardHead">
+        <h2 class="cardHead__title">Send me a message</h2>
+        <p class="cardHead__hint">
+          Fill out the form below and I’ll get back to you as soon as possible
+        </p>
+      </header>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+
+        <!-- Name -->
+        <label class="field">
+          <span class="field__label">Full Name</span>
+          <input
+            class="field__input"
+            type="text"
+            formControlName="name"
+            autocomplete="name"
+            placeholder="John Doe"
+            [attr.aria-invalid]="name?.touched && name?.invalid"
+          />
+          <span class="field__error" *ngIf="name?.touched && name?.invalid">
+            Name is required (min 2 characters).
+          </span>
+        </label>
+
+        <!-- Email -->
+        <label class="field">
+          <span class="field__label">Email Address</span>
+          <input
+            class="field__input"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            placeholder="john@example.com"
+            [attr.aria-invalid]="email?.touched && email?.invalid"
+          />
+          <span class="field__error" *ngIf="email?.touched && email?.invalid">
+            Please enter a valid email.
+          </span>
+        </label>
+
+        <!-- Subject -->
+        <label class="field">
+          <span class="field__label">Subject</span>
+          <input
+            class="field__input"
+            type="text"
+            formControlName="subject"
+            placeholder="e.g., Website project inquiry"
+            [attr.aria-invalid]="subject?.touched && subject?.invalid"
+          />
+          <span class="field__error" *ngIf="subject?.touched && subject?.invalid">
+            Subject is required (min 3 characters).
+          </span>
+        </label>
+
+        <!-- Message -->
+        <label class="field">
+          <span class="field__label">Message</span>
+          <textarea
+            class="field__input field__textarea"
+            rows="6"
+            formControlName="message"
+            placeholder="Tell me about it"
+            [attr.aria-invalid]="message?.touched && message?.invalid"
+          ></textarea>
+          <span class="field__error" *ngIf="message?.touched && message?.invalid">
+            Message is required (min 10 characters).
+          </span>
+        </label>
+
+        <!-- Submit -->
+        <button class="submitBtn" type="submit" [disabled]="sending || form.invalid">
+          {{ sending ? 'Sending…' : 'Send Message' }}
+        </button>
+
+        <!-- Status messages -->
+        <div *ngIf="sent; else errorBlock" class="formStatus success" role="status">
+          <span class="statusIcon">✓</span>
+          <div>
+            <strong>Message sent successfully!</strong>
+            <p>I’ll get back to you as soon as possible.</p>
+          </div>
+        </div>
+
+        <ng-template #errorBlock>
+          <div class="formStatus error" *ngIf="errorMsg" role="alert">
+            <span class="statusIcon">!</span>
+            <div>
+              <strong>Something went wrong</strong>
+              <p>{{ errorMsg }}</p>
+            </div>
+          </div>
+        </ng-template>
+
+      </form>
+    </section>
+
+  </div>
+</section>

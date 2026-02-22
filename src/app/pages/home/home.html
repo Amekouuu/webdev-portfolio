@@ -1,0 +1,146 @@
+<section class="home">
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero section" appReveal>
+    <div class="hero__wrap">
+      <!-- LEFT TEXT -->
+      <div class="hero__content heroIntro heroIntro--text">
+        <h1
+          class="hero__title h-serif heroIntro__item heroIntro__item--1 heroWords"
+          [attr.aria-label]="heroTitleA11y"
+        >
+          <span class="heroWord" style="--w: 0">still</span>
+          <span class="heroWord" style="--w: 1">learning,</span>
+          <br />
+          <span class="heroWord" style="--w: 2">still</span>
+          <span class="heroWord" style="--w: 3">building</span>
+        </h1>
+
+        <!-- ✅ WORD-BY-WORD SUBTITLE -->
+        <p class="hero__sub heroIntro__item heroIntro__item--2 heroSubWords" aria-label="Hero subtitle">
+          <span class="heroWord heroWord--sub" style="--w: 4">Micko</span>
+          <span class="heroWord heroWord--sub" style="--w: 5">Q.</span>
+          <span class="heroWord heroWord--sub" style="--w: 6">Alberto</span>
+
+          <span class="heroSubSep">—</span>
+
+          <span class="heroWord heroWord--sub" style="--w: 7">IT</span>
+          <span class="heroWord heroWord--sub" style="--w: 8">STUDENT</span>
+
+          <span class="heroSubSep">(</span>
+          <span class="heroWord heroWord--sub" style="--w: 9">WEB</span>
+          <span class="heroWord heroWord--sub" style="--w: 10">DEV</span>
+          <span class="heroSubSep">)</span>
+
+          <span class="heroSubSep">•</span>
+
+          <span class="heroWord heroWord--sub" style="--w: 11">SEO-FOCUSED</span>
+        </p>
+
+        <p class="hero__body heroIntro__item heroIntro__item--3" [innerHTML]="intro"></p>
+
+        <ul class="status heroIntro__item heroIntro__item--4" aria-label="Quick status">
+          <li
+            class="status__row"
+            *ngFor="let s of statusLines"
+            [class.is-visible]="s.visible"
+            [class.is-loading]="s.loading"
+            [class.is-done]="s.done"
+          >
+            <span class="status__icon" aria-hidden="true">{{ s.icon }}</span>
+
+            <span class="status__text">
+              <span class="status__loadingbar" aria-hidden="true"></span>
+
+              <ng-container *ngIf="s.isTime; else notTime">
+                {{ '' | localTime }} — PHT (GMT+8)
+              </ng-container>
+
+              <ng-template #notTime>
+                <a
+                  *ngIf="s.link; else regularText"
+                  [href]="s.link"
+                  target="_blank"
+                  class="status__link"
+                  rel="noopener noreferrer"
+                >
+                  {{ s.text }}
+                </a>
+
+                <ng-template #regularText>
+                  {{ s.text }}
+                </ng-template>
+              </ng-template>
+            </span>
+          </li>
+        </ul>
+
+        <div class="hero__actions heroIntro__item heroIntro__item--5">
+          <a class="heroBtn" routerLink="/projects">View My Projects</a>
+          <a
+            class="heroBtn heroBtn--ghost"
+            href="assets/Micko_Alberto_Resume.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            View My Resume
+          </a>
+          <a class="heroBtn heroBtn--ghost" routerLink="/contact">Reach Out!</a>
+        </div>
+      </div>
+
+      <!-- RIGHT VISUAL -->
+      <div class="hero__grid heroIntro heroIntro--visual" aria-hidden="true">
+        <div class="hero__gridLines heroIntro__gridLines"></div>
+
+        <img
+          src="assets/images/profile-photo-transparent.png"
+          alt=""
+          class="hero__portrait heroIntro__portrait"
+        />
+      </div>
+    </div>
+  </section>
+
+  <hr class="home__divider" aria-hidden="true" />
+
+  <!-- WHAT I DO -->
+  <section class="whatSection" aria-label="What I do" appReveal>
+    <app-section-header title="What I Do" subtitle="My main strengths and focus areas."></app-section-header>
+
+    <div class="whatPanel">
+      <div class="whatPanel__grid" aria-hidden="true"></div>
+
+      <div class="what">
+        <article
+          class="what__item"
+          *ngFor="let w of whatIDo; let i = index"
+          appReveal
+          [style.--delay]="(i * 100) + 'ms'"
+        >
+          <span class="what__kicker">0{{ i + 1 }}</span>
+          <h3 class="what__title">{{ w.title }}</h3>
+          <p class="what__desc">{{ w.desc }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS BAND -->
+  <section class="featuredBand" aria-label="Featured projects" appReveal>
+    <div class="featuredBand__inner">
+      <div class="featuredBand__header">
+        <app-section-header title="Featured Projects" subtitle="A selection of my recent work."></app-section-header>
+      </div>
+
+      <div class="featured__grid">
+        <app-project-card
+          class="featuredCard"
+          *ngFor="let p of featured; let i = index"
+          [project]="p"
+          appReveal
+          [style.--delay]="(i * 140) + 'ms'"
+        ></app-project-card>
+      </div>
+    </div>
+  </section>
+</section>
