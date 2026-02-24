@@ -1,26 +1,57 @@
 <footer class="siteFooter" aria-label="Site footer">
   <div class="siteFooter__container">
-    <div class="siteFooter__inner">
-      <div class="siteFooter__credit">
-        <span class="siteFooter__dot" aria-hidden="true"></span>
 
-        <div class="siteFooter__creditText">
-          <span class="siteFooter__copy">© {{ year }} | Micko Q. Alberto</span>
-          <span class="siteFooter__sub">IT Student | Web Dev | SEO-Focused</span>
+    <div class="siteFooter__top">
+      <!-- LEFT -->
+      <div class="siteFooter__brand">
+        <div class="siteFooter__badge" aria-label="Site credit">
+          <span class="siteFooter__dot" aria-hidden="true"></span>
+
+          <div class="siteFooter__creditText">
+            <span class="siteFooter__copy">© {{ year }} | Micko Q. Alberto</span>
+            <span class="siteFooter__sub">IT Student • Web Dev • SEO-Focused</span>
+          </div>
+        </div>
+
+        <p class="siteFooter__blurb">
+          Building clean, performance-first web experiences — with technical SEO baked in.
+        </p>
+
+        <div class="siteFooter__meta" aria-label="Footer meta">
+          <span class="siteFooter__metaChip">PH-based</span>
+          <span class="siteFooter__metaChip">Open to opportunities</span>
+          <a class="siteFooter__metaLink" href="#top">Back to Home</a>
         </div>
       </div>
 
+      <!-- RIGHT -->
       <nav class="siteFooter__links" aria-label="Footer links">
-        <a
-          *ngFor="let s of socials"
-          class="siteFooter__chip"
-          [href]="s.href"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ s.label }} <span class="siteFooter__arrow" aria-hidden="true">↗</span>
-        </a>
+        <div class="siteFooter__linksTitle">Find me here</div>
+
+        <div class="siteFooter__chips">
+          <a
+            *ngFor="let s of socials"
+            class="siteFooter__chip"
+            [href]="s.href"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="siteFooter__chipLabel">{{ s.label }}</span>
+            <span class="siteFooter__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="siteFooter__mini">
+          <span class="siteFooter__miniText">Fast • Accessible • SEO-ready</span>
+        </div>
       </nav>
     </div>
+
+    <div class="siteFooter__bottom" aria-label="Footer bottom">
+      <span class="siteFooter__fineprint">
+        Designed & built by Micko — optimized for Lighthouse & search visibility.
+      </span>
+    </div>
+
   </div>
 </footer>

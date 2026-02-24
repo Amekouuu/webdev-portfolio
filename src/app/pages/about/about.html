@@ -1,10 +1,7 @@
-<!-- about.html -->
 <section class="about">
   <div class="aboutGrid">
-    <!-- LEFT: sticky profile -->
     <aside class="sidebar" aria-label="Profile sidebar">
 
-      <!-- ✅ Header moved into sidebar (same area as profile card) -->
       <header class="about__header about__header--sidebar">
         <h1 class="about__title about__title--sidebar">{{ title }}</h1>
         <p class="about__subtitle about__subtitle--sidebar">{{ subtitle }}</p>
@@ -55,24 +52,21 @@
       </div>
     </aside>
 
-    <!-- RIGHT: content -->
     <main class="content" aria-label="About content">
-      <!-- Intro card -->
       <section class="panel">
         <span class="kicker">A Quick Intro</span>
         <h2 class="panel__title">For starters</h2>
 
         <p class="panel__lead" *ngFor="let line of bioLines">{{ line }}</p>
 
-        <!-- ✅ Jump buttons (reliable in Angular) -->
         <nav class="jump" aria-label="Jump links">
-          <button class="jump__btn" type="button" (click)="scrollTo('how')">
-            How I Work
-          </button>
+          <button class="jump__btn jump__btn--inlineHint" type="button" (click)="scrollTo('how')">
+  How I Work <span class="jump__inlineHint" aria-hidden="true"> — Jump ↓</span>
+</button>
+         
         </nav>
       </section>
 
-      <!-- Mini grid -->
       <section class="miniGrid" aria-label="Now and next">
         <article class="miniCard">
           <h3 class="miniCard__title">Now</h3>
@@ -99,7 +93,6 @@
         </article>
       </section>
 
-      <!-- Highlights -->
       <section class="featureGrid" aria-label="Highlights">
         <article class="featureCard" *ngFor="let s of sections">
           <div class="featureCard__text">
@@ -118,7 +111,6 @@
         </article>
       </section>
 
-      <!-- How I Work -->
       <section id="how" class="panel" aria-label="How I work">
         <span class="kicker">Approach</span>
         <div class="panel__head">
@@ -146,7 +138,6 @@
         </div>
       </section>
 
-      <!-- Skills + Certs -->
       <section class="panel" aria-label="Skills and certifications">
         <span class="kicker">Toolkit</span>
 

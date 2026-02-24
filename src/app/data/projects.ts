@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
     description: 'SEO blog + responsive UI for a used car dealership in Mabalacat.',
     tools: ['Angular', 'HTML', 'CSS', 'SEO'],
     images: [
-      { src: '/assets/images/mjqualitycars-background.png', alt: 'Project screenshot placeholder 1' },
+      { src: '/assets/images/mjqualitycars-background.png', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
     liveUrl: 'https://www.mjqualitycars.com/',
     repoUrl: 'https://github.com/Jex-beep/done-WSEA',
@@ -31,7 +31,7 @@ export const PROJECTS: Project[] = [
     description: 'A student planner app concept with simple task tracking and clean UI.',
     tools: ['Vue.js', 'JavaScript', 'CSS'],
     images: [
-      { src: '/assets/images/domore-background.png', alt: 'Project screenshot placeholder 1' },
+      { src: '/assets/images/domore-background.png', alt: 'Do More Student Planner Screenshot' },
     ],
     liveUrl: 'https://domore-student-planner.netlify.app/login',
     repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
@@ -39,16 +39,15 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'coffee-shop-dashboard',
-    name: 'Coffee Shop Ratings Dashboard (PHP)',
-     tag: 'Academic PHP + JavaScript Case Study',
+    name: 'Coffee Shop Blog Site (HTML + CSS)',
+     tag: 'Academic HTML/CSS + JavaScript Case Study',
     description: 'Admin dashboard that displays all cafe data, favorites, and reviews.',
-    tools: ['HTML', 'CSS', 'JavaScript', 'Database'],
+    tools: ['HTML', 'CSS', 'JavaScript'],
     images: [
-      { src: 'assets/images/placeholder-1.png', alt: 'Project screenshot placeholder 1' },
-      { src: 'assets/images/placeholder-2.png', alt: 'Project screenshot placeholder 2' },
+      { src: '/assets/images/cafe-crawl-background.png', alt: 'Cafe Crawl Dashboard Screenshot' },
     ],
-    liveUrl: 'https://your-live-demo-link.com',
-    repoUrl: 'https://github.com/your-repo-link',
+    liveUrl: 'https://cafe-crawl.netlify.app/',
+    repoUrl: 'https://github.com/Amekouuu/IntroWeb',
     featured: true,
   },
 ];
