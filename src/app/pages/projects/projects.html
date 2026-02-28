@@ -1,57 +1,121 @@
 <section class="projects">
   <app-section-header
     title="Projects"
-    subtitle="Selected web dev and SEO-focused work — built and documented for real-world use."
+    subtitle="Selected web dev and UI/UX work — built and documented for real-world use."
   ></app-section-header>
 
-  <div class="projects__grid" role="list">
-    <article class="pCard" role="listitem" *ngFor="let p of projects">
-      <a
-        class="pCard__media"
-        [href]="p.liveUrl || p.repoUrl"
-        target="_blank"
-        rel="noopener"
-      >
-        <img
-          [src]="p.images.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
-          [alt]="p.images.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
-          loading="lazy"
-          decoding="async"
-        />
-      </a>
+  <!-- FILTER MENU -->
+  <div class="projects__filters" role="tablist" aria-label="Project filters">
+    <button
+      type="button"
+      class="filterBtn"
+      [class.isActive]="activeFilter === 'all'"
+      (click)="setFilter('all')"
+      role="tab"
+      [attr.aria-selected]="activeFilter === 'all'"
+    >
+      All
+    </button>
 
-      <div class="pCard__body">
-        <div class="pCard__top">
-          <h3 class="pCard__name">{{ p.name }}</h3>
-          <span class="pCard__meta" *ngIf="p.tag">{{ p.tag }}</span>
+    <button
+      type="button"
+      class="filterBtn"
+      [class.isActive]="activeFilter === 'web'"
+      (click)="setFilter('web')"
+      role="tab"
+      [attr.aria-selected]="activeFilter === 'web'"
+    >
+      Web Dev
+    </button>
+
+    <button
+      type="button"
+      class="filterBtn"
+      [class.isActive]="activeFilter === 'design'"
+      (click)="setFilter('design')"
+      role="tab"
+      [attr.aria-selected]="activeFilter === 'design'"
+    >
+      UI / UX
+    </button>
+  </div>
+
+  <div class="projects__grid" role="list">
+    <article class="pCard" role="listitem" *ngFor="let p of filteredProjects">
+      <!-- whole card clickable -->
+      <div
+        class="pCard__shell"
+        role="link"
+        tabindex="0"
+        (click)="openProject(p)"
+        (keydown)="onCardKeydown($event, p)"
+        [attr.aria-label]="'Open ' + p.name"
+      >
+        <!-- MEDIA -->
+        <div class="pCard__media">
+          <img
+            class="pCard__img"
+            [src]="p.images?.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
+            [alt]="p.images?.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
+            loading="lazy"
+            decoding="async"
+            [style.object-position]="p.imgPos || 'center'"
+          />
+
+          <!-- sheen -->
+          <span class="pCard__sheen" aria-hidden="true"></span>
+
+          <!-- badges -->
+          <div class="pCard__badges" *ngIf="p.tag || (p.tools && p.tools.length)">
+            <span class="pCard__badge pCard__badge--primary" *ngIf="p.tag">
+              {{ p.tag }}
+            </span>
+            <span class="pCard__badge" *ngIf="p.tools.length > 0">{{ p.tools[0] }}</span>
+            <span class="pCard__badge" *ngIf="p.tools.length > 1">{{ p.tools[1] }}</span>
+          </div>
+
+          <!-- overlay (no separate scrim element) -->
+          <div class="pCard__overlay" aria-hidden="true">
+            <div class="pCard__overlayTitle">{{ p.name }}</div>
+            <div class="pCard__overlayCta">View project →</div>
+          </div>
         </div>
 
-        <p class="pCard__desc">{{ p.description }}</p>
+        <!-- BODY (solid white — cannot tint/gray-band) -->
+        <div class="pCard__body">
+          <p class="pCard__desc">{{ p.description }}</p>
 
-        <ul class="pCard__chips" *ngIf="p.tools.length">
-          <li *ngFor="let t of p.tools">{{ t }}</li>
-        </ul>
+          <ul class="pCard__chips" *ngIf="p.tools?.length">
+            <li *ngFor="let t of p.tools">{{ t }}</li>
+          </ul>
 
-        <div class="pCard__actions">
-          <a
-            *ngIf="p.repoUrl"
-            class="btnLink btnLink--ghost"
-            [href]="p.repoUrl"
-            target="_blank"
-            rel="noopener"
-          >
-            GitHub
-          </a>
+          <div class="pCard__footer">
+            <div class="pCard__actions">
+              <a
+                *ngIf="p.repoUrl"
+                class="btnLink btnLink--ghost"
+                [href]="p.repoUrl"
+                target="_blank"
+                rel="noopener"
+                (click)="stop($event)"
+              >
+                GitHub
+              </a>
 
-          <a
-            *ngIf="p.liveUrl"
-            class="btnLink btnLink--solid"
-            [href]="p.liveUrl"
-            target="_blank"
-            rel="noopener"
-          >
-            Live Demo
-          </a>
+              <a
+                *ngIf="p.type === 'design'"
+                class="btnLink btnLink--ghost"
+                [href]="p.liveUrl"
+                target="_blank"
+                rel="noopener"
+                (click)="stop($event)"
+              >
+                Figma
+              </a>
+            </div>
+
+            <span class="pCard__hint" aria-hidden="true">Click card to open</span>
+          </div>
         </div>
       </div>
     </article>

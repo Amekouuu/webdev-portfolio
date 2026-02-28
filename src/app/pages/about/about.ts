@@ -1,9 +1,19 @@
 import { Component } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 import { SeoService } from '../../core/services/seo.service';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 
-type Skill = { name: string; level: number; iconText: string };
+type TechItem = {
+  name: string;
+  iconSrc: string;
+  iconAlt?: string;
+};
+
+type TechGroup = {
+  title: string;
+  items: TechItem[];
+};
+
 type Cert = {
   name: string;
   issuer: string;
@@ -13,7 +23,6 @@ type Cert = {
   validTo?: string;
 };
 
-// ✅ new social type uses images
 type Social = {
   label: string;
   url: string;
@@ -21,24 +30,74 @@ type Social = {
   iconAlt: string;
 };
 
+type CertGroup = {
+  issuer: string;
+  certs: Cert[];
+};
+
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [NgFor, NgIf, RevealDirective],
+  imports: [NgFor, NgIf, NgClass, RevealDirective],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })
 export class About {
-  title = 'About Me';
-  subtitle = 'What drives me and my passion.';
+  // Page header copy (used as accessible headings too)
+  title = 'About';
+  subtitle = 'A quick story about me — and how I build things.';
 
-  bioLines: string[] = [
-    'I enjoy making websites search engine friendly and easy to use.',
-    'I believe good design should be simple, functional, and easy to navigate—while good SEO helps ensure people can find it.',
-    "Let’s connect! I’d love to hear from you about design, the web, or anything at all!",
+  // --- HERO / INTRO ---
+  profile = {
+    name: 'Micko Q. Alberto',
+    role: 'IT (Web Dev) Student • Angular • SEO',
+    imageUrl: 'assets/images/about-profile-transparent.png', // put your image here
+    imageAlt: 'Profile picture of Micko Q. Alberto',
+  };
+
+  introParagraphs: string[] = [
+    "I’m an IT (Web Development) student at Holy Angel University. I like building websites that feel simple to use, fast to load, and easy to understand.",
+    "Outside school, I’m into gaming, learning design/SEO, and exploring new tech — especially tools that help me work smarter.",
+    "I enjoy projects where I can combine clean UI + practical SEO, so the site not only looks good… but actually gets found.",
   ];
 
-  // ✅ image icons
+  quickFacts = [
+    { label: 'Base', value: 'Pampanga, PH' },
+    { label: 'School', value: 'Holy Angel University' },
+    { label: 'Focus', value: 'Front-End + SEO' },
+    { label: 'Style', value: 'Clean + Simple UI' },
+  ];
+
+  // --- “PERSONAL VIBES” SECTION ---
+  gamer = {
+    title: 'Gaming & the “Amekou” name',
+    body: [
+      "I love gaming, and my in-game handle is “Amekou”.",
+      "It matches the vibe of my best friend’s IGN “Neku”, so it’s kind of our thing — it’s small, but it makes my username unique but a bit more… me.",
+    ],
+  };
+
+  // --- HOW I WORK ---
+  howIWorkTitle = 'How I work';
+  howIWorkPoints = [
+    {
+      title: 'User-first thinking',
+      desc: 'I try to “wear the user’s shoes” so navigation feels natural and everything is easy to find.',
+      icon: '🧭',
+    },
+    {
+      title: 'Simple, clean design',
+      desc: 'I avoid flashy movement/layout unless it actually improves the experience.',
+      icon: '🧼',
+    },
+    {
+      title: 'Open to new tech (AI included)',
+      desc: 'I enjoy learning and experimenting with modern tools, especially AI innovations, as long as the output stays clean and useful.',
+      icon: '🤖',
+    },
+  ];
+
+  // --- SOCIALS ---
   socials: Social[] = [
     {
       label: 'LinkedIn',
@@ -60,47 +119,28 @@ export class About {
     },
   ];
 
-  profile = {
-    name: 'Micko Q. Alberto',
-    role: 'IT (Web Dev) Student • Angular • SEO',
-    imageUrl: '',
-    imageAlt: 'Profile picture of Micko Q. Alberto',
-  };
+// --- TECH STACK (Core + Tools) ---
+techGroups: TechGroup[] = [
+  {
+    title: 'Core Technologies',
+    items: [
+      { name: 'HTML', iconSrc: 'assets/icons/skills/html.png', iconAlt: 'HTML logo' },
+      { name: 'CSS', iconSrc: 'assets/icons/skills/css.png', iconAlt: 'CSS logo' },
+      { name: 'JavaScript', iconSrc: 'assets/icons/skills/javascript.png', iconAlt: 'JavaScript logo' },
+      { name: 'Angular', iconSrc: 'assets/icons/skills/angular.png', iconAlt: 'Angular logo' },
+    ],
+  },
+  {
+    title: 'Tools',
+    items: [
+      { name: 'Git', iconSrc: 'assets/icons/skills/github.png', iconAlt: 'Git logo' },
+      { name: 'Figma', iconSrc: 'assets/icons/skills/figma.png', iconAlt: 'Figma logo' },
+      { name: 'SEO', iconSrc: 'assets/icons/skills/seo.png', iconAlt: 'SEO icon' },
+    ],
+  },
+];
 
-  quickFacts = [
-    { label: 'Base', value: 'Pampanga, PH' },
-    { label: 'Focus', value: 'Front-End + SEO' },
-    { label: 'Goal', value: 'Clean + Fast UI' },
-  ];
-
-  chips = ['Lighthouse', 'GA4 basics', 'Technical SEO', 'Responsive UI'];
-
-  sections = [
-    {
-      heading: 'Background',
-      body:
-        "I’m currently studying IT (Web Development) at Holy Angel University. I enjoy building simple, readable web pages and turning designs into clean, working UI.",
-      type: 'image',
-      imageUrl: 'assets/images/holy-angel-university.jpg',
-    },
-    {
-      heading: "What I’m working on",
-      body:
-        'I’m improving a client-style website for M&J Quality Used Cars (Mabalacat) where we practice SEO through blogs, audits, and optimization.',
-      type: 'image',
-      imageUrl: 'assets/images/mjqualitycars-background.png',
-    },
-  ];
-
-  skills: Skill[] = [
-    { name: 'HTML', level: 85, iconText: 'H' },
-    { name: 'CSS', level: 80, iconText: 'C' },
-    { name: 'JavaScript', level: 75, iconText: 'J' },
-    { name: 'Angular', level: 70, iconText: 'A' },
-    { name: 'Git', level: 70, iconText: 'G' },
-    { name: 'SEO', level: 70, iconText: 'S' },
-  ];
-
+  // --- CERTS (same list; grouped by issuer with prev/next) ---
   certs: Cert[] = [
     {
       name: 'HubSpot SEO Certified',
@@ -129,14 +169,75 @@ export class About {
       url: 'https://simpli-web.app.link/e/yyfQm52OF0b',
       validFrom: 'Aug 23, 2025',
     },
+    {
+      name: 'Introduction to Graphic Design; Basics of UI/UX',
+      issuer: 'Simplilearn SkillUp',
+      url: 'https://simpli-web.app.link/e/XbXbQO7450b',
+      validFrom: 'Aug 09, 2025',
+    },
+    {
+      name: 'Legacy Responsive Web Design V8',
+      issuer: 'freeCodeCamp.org',
+      url: 'https://www.freecodecamp.org/certification/amekuraiya/responsive-web-design',
+      validFrom: 'Sept 03, 2024',
+    },
+    {
+      name: 'Legacy JavaScript Algorithms and Data Structures',
+      issuer: 'freeCodeCamp.org',
+      url: 'https://www.freecodecamp.org/certification/amekuraiya/javascript-algorithms-and-data-structures',
+      validFrom: 'Oct 01, 2025',
+    },
   ];
+
+  certGroups: CertGroup[] = [];
+  activeIssuerIndex = 0;
 
   constructor(private seo: SeoService) {
     this.seo.set({
       title: 'About | Micko Q. Alberto',
       description:
-        'About Micko Q. Alberto — IT Web Development student with certifications in SEO, SEO II, Content Marketing, and UI/UX design.',
+        'About Micko Q. Alberto — IT Web Development student focused on clean UI, Angular, and SEO. Includes certifications grouped by issuer.',
     });
+
+    this.certGroups = this.groupCertsByIssuer(this.certs);
+    this.activeIssuerIndex = 0;
+  }
+
+  // ---------- Cert helpers ----------
+  private groupCertsByIssuer(list: Cert[]): CertGroup[] {
+    const map = new Map<string, Cert[]>();
+    for (const c of list) {
+      const key = c.issuer?.trim() || 'Other';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(c);
+    }
+
+    // Keep stable + readable ordering (A-Z)
+    return Array.from(map.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([issuer, certs]) => ({ issuer, certs }));
+  }
+
+  get activeGroup(): CertGroup | null {
+    if (!this.certGroups.length) return null;
+    return this.certGroups[this.activeIssuerIndex] || null;
+  }
+
+  selectIssuer(index: number) {
+    if (index < 0 || index >= this.certGroups.length) return;
+    this.activeIssuerIndex = index;
+    this.scrollTo('certs');
+  }
+
+  nextIssuer() {
+    if (!this.certGroups.length) return;
+    this.activeIssuerIndex = (this.activeIssuerIndex + 1) % this.certGroups.length;
+  }
+
+  prevIssuer() {
+    if (!this.certGroups.length) return;
+    this.activeIssuerIndex =
+      (this.activeIssuerIndex - 1 + this.certGroups.length) % this.certGroups.length;
   }
 
   certMeta(c: Cert) {
@@ -145,18 +246,17 @@ export class About {
     return '';
   }
 
-  /** ✅ smooth scroll helper for jump buttons */
+  // ---------- Smooth scroll helper ----------
   scrollTo(id: string) {
     const el = document.getElementById(id);
     if (!el) return;
 
-    // If your top navbar is fixed/sticky, bump this to ~70
-    const yOffset = 12;
-
+    const yOffset = 14; // adjust if you have sticky nav
     const y = el.getBoundingClientRect().top + window.scrollY - yOffset;
+
     window.scrollTo({ top: y, behavior: 'smooth' });
 
-    // Accessibility: focus target without jumping again
+    // accessibility: focus target
     el.setAttribute('tabindex', '-1');
     (el as HTMLElement).focus({ preventScroll: true });
   }

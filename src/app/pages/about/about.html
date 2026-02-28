@@ -1,195 +1,197 @@
-<section class="about">
-  <div class="aboutGrid">
-    <aside class="sidebar" aria-label="Profile sidebar">
+<section class="aboutPage">
 
-      <header class="about__header about__header--sidebar">
-        <h1 class="about__title about__title--sidebar">{{ title }}</h1>
-        <p class="about__subtitle about__subtitle--sidebar">{{ subtitle }}</p>
-      </header>
+  <!-- QUICK NAV -->
+  <nav class="jumpNav" aria-label="About page sections">
+    <button type="button" class="jumpNav__btn" (click)="scrollTo('work')">How I work</button>
+    <button type="button" class="jumpNav__btn" (click)="scrollTo('skills')">Skills</button>
+    <button type="button" class="jumpNav__btn" (click)="scrollTo('certs')">Certs</button>
+  </nav>
 
-      <div class="profileCard">
-        <div class="profileCard__imgWrap" aria-hidden="true">
+  <!-- HERO / INTRO (SPLIT) -->
+  <header id="intro" class="hero" appReveal>
+    <div class="heroSplit">
+
+      <!-- LEFT: Profile Card -->
+      <aside class="profileCard" aria-label="Profile card">
+        <div class="profileCard__imgWrap">
           <img
             class="profileCard__img"
-            src="assets/images/about-profile-transparent.png"
-            alt="Profile photo"
+            [src]="profile.imageUrl || 'assets/images/about-profile-transparent.png'"
+            [alt]="profile.imageAlt"
+            loading="lazy"
           />
         </div>
 
-        <div class="profileCard__meta">
-          <div class="profileCard__name">{{ profile.name }}</div>
-          <div class="profileCard__role">{{ profile.role }}</div>
+        <div class="profileCard__info">
+          <h1 class="profileCard__name">{{ profile.name }}</h1>
+          <p class="profileCard__role">{{ profile.role }}</p>
+
+          <div class="profileCard__socials" aria-label="Social links">
+            <a
+              class="profileCard__social"
+              *ngFor="let s of socials"
+              [href]="s.url"
+              target="_blank"
+              rel="noopener"
+              [attr.aria-label]="s.label"
+              title="{{ s.label }}"
+            >
+              <img class="profileCard__icon" [src]="s.iconSrc" [alt]="s.iconAlt" />
+              <span class="profileCard__label">{{ s.label }}</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: Hero Card -->
+      <section class="heroMain" aria-label="Introduction">
+        <p class="heroMain__subtitle">{{ subtitle }}</p>
+
+        <div class="heroMain__paras">
+          <p class="para" *ngFor="let p of introParagraphs">{{ p }}</p>
         </div>
 
-        <div class="profileCard__socials" aria-label="Social links">
+        <div class="facts" role="list" aria-label="Quick facts">
+          <div class="fact" role="listitem" *ngFor="let f of quickFacts">
+            <div class="fact__label">{{ f.label }}</div>
+            <div class="fact__value">{{ f.value }}</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </header>
+
+  <div class="sectionDivider" aria-hidden="true"></div>
+
+  <!-- PERSONAL VIBES -->
+  <section id="personal" class="panel" appReveal>
+    <div class="panel__head">
+      <h2 class="panel__title">{{ gamer.title }}</h2>
+      <p class="panel__sub">Just a small detail that makes the page feel more personal.</p>
+    </div>
+
+    <div class="personalCard">
+      <div class="personalCard__body">
+        <p class="para para--dark" *ngFor="let p of gamer.body">{{ p }}</p>
+      </div>
+
+      <div class="personalCard__note">
+        <span class="noteDot" aria-hidden="true"></span>
+        <span>“Amekou” is my handle — “Neku” is my best friend’s. Same vibe. Same energy.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW I WORK -->
+  <section id="work" class="panel" appReveal>
+    <div class="panel__head">
+      <h2 class="panel__title">{{ howIWorkTitle }}</h2>
+      <p class="panel__sub">My approach is calm, practical, and focused on real users.</p>
+    </div>
+
+    <div class="workGrid">
+  <article class="workCard" *ngFor="let w of howIWorkPoints">
+    <span class="workCard__rule" aria-hidden="true"></span>
+    <h3 class="workCard__title">{{ w.title }}</h3>
+    <p class="workCard__desc">{{ w.desc }}</p>
+  </article>
+</div>
+  </section>
+
+  <!-- SKILLS + CERTS (SIDE BY SIDE) -->
+  <div class="skillsCertRow">
+
+    <section id="skills" class="panel" appReveal>
+  <div class="panel__head">
+    <h2 class="panel__title">Tech skills</h2>
+    <p class="panel__sub">Core technologies I build with and tools I use regularly.</p>
+  </div>
+
+  <div class="techGroup" *ngFor="let group of techGroups">
+
+    <h3 class="techGroup__title">{{ group.title }}</h3>
+
+    <div class="skillsLogos">
+      <div class="skillLogo" *ngFor="let item of group.items">
+        <div class="skillLogo__iconWrap">
+          <img
+            class="skillLogo__icon"
+            [src]="item.iconSrc"
+            [alt]="item.iconAlt || (item.name + ' logo')"
+            loading="lazy"
+          />
+        </div>
+        <div class="skillLogo__name">{{ item.name }}</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    <!-- CERTS -->
+    <section id="certs" class="panel" appReveal>
+      <div class="panel__head">
+        <h2 class="panel__title">Certifications</h2>
+        <p class="panel__sub">Grouped by issuer/distributor — tap next/prev to browse.</p>
+      </div>
+
+      <div class="issuerTabs" *ngIf="certGroups.length">
+        <button
+          type="button"
+          class="issuerTabs__chip"
+          *ngFor="let g of certGroups; let i = index"
+          [ngClass]="{ 'isActive': i === activeIssuerIndex }"
+          (click)="selectIssuer(i)"
+        >
+          {{ g.issuer }}
+        </button>
+      </div>
+
+      <div class="issuerNav" *ngIf="activeGroup as g">
+        <button type="button" class="issuerNav__btn" (click)="prevIssuer()">← Prev</button>
+        <div class="issuerNav__title">
+          <div class="issuerNav__label">Issuer</div>
+          <div class="issuerNav__name">{{ g.issuer }}</div>
+        </div>
+        <button type="button" class="issuerNav__btn" (click)="nextIssuer()">Next →</button>
+      </div>
+
+      <!-- certList container ALWAYS exists -->
+      <div class="certList">
+        <ng-container *ngIf="activeGroup as g">
           <a
-            class="socialBtn"
-            *ngFor="let s of socials"
-            [href]="s.url"
+            class="certCard"
+            *ngFor="let c of g.certs"
+            [href]="c.url"
             target="_blank"
             rel="noopener"
-            [attr.aria-label]="s.label"
-            [title]="s.label"
           >
-            <img
-              class="socialBtn__iconImg"
-              [src]="s.iconSrc"
-              [alt]="s.iconAlt"
-            />
-          </a>
-        </div>
-
-        <div class="facts" aria-label="Quick facts">
-          <div class="fact" *ngFor="let f of quickFacts">
-            <span class="fact__label">{{ f.label }}</span>
-            <span class="fact__value">{{ f.value }}</span>
-          </div>
-        </div>
-
-        <div class="chips" aria-label="Currently learning">
-          <span class="chip" *ngFor="let c of chips">{{ c }}</span>
-        </div>
-      </div>
-    </aside>
-
-    <main class="content" aria-label="About content">
-      <section class="panel">
-        <span class="kicker">A Quick Intro</span>
-        <h2 class="panel__title">For starters</h2>
-
-        <p class="panel__lead" *ngFor="let line of bioLines">{{ line }}</p>
-
-        <nav class="jump" aria-label="Jump links">
-          <button class="jump__btn jump__btn--inlineHint" type="button" (click)="scrollTo('how')">
-  How I Work <span class="jump__inlineHint" aria-hidden="true"> — Jump ↓</span>
-</button>
-         
-        </nav>
-      </section>
-
-      <section class="miniGrid" aria-label="Now and next">
-        <article class="miniCard">
-          <h3 class="miniCard__title">Now</h3>
-          <p class="miniCard__body">
-            Building Angular UI and improving page experience using Lighthouse,
-            clean component structure, and responsive layouts.
-          </p>
-        </article>
-
-        <article class="miniCard">
-          <h3 class="miniCard__title">Next</h3>
-          <p class="miniCard__body">
-            Going deeper into Technical SEO (schema, internal linking, and
-            audits) while tightening performance and accessibility.
-          </p>
-        </article>
-
-        <article class="miniCard">
-          <h3 class="miniCard__title">My vibe</h3>
-          <p class="miniCard__body">
-            I like simple UI, readable code, and real-world projects where I can
-            ship improvements fast and iterate.
-          </p>
-        </article>
-      </section>
-
-      <section class="featureGrid" aria-label="Highlights">
-        <article class="featureCard" *ngFor="let s of sections">
-          <div class="featureCard__text">
-            <span class="kicker">Highlight</span>
-            <p></p>
-            <h3 class="featureCard__title">{{ s.heading }}</h3>
-            <p class="featureCard__body">{{ s.body }}</p>
-          </div>
-
-          <img
-            *ngIf="s.type === 'image'"
-            [src]="s.imageUrl"
-            alt=""
-            class="featureCard__img"
-          />
-        </article>
-      </section>
-
-      <section id="how" class="panel" aria-label="How I work">
-        <span class="kicker">Approach</span>
-        <div class="panel__head">
-          <h2 class="panel__title">How I Work</h2>
-          <p class="panel__sub">
-            Simple process, clean output, SEO-aware decisions.
-          </p>
-        </div>
-
-        <div class="howWork__grid">
-          <article class="howWork__card">
-            <h3>User &amp; Intent-Focused</h3>
-            <p>I design and optimize with real users and search behavior in mind.</p>
-          </article>
-
-          <article class="howWork__card">
-            <h3>Attention to Detail</h3>
-            <p>From spacing and hierarchy to metadata and content structure.</p>
-          </article>
-
-          <article class="howWork__card">
-            <h3>Open to Ideas</h3>
-            <p>I appreciate input from peers to see things from a different view.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="panel" aria-label="Skills and certifications">
-        <span class="kicker">Toolkit</span>
-
-        <div class="skillsCertLayout">
-          <section id="skills" class="skills" aria-label="Tech skills">
-            <h2 class="skills__title">Tech Skills</h2>
-            <p class="skills__sub">
-              Focused on simple UI, front-end development, and practical
-              SEO/performance basics.
-            </p>
-
-            <div class="skills__grid">
-              <div class="skill" *ngFor="let sk of skills">
-                <div class="skill__icon" aria-hidden="true">
-                  {{ sk.iconText }}
-                </div>
-
-                <div class="skill__meta">
-                  <div class="skill__top">
-                    <span class="skill__name">{{ sk.name }}</span>
-                    <span class="skill__pct">{{ sk.level }}%</span>
-                  </div>
-
-                  <div
-                    class="bar"
-                    role="progressbar"
-                    [attr.aria-valuenow]="sk.level"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    <div class="bar__fill" [style.width.%]="sk.level"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="certCard__name">{{ c.name }}</div>
+            <div class="certCard__meta">
+              <span class="certCard__issuer">{{ c.issuer }}</span>
+              <span class="certCard__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
             </div>
-          </section>
+            <div class="certCard__cta">Open credential →</div>
+          </a>
+        </ng-container>
+      </div>
+    </section>
 
-          <section id="certs" class="certs" aria-label="Certifications">
-            <h2 class="certs__title">Certifications</h2>
+  </div><!-- /skillsCertRow -->
 
-            <ul class="certs__list">
-              <li *ngFor="let c of certs">
-                <strong>{{ c.name }}</strong> — {{ c.issuer }}
-                <span class="muted"> {{ certMeta(c) }}</span>
-                <a class="link" [href]="c.url" target="_blank" rel="noopener">
-                  View
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </section>
-    </main>
-  </div>
+  <!-- ✅ divider belongs OUTSIDE the grid row -->
+  <div class="sectionDivider" aria-hidden="true"></div>
+
+  <!-- FOOTER CTA -->
+  <footer class="endCta" appReveal>
+    <h2 class="endCta__title">That’s all from me !</h2>
+    <p class="endCta__text">
+      <!-- Add na lang ng kung ano in the future -->
+    </p>
+    <button type="button" class="endCta__btn" (click)="scrollTo('intro')">
+      Back to top ?
+    </button>
+  </footer>
+
 </section>

@@ -2,7 +2,7 @@
 /* src/styles.css (append at the bottom) */
 :root{
   /* Base */
-  --bg:#f8f9fc;                 /* soft white, easier on eyes */
+  --bg:white;                 /* soft white, easier on eyes */
   --text:#000000;               /* deep navy text */
   --muted:#4f566b;              /* cool gray-blue */
 
@@ -37,7 +37,7 @@
 
 
 a:hover{
-  color: var(--gold);
+  color: var(--royal-deep);
 }
 body{
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
