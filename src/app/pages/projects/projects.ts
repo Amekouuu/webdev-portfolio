@@ -40,7 +40,6 @@ export class Projects {
     window.open(url, '_blank', 'noopener');
   }
 
-  // keyboard accessibility for the clickable card
   onCardKeydown(event: KeyboardEvent, p: Project) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();

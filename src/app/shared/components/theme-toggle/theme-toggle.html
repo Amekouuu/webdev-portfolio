@@ -1,1 +1,11 @@
-<p>theme-toggle works!</p>
+<button
+  class="themeToggle"
+  type="button"
+  (click)="themeService.toggle()"
+  [attr.aria-label]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+  [attr.title]="themeService.isDark() ? 'Light mode' : 'Dark mode'"
+>
+  <span class="themeToggle__icon" aria-hidden="true">
+    {{ themeService.isDark() ? '☀' : '☾' }}
+  </span>
+</button>

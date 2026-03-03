@@ -1,53 +1,546 @@
-/* You can add global styles to this file, and also import other style files */
-/* src/styles.css (append at the bottom) */
+/* ================================================================
+   GLOBAL STYLES — Micko Q. Alberto Portfolio
+   Single source of truth for colors, typography, utilities + layout.
+================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+/* ================================================================
+   LIGHT MODE TOKENS (default)
+================================================================ */
 :root{
-  /* Base */
-  --bg:white;                 /* soft white, easier on eyes */
-  --text:#000000;               /* deep navy text */
-  --muted:#4f566b;              /* cool gray-blue */
 
-  /* Lines / borders */
-  --line:#0d1b3a;               /* dark royal border */
+  --shell: clamp(980px, 88vw, 1380px);
+  /* ── Page background ──────────────────────────────────────── */
+  --bg:           #f4f6fb;
+  --bg-raised:    #ffffff;
+  --bg-sunken:    #edf0f7;
 
-  /* Primary blue */
-  --royal:#182f68;              /* main royal blue */
-  --royal-deep:#0f1f4a;         /* hero / dark surfaces */
-  --royal-soft:#dfe6ff;         /* hover / soft bg */
+  /* ── Text ─────────────────────────────────────────────────── */
+  --text:         #0d1b2a;
+  --text-soft:    #2e3e52;
+  --text-muted:   #4f566b;
+  --text-faint:   #8892a4;
 
-  /* Gold accent */
-  --gold:#caa33a;               /* main gold */
-  --gold-soft:#f4d98b;          /* highlight gold */
-  --gold-deep:#8b6b1f;          /* darker accent */
+  /* ── Brand: Royal Blue ────────────────────────────────────── */
+  --royal:        #182f68;
+  --royal-deep:   #0f1f4a;
+  --royal-soft:   #dfe6ff;
+  --royal-mid:    #2a4a9f;
 
-  /* Buttons / nav */
-  --navlink:var(--royal);
-  --accent:var(--royal);
-  --accentText:#ffffff;
-  --cta:var(--gold);
+  /* ── Brand: Gold ──────────────────────────────────────────── */
+  --gold:         #caa33a;
+  --gold-soft:    #f4d98b;
+  --gold-deep:    #8b6b1f;
+  --gold-faint:   rgba(202,163,58,.10);
 
-  /* Hero section */
+  /* ── Lines / borders ──────────────────────────────────────── */
+  --border:       rgba(13,27,58,.12);
+  --border-soft:  rgba(13,27,58,.07);
+  --border-strong:rgba(13,27,58,.28);
+  --line:         #0d1b3a;
+
+  /* ── Cards ────────────────────────────────────────────────── */
+  --card-bg:      #ffffff;
+  --card-bg-alt:  #f8faff;
+  --card-border:  rgba(13,27,58,.12);
+  --card-shadow:
+    0 1px 2px rgba(2,10,30,.04),
+    0 8px 24px rgba(2,10,30,.08);
+  --card-shadow-hover:
+    0 2px 6px rgba(2,10,30,.06),
+    0 18px 44px rgba(2,10,30,.14);
+
+  /* ── Inputs ───────────────────────────────────────────────── */
+  --input-bg:          #ffffff;
+  --input-border:      rgba(13,27,58,.22);
+  --input-text:        #0d1b2a;
+  --input-placeholder: #8892a4;
+  --input-focus:       var(--royal);
+
+  /* ── Hero section (always dark surface) ───────────────────── */
+  --hero-bg:      var(--royal-deep);
+  --hero-text:    #f5f7ff;
+  --hero-muted:   rgba(245,247,255,.75);
+  --hero-accent:  var(--gold);
+
+  /* Logo */
+  --logo-outer-stroke: rgba(255,255,255,.90);
+  --logo-inner-fill:   rgba(255,255,255,.08);
+
+  /* ── Nav ──────────────────────────────────────────────────── */
+  --nav-bg:       rgba(255,255,255,.92);
+  --nav-border:   rgba(13,27,58,.10);
+  --nav-text:     var(--royal-deep);
+  --navlink:      var(--royal);
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  --footer-bg:    #ffffff;
+  --footer-text:  var(--text);
+  --footer-muted: var(--text-muted);
+  --footer-border:rgba(13,27,58,.10);
+
+  /* ✅ ADDED: footer UI tokens (chips/pills/links) */
+  --footer-surface: rgba(255,255,255,.72);
+  --footer-hover:   rgba(24,47,104,.10);
+  --footer-accent:  rgba(202,163,58,.10);
+  --footer-title:   rgba(13,27,58,.92);
+  --footer-link:    rgba(13,27,58,.72);
+  --footer-shadow:  0 12px 26px rgba(0,0,0,.06);
+
+  /* ── Buttons ──────────────────────────────────────────────── */
+  --btn-ghost-border: rgba(13,27,58,.22);
+  --btn-ghost-text:   var(--royal);
+  --btn-ghost-hover:  var(--royal);
+
+  /* ── Misc ─────────────────────────────────────────────────── */
+  --grid:         rgba(255,255,255,.19);
+  --accent:       var(--royal);
+  --accentText:   #ffffff;
+  --cta:          var(--gold);
+  --muted:        var(--text-muted);
+
+  /* ── Typography ───────────────────────────────────────────── */
+  --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+                 Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-serif:  "Fraunces", Georgia, "Times New Roman", serif;
+
+  --text-xs:     11px;
+  --text-sm:     12px;
+  --text-base:   14px;
+  --text-md:     16px;
+  --text-lg:     18px;
+  --text-xl:     22px;
+  --text-2xl:    28px;
+  --text-3xl:    38px;
+  --text-4xl:    52px;
+  --text-5xl:    72px;
+
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-black:    900;
+
+  --leading-tight:   0.95;
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose:   1.85;
+
+  --tracking-tight:   -0.5px;
+  --tracking-normal:  0px;
+  --tracking-wide:    0.08em;
+  --tracking-wider:   0.14em;
+  --tracking-widest:  0.20em;
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(.2,.8,.2,1);
+}
+
+/* ================================================================
+   DARK MODE TOKENS
+================================================================ */
+[data-theme='dark']{
+  --bg:           #070c18;
+  --bg-raised:    #0d1528;
+  --bg-sunken:    #060b15;
+
+  --text:         #e8ecf7;
+  --text-soft:    #c2cbdf;
+  --text-muted:   #8892a4;
+  --text-faint:   #4f5a70;
+
+  --royal-soft:   #1a2545;
+  --royal-mid:    #4a6abf;
+
+  /* ✅ FIXED: remove the accidental red border */
+  --border:       rgba(255,255,255,.08);
+  --border-soft:  rgba(255,255,255,.04);
+  --border-strong:rgba(255,255,255,.18);
+  --line:         #2a3a6a;
+
+  --card-bg:      #0d1528;
+  --card-bg-alt:  #111a30;
+  --card-border:  rgba(255,255,255,.08);
+  --card-shadow:
+    0 1px 2px rgba(0,0,0,.20),
+    0 8px 24px rgba(0,0,0,.28);
+  --card-shadow-hover:
+    0 2px 6px rgba(0,0,0,.28),
+    0 18px 44px rgba(0,0,0,.40);
+
+  --input-bg:          #0d1528;
+  --input-border:      rgba(255,255,255,.12);
+  --input-text:        #e8ecf7;
+  --input-placeholder: #4f5a70;
+  --input-focus:       var(--gold);
+
+  --hero-bg:      #060d1f;
+  --hero-text:    #f5f7ff;
+  --hero-muted:   rgba(245,247,255,.60);
+  --hero-accent:  var(--gold);
+
+  --nav-bg:       rgba(7,12,24,.92);
+  --nav-border:   rgba(255,255,255,.08);
+  --nav-text:     #e8ecf7;
+  --navlink:      #e8ecf7;
+
+  /* Footer */
+  --footer-bg:     #0d1528;
+  --footer-text:   rgba(245,247,255,.92);
+  --footer-muted:  rgba(245,247,255,.66);
+  --footer-border: rgba(255,255,255,.10);
+
+  /* ✅ ADDED: footer UI tokens (dark) */
+  --footer-surface: rgba(255,255,255,.06);
+  --footer-hover:   rgba(255,255,255,.08);
+  --footer-accent:  rgba(202,163,58,.14);
+  --footer-title:   rgba(245,247,255,.84);
+  --footer-link:    rgba(245,247,255,.70);
+  --footer-shadow:  none;
+
+  --btn-ghost-border: rgba(255,255,255,.12);
+  --btn-ghost-text:   #e8ecf7;
+  --btn-ghost-hover:  var(--royal);
+
+  --grid:         rgba(255,255,255,.05);
+  --muted:        var(--text-muted);
+}
+
+/* Optional explicit light hook (safe to keep) */
+[data-theme='light']{
+  --bg: white;
+  --bg-raised: #ffffff;
+  --text: #0d1b2a;
+  --text-muted: #4f566b;
+  --card-bg: #ffffff;
+  --card-border: rgba(13,27,58,.12);
+  --border: rgba(13,27,58,.12);
+  --line: #0d1b3a;
+  --royal-soft: #dfe6ff;
+  --nav-bg: rgba(255,255,255,.92);
+  --footer-bg: #ffffff;
   --hero-bg: var(--royal-deep);
   --hero-text: #f5f7ff;
   --hero-muted: rgba(245,247,255,.75);
-  --hero-accent: var(--gold);
-
-  /* Grid overlay */
-  --grid: rgba(255, 255, 255, 0.192);
+  --input-bg: #ffffff;
+  --input-border: rgba(13,27,58,.22);
+  --input-text: #0d1b2a;
+  --muted: #4f566b;
 }
 
+/* ================================================================
+   BASE RESET
+================================================================ */
+*, *::before, *::after{ box-sizing: border-box; }
 
-a:hover{
-  color: var(--royal-deep);
+html{
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background: var(--bg);
 }
+
 body{
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  margin: 0;
+  min-height: 100dvh;
+
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-relaxed);
+
+  color: var(--text);
+  background: var(--bg);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body{
+  overflow-x: clip;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6{
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-snug);
+  color: var(--text);
+  letter-spacing: var(--tracking-tight);
 }
 
 .h-serif{
-  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
+  font-weight: 800;
 }
 
-/* Utility: subtle underline accent */
-.u-accent{
-  color: var(--hero-accent);
+p{
+  margin: 0 0 16px;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text);
+}
+
+/* ================================================================
+   LINKS (single definitive set)
+================================================================ */
+a{
+  color: var(--royal);
+  text-decoration: none;
+  transition: color .15s ease, text-decoration-color .15s ease, opacity .15s ease;
+}
+
+a:hover{ color: var(--gold-deep); }
+
+[data-theme='dark'] a{
+  color: rgba(245,247,255,.72);
+  text-decoration: underline;
+  text-decoration-color: rgba(245,247,255,0);
+  text-underline-offset: 3px;
+}
+
+[data-theme='dark'] a:hover{
+  color: rgba(245,247,255,.96);
+  text-decoration-color: rgba(245,247,255,.45);
+}
+
+[data-theme='dark'] a:focus-visible{
+  outline: 3px solid rgba(202,163,58,.65);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+a.u-accentLink{ color: var(--gold); }
+a.u-accentLink:hover{ color: var(--gold-soft); }
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Form controls */
+input, textarea, select{
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--input-text);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+input::placeholder,
+textarea::placeholder{
+  color: var(--input-placeholder);
+}
+
+input:focus,
+textarea:focus{
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(202,163,58,.12);
+}
+
+/* ================================================================
+   THEME TRANSITION (safe, not global wildcard)
+================================================================ */
+body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
+  transition:
+    background-color .25s ease,
+    color .20s ease,
+    border-color .20s ease,
+    box-shadow .20s ease;
+}
+
+/* ================================================================
+   UTILITIES
+================================================================ */
+.u-accent{ color: var(--hero-accent); }
+.u-muted{ color: var(--text-muted); }
+.u-kicker{
+  font-size: var(--text-xs);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sr-only, .srOnly{
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ================================================================
+   LAYOUT HELPERS
+================================================================ */
+.shell{
+  width: 100%;
+}
+
+/* Reusable page wrapper */
+.page{
+  padding: 18px 0 60px;
+  animation: pageFade .25s ease both;
+}
+
+@keyframes pageFade{
+  from{ opacity: 0; transform: translateY(4px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* Reusable 2-col page grid */
+.page__grid{
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.page__grid > *{ min-width: 0; }
+
+/* Left sticky intro column */
+.pageIntro{
+  position: sticky;
+  top: 90px;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pageIntro__title{
+  margin: 0 0 10px;
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+}
+
+.pageIntro__rule{
+  display: block;
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--royal) 0%, var(--gold) 100%);
+  border-radius: 999px;
+  margin-bottom: 16px;
+  transform-origin: left;
+  animation: ruleIn .35s var(--ease-out) both;
+}
+
+@keyframes ruleIn{
+  from{ transform: scaleX(.6); opacity: .4; }
+  to{ transform: scaleX(1); opacity: 1; }
+}
+
+.pageIntro__blurb{
+  margin: 0 0 18px;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-muted);
+  max-width: 360px;
+}
+
+/* Right “hero surface” card (used by Resume/About/etc) */
+.pageCard{
+  position: relative;
+  background: var(--hero-bg);
+  border: 1.5px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 22px;
+  color: var(--hero-text);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 18px 40px rgba(0,0,0,.20);
+
+  overflow: hidden;
+  transition: transform .16s ease, box-shadow .18s ease;
+}
+
+.pageCard:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 22px 46px rgba(0,0,0,.26);
+}
+
+.pageCard::before{
+  content:"";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 10%, rgba(255,255,255,.06), transparent 55%),
+    radial-gradient(circle at 70% 35%, rgba(202,163,58,.06), transparent 60%);
+  pointer-events: none;
+}
+
+.pageCard > *{ position: relative; z-index: 1; }
+
+.cardHead{ margin-bottom: 14px; }
+
+.cardHead__title{
+  margin: 0 0 4px;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--hero-text);
+}
+
+.cardHead__hint{
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--hero-muted);
+  line-height: var(--leading-relaxed);
+}
+
+/* ================================================================
+   REVEAL ANIMATION
+================================================================ */
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out);
+  will-change: opacity, transform;
+  transition-delay: var(--delay, 0ms);
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media (max-width: 900px){
+  .page__grid{ grid-template-columns: 1fr; gap: 22px; }
+  .pageIntro{ position: static; top: auto; }
+  .pageIntro__title{ font-size: 36px; }
+  .pageIntro__rule{ width: 160px; }
+}
+
+@media (max-width: 520px){
+  .page{ padding: 12px 0 60px; }
+}
+
+/* ================================================================
+   REDUCED MOTION
+================================================================ */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal{ opacity: 1 !important; transform: none !important; }
 }

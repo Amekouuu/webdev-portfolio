@@ -1,22 +1,36 @@
-<section class="resume">
-  <header class="resume__header">
-    <h1 class="resume__title">Resume.</h1>
-    <p class="resume__intro">
-      [PUT A SHORT LINE HERE — what roles you’re looking for, what you specialize in.]
-    </p>
-  </header>
+<section class="page shell">
+  <div class="page__grid">
 
-  <div class="resume__card">
-    <p class="resume__hint">
-      Download my resume as a PDF:
-    </p>
+    <!-- LEFT: Intro -->
+    <div class="pageIntro">
+      <h1 class="pageIntro__title h-serif">Resume.</h1>
+      <span class="pageIntro__rule"></span>
+      <p class="pageIntro__blurb">View inline or grab the PDF.</p>
 
-    <a class="resume__btn" [href]="resumeUrl" download>
-      Download Resume (PDF)
-    </a>
+      <button class="resume__download" (click)="download()" type="button">
+        <span class="resume__downloadIcon">↓</span>
+        Download PDF
+      </button>
 
-    <p class="resume__note">
-      Tip: Replace <code>assets/resume/micko-resume.pdf</code> with your real file.
-    </p>
+      <a
+        [href]="resumeUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resume__openLink"
+      >
+        Open in new tab →
+      </a>
+    </div>
+
+    <!-- RIGHT: Inline PDF viewer -->
+    <div class="resume__viewer">
+      <iframe
+        [src]="resumeUrl"
+        title="Micko Alberto Resume"
+        class="resume__iframe"
+        loading="lazy"
+      ></iframe>
+    </div>
+
   </div>
 </section>

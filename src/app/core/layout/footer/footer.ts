@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 type Social = { label: string; href: string };
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, RouterLink],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

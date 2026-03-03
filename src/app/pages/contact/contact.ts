@@ -5,7 +5,7 @@ import { SeoService } from '../../core/services/seo.service';
 
 import emailjs from '@emailjs/browser';
 
-type Social = { label: string; href: string };
+type Social = { label: string; href: string; icon: string };
 
 @Component({
   selector: 'app-contact',
@@ -16,24 +16,30 @@ type Social = { label: string; href: string };
 })
 export class Contact {
   socials: Social[] = [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/micko-alberto-b49906316/' },
-    { label: 'Instagram', href: 'https://www.instagram.com/mcko.qrz/' },
+    { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/micko-alberto-b49906316/', icon: '↗' },
+    { label: 'Instagram', href: 'https://www.instagram.com/mcko.qrz/', icon: '↗' },
+    { label: 'GitHub',    href: 'https://github.com/Amekouuu', icon: '↗' },
   ];
 
-  sent = false;
-  sending = false;
+  availability = [
+    { day: 'Mon – Fri', time: '10:00 AM – 4:00 PM' },
+    { day: 'Weekend',   time: '1:00 PM – 5:00 PM' },
+  ];
+
+  sent     = false;
+  sending  = false;
   errorMsg = '';
 
   form!: FormGroup;
 
-  private SERVICE_ID = 'service_oq6guxv';
+  private SERVICE_ID  = 'service_oq6guxv';
   private TEMPLATE_ID = 'template_cieebsk';
-  private PUBLIC_KEY = 'WwErruUkpcQbr-sPQ';
+  private PUBLIC_KEY  = 'WwErruUkpcQbr-sPQ';
 
   constructor(private fb: FormBuilder, private seo: SeoService) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      name:    ['', [Validators.required, Validators.minLength(2)]],
+      email:   ['', [Validators.required, Validators.email]],
       subject: ['', [Validators.required, Validators.minLength(3)]],
       message: ['', [Validators.required, Validators.minLength(10)]],
     });
@@ -46,13 +52,13 @@ export class Contact {
     emailjs.init(this.PUBLIC_KEY);
   }
 
-  get name() { return this.form.get('name'); }
-  get email() { return this.form.get('email'); }
+  get name()    { return this.form.get('name');    }
+  get email()   { return this.form.get('email');   }
   get subject() { return this.form.get('subject'); }
   get message() { return this.form.get('message'); }
 
   async submit() {
-    this.sent = false;
+    this.sent     = false;
     this.errorMsg = '';
 
     if (this.form.invalid) {
@@ -63,17 +69,13 @@ export class Contact {
     this.sending = true;
 
     try {
-      const now = new Date();
-
       const templateParams = {
-        name: this.form.value.name,
-        email: this.form.value.email,
-        subject: this.form.value.subject,
-        message: this.form.value.message,
-        time: now.toLocaleString(),
-
-        // optional metadata (use in template if you want)
-        page_url: window.location.href,
+        name:       this.form.value.name,
+        email:      this.form.value.email,
+        subject:    this.form.value.subject,
+        message:    this.form.value.message,
+        time:       new Date().toLocaleString(),
+        page_url:   window.location.href,
         user_agent: navigator.userAgent,
       };
 
@@ -81,16 +83,11 @@ export class Contact {
 
       this.sent = true;
       this.form.reset();
-
-      // auto-hide success after 5 seconds
-      setTimeout(() => {
-        this.sent = false;
-      }, 5000);
+      setTimeout(() => { this.sent = false; }, 5000);
 
     } catch (error: any) {
       console.error('EmailJS Error:', error);
-      const msg = error?.text || error?.message || JSON.stringify(error);
-      this.errorMsg = `Sending failed: ${msg}`;
+      this.errorMsg = `Sending failed: ${error?.text || error?.message || JSON.stringify(error)}`;
     } finally {
       this.sending = false;
     }

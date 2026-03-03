@@ -42,7 +42,6 @@
 
   <div class="projects__grid" role="list">
     <article class="pCard" role="listitem" *ngFor="let p of filteredProjects">
-      <!-- whole card clickable -->
       <div
         class="pCard__shell"
         role="link"
@@ -55,17 +54,15 @@
         <div class="pCard__media">
           <img
             class="pCard__img"
-            [src]="p.images?.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
-            [alt]="p.images?.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
+            [src]="p.images.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
+            [alt]="p.images.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
             loading="lazy"
             decoding="async"
             [style.object-position]="p.imgPos || 'center'"
           />
 
-          <!-- sheen -->
           <span class="pCard__sheen" aria-hidden="true"></span>
 
-          <!-- badges -->
           <div class="pCard__badges" *ngIf="p.tag || (p.tools && p.tools.length)">
             <span class="pCard__badge pCard__badge--primary" *ngIf="p.tag">
               {{ p.tag }}
@@ -74,18 +71,17 @@
             <span class="pCard__badge" *ngIf="p.tools.length > 1">{{ p.tools[1] }}</span>
           </div>
 
-          <!-- overlay (no separate scrim element) -->
           <div class="pCard__overlay" aria-hidden="true">
             <div class="pCard__overlayTitle">{{ p.name }}</div>
             <div class="pCard__overlayCta">View project →</div>
           </div>
         </div>
 
-        <!-- BODY (solid white — cannot tint/gray-band) -->
+        <!-- BODY -->
         <div class="pCard__body">
           <p class="pCard__desc">{{ p.description }}</p>
 
-          <ul class="pCard__chips" *ngIf="p.tools?.length">
+          <ul class="pCard__chips" *ngIf="p.tools.length">
             <li *ngFor="let t of p.tools">{{ t }}</li>
           </ul>
 

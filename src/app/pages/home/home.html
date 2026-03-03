@@ -1,7 +1,9 @@
 <section class="home">
+
   <!-- HERO -->
   <section class="hero" aria-label="Hero section" appReveal>
     <div class="hero__wrap">
+
       <!-- LEFT TEXT -->
       <div class="hero__content heroIntro heroIntro--text">
         <h1
@@ -15,24 +17,21 @@
           <span class="heroWord" style="--w: 3">building</span>
         </h1>
 
-        <!-- ✅ WORD-BY-WORD SUBTITLE -->
-        <p class="hero__sub heroIntro__item heroIntro__item--2 heroSubWords" aria-label="Hero subtitle">
+        <p
+          class="hero__sub heroIntro__item heroIntro__item--2 heroSubWords"
+          aria-label="Hero subtitle"
+        >
           <span class="heroWord heroWord--sub" style="--w: 4">Micko</span>
           <span class="heroWord heroWord--sub" style="--w: 5">Q.</span>
           <span class="heroWord heroWord--sub" style="--w: 6">Alberto</span>
-
           <span class="heroSubSep">—</span>
-
           <span class="heroWord heroWord--sub" style="--w: 7">IT</span>
           <span class="heroWord heroWord--sub" style="--w: 8">STUDENT</span>
-
           <span class="heroSubSep">(</span>
           <span class="heroWord heroWord--sub" style="--w: 9">WEB</span>
           <span class="heroWord heroWord--sub" style="--w: 10">DEV</span>
           <span class="heroSubSep">)</span>
-
           <span class="heroSubSep">•</span>
-
           <span class="heroWord heroWord--sub" style="--w: 11">SEO-FOCUSED</span>
         </p>
 
@@ -62,13 +61,9 @@
                   target="_blank"
                   class="status__link"
                   rel="noopener noreferrer"
-                >
-                  {{ s.text }}
-                </a>
+                >{{ s.text }}</a>
 
-                <ng-template #regularText>
-                  {{ s.text }}
-                </ng-template>
+                <ng-template #regularText>{{ s.text }}</ng-template>
               </ng-template>
             </span>
           </li>
@@ -81,9 +76,7 @@
             href="assets/Micko_Alberto_Resume.pdf"
             target="_blank"
             rel="noopener"
-          >
-            View My Resume
-          </a>
+          >View My Resume</a>
           <a class="heroBtn heroBtn--ghost" routerLink="/contact">Reach Out!</a>
         </div>
       </div>
@@ -91,36 +84,87 @@
       <!-- RIGHT VISUAL -->
       <div class="hero__grid heroIntro heroIntro--visual" aria-hidden="true">
         <div class="hero__gridLines heroIntro__gridLines"></div>
-
         <img
-          src="assets/images/profile-photo-transparent.png"
+          src="/assets/images/profile-photo-transparent.png"
           alt=""
           class="hero__portrait heroIntro__portrait"
         />
       </div>
+
     </div>
   </section>
 
   <hr class="home__divider" aria-hidden="true" />
 
   <!-- WHAT I DO -->
-  <section class="whatSection" aria-label="What I do" appReveal>
-    <app-section-header title="What I Do" subtitle="My main strengths and focus areas."></app-section-header>
+  <section class="whatSection" aria-label="Capabilities" appReveal>
+    <div class="capFrame">
+      <div class="capWrap">
 
-    <div class="whatPanel">
-      <div class="whatPanel__grid" aria-hidden="true"></div>
+        <!-- LEFT SIDE -->
+        <aside class="capLeft" appReveal>
+          <div class="capLeft__kicker">CAPABILITIES</div>
+          <h2 class="capLeft__title">WHAT I BRING<br />TO THE TABLE<span class="capDot">.</span></h2>
+          <p class="capLeft__desc">
+            I don't just write code — I build clean, structured systems with strong UX and SEO foundations.
+            I like turning "messy ideas" into pages that feel simple to use.
+          </p>
+          <a class="capLeft__btn" routerLink="/about">
+            ABOUT ME <span aria-hidden="true">→</span>
+          </a>
+        </aside>
 
-      <div class="what">
-        <article
-          class="what__item"
-          *ngFor="let w of whatIDo; let i = index"
-          appReveal
-          [style.--delay]="(i * 100) + 'ms'"
-        >
-          <span class="what__kicker">0{{ i + 1 }}</span>
-          <h3 class="what__title">{{ w.title }}</h3>
-          <p class="what__desc">{{ w.desc }}</p>
-        </article>
+        <!-- RIGHT SIDE -->
+        <div class="capRight" role="list">
+          <article
+            class="capRow"
+            role="listitem"
+            *ngFor="let c of capabilities; let i = index"
+            [class.is-open]="activeCap === i"
+            (click)="toggleCap(i)"
+            (keydown.enter)="toggleCap(i)"
+            (keydown.space)="toggleCap(i); $event.preventDefault()"
+            tabindex="0"
+            appReveal
+            [style.--delay]="(i * 120) + 'ms'"
+          >
+            <div class="capRow__top">
+              <div class="capRow__num">0{{ i + 1 }}</div>
+
+              <div class="capRow__main">
+                <h3 class="capRow__title">{{ c.title }}</h3>
+                <div class="capPills" aria-label="Tools / skills">
+                  <span class="capPill" *ngFor="let t of c.pills">{{ t }}</span>
+                </div>
+              </div>
+
+              <button
+                class="capRow__toggle"
+                type="button"
+                (click)="$event.stopPropagation(); toggleCap(i)"
+                [attr.aria-expanded]="activeCap === i"
+                [attr.aria-controls]="'capPanel' + i"
+              >
+                <span class="capRow__toggleIcon" aria-hidden="true">
+                  {{ activeCap === i ? '×' : '+' }}
+                </span>
+                <span class="srOnly">{{ activeCap === i ? 'Collapse' : 'Expand' }} {{ c.title }}</span>
+              </button>
+            </div>
+
+            <div
+              class="capRow__panel"
+              [id]="'capPanel' + i"
+              [attr.aria-hidden]="activeCap !== i"
+            >
+              <div class="capRow__panelInner">
+                <div class="capRow__badge" aria-hidden="true">{{ c.badge }}</div>
+                <p class="capRow__desc">{{ c.desc }}</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
       </div>
     </div>
   </section>
@@ -128,8 +172,12 @@
   <!-- FEATURED PROJECTS BAND -->
   <section class="featuredBand" aria-label="Featured projects" appReveal>
     <div class="featuredBand__inner">
+
       <div class="featuredBand__header">
-        <app-section-header title="Featured Projects" subtitle="A selection of my recent work."></app-section-header>
+        <app-section-header
+          title="Featured Projects"
+          subtitle="A selection of my recent work."
+        ></app-section-header>
       </div>
 
       <div class="featured__grid">
@@ -141,6 +189,14 @@
           [style.--delay]="(i * 140) + 'ms'"
         ></app-project-card>
       </div>
+
+      <div class="featuredBand__footer">
+        <a class="featuredMoreBtn" routerLink="/projects">
+          View More Projects <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
     </div>
   </section>
+
 </section>

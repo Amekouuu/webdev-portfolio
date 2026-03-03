@@ -20,8 +20,24 @@
     </ul>
 
     <div class="pc__actions">
-      <a class="pc__btn" [href]="project.liveUrl" target="_blank" rel="noopener">Live Demo</a>
-      <a class="pc__btn pc__btn--ghost" [href]="project.repoUrl" target="_blank" rel="noopener">GitHub</a>
+      <a
+        *ngIf="project.liveUrl"
+        class="pc__btn"
+        [href]="project.liveUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        {{ project.type === 'design' ? 'View Figma' : 'Live Demo' }}
+      </a>
+      <a
+        *ngIf="project.repoUrl"
+        class="pc__btn pc__btn--ghost"
+        [href]="project.repoUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        GitHub
+      </a>
     </div>
   </div>
 </article>

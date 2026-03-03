@@ -1,57 +1,94 @@
 <footer class="siteFooter" aria-label="Site footer">
-  <div class="siteFooter__container">
+  <!-- Full-bleed background layer -->
+  <div class="siteFooter__inner">
+    <!-- Centered container (matches your --shell width) -->
+    <div class="siteFooter__container">
 
-    <div class="siteFooter__top">
-      <!-- LEFT -->
-      <div class="siteFooter__brand">
-        <div class="siteFooter__badge" aria-label="Site credit">
-          <span class="siteFooter__dot" aria-hidden="true"></span>
+      <div class="siteFooter__grid">
 
-          <div class="siteFooter__creditText">
-            <span class="siteFooter__copy">© {{ year }} | Micko Q. Alberto</span>
-            <span class="siteFooter__sub">IT Student • Web Dev • SEO-Focused</span>
+        <!-- Signature / Brand -->
+        <section class="footSig" aria-label="Footer signature">
+          <div class="footSig__badge" aria-label="Site credit">
+            <span class="footSig__mark" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
+    <path
+      fill="currentColor"
+      stroke="rgba(255,255,255,.90)"
+      stroke-width="10"
+      stroke-miterlimit="10"
+      d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
+    />
+    <path
+      fill="rgba(255,255,255,.06)"
+      stroke="var(--gold)"
+      stroke-width="3"
+      stroke-miterlimit="10"
+      d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
+    />
+  </svg>
+</span>
+            <div class="footSig__txt">
+              <span class="footSig__name">Micko Q. Alberto</span>
+              <span class="footSig__role">IT Student • Web Dev • SEO-Focused</span>
+            </div>
           </div>
-        </div>
 
-        <p class="siteFooter__blurb">
-          Building clean, performance-first web experiences — with technical SEO baked in.
-        </p>
+          <p class="footSig__blurb">
+            Building clean, performance-first web experiences — with technical SEO baked in.
+          </p>
 
-        <div class="siteFooter__meta" aria-label="Footer meta">
-          <span class="siteFooter__metaChip">PH-based</span>
-          <span class="siteFooter__metaChip">Open to opportunities</span>
-          <a class="siteFooter__metaLink" href="#top">Back to Home</a>
-        </div>
+          <div class="footSig__chips" aria-label="Highlights">
+            <span class="chip">PH-based</span>
+            <span class="chip">Open to opportunities</span>
+            <span class="chip chip--accent">Lighthouse-minded</span>
+          </div>
+        </section>
+
+        <!-- Quick Links -->
+        <nav class="footCol" aria-label="Footer quick links">
+          <div class="footCol__title">Quick links</div>
+          <a routerLink="/">Home</a>
+          <a routerLink="/about">About</a>
+          <a routerLink="/projects">Projects</a>
+          <a routerLink="/blog">Blog</a>
+          <a routerLink="/contact">Contact</a>
+        </nav>
+
+        <!-- Contact -->
+        <section class="footCol" aria-label="Footer contact">
+          <div class="footCol__title">Contact</div>
+          <a href="mailto:mqalberto12@gmail.com">mqalberto12@gmail.com</a>
+          <a href="#top">Back to top</a>
+          <div class="footCol__note">Fast • Accessible • SEO-ready</div>
+        </section>
+
+        <!-- Socials -->
+        <section class="footSocial" aria-label="Footer socials">
+          <div class="footCol__title">Find me here</div>
+
+          <div class="footSocial__row">
+            <a
+              *ngFor="let s of socials"
+              class="socialBtn"
+              [href]="s.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="socialBtn__label">{{ s.label }}</span>
+              <span class="socialBtn__arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
       </div>
 
-      <!-- RIGHT -->
-      <nav class="siteFooter__links" aria-label="Footer links">
-        <div class="siteFooter__linksTitle">Find me here</div>
+      <!-- Bottom line -->
+      <div class="siteFooter__bottom" aria-label="Footer bottom">
+        <span class="fineprint">
+          © {{ year }} • Designed &amp; built by Micko • Optimized for search visibility.
+        </span>
+      </div>
 
-        <div class="siteFooter__chips">
-          <a
-            *ngFor="let s of socials"
-            class="siteFooter__chip"
-            [href]="s.href"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="siteFooter__chipLabel">{{ s.label }}</span>
-            <span class="siteFooter__arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <div class="siteFooter__mini">
-          <span class="siteFooter__miniText">Fast • Accessible • SEO-ready</span>
-        </div>
-      </nav>
     </div>
-
-    <div class="siteFooter__bottom" aria-label="Footer bottom">
-      <span class="siteFooter__fineprint">
-        Designed & built by Micko — optimized for Lighthouse & search visibility.
-      </span>
-    </div>
-
   </div>
 </footer>

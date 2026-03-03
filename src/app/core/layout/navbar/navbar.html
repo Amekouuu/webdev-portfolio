@@ -1,92 +1,135 @@
-<header class="siteHeader">
-  <nav class="nav" aria-label="Primary navigation">
+<header class="siteHeader" [class.isOpen]="isOpen">
+  <nav class="nav shell" aria-label="Primary navigation">
+
+    <!-- LEFT: Brand -->
     <a class="brand" routerLink="/" aria-label="Go to Home">
-      <span class="brand__mark" aria-hidden="true">△</span>
-      <span class="brand__text">Micko</span>
+      <span class="brand__mark" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
+    <path
+      fill="currentColor"
+      stroke="rgba(255,255,255,.90)"
+      stroke-width="10"
+      stroke-miterlimit="10"
+      d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
+    />
+    <path
+      fill="rgba(255,255,255,.06)"
+      stroke="var(--gold)"
+      stroke-width="3"
+      stroke-miterlimit="10"
+      d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
+    />
+  </svg>
+</span>
+      <span class="brand__stack">
+        <span class="brand__text">Micko</span>
+        <span class="brand__sub">Web Dev • SEO-Focused</span>
+      </span>
     </a>
 
-    <!-- Right side menu trigger -->
-    <button
-      #menuBtn
-      class="menuBtn"
-      [class.isOpen]="isOpen"  
-      type="button"
-      (click)="toggle()"
-      [attr.aria-expanded]="isOpen"
-      aria-controls="menuPanel"
-    >
-      <span class="menuBtn__label">MENU</span>
+    <!-- CENTER: Desktop links -->
+    <div class="navLinks" aria-label="Primary links">
+      <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/about"    routerLinkActive="isActive">About</a>
+      <a routerLink="/projects" routerLinkActive="isActive">Projects</a>
+      <a routerLink="/blog"     routerLinkActive="isActive">Blog</a>
+      <a routerLink="/contact"  routerLinkActive="isActive">Contact</a>
+    </div>
 
-      <!-- ✅ change icon to include a middle bar span -->
-      <span class="menuBtn__icon" aria-hidden="true">
-        <span></span>
-      </span>
-    </button>
+    <!-- RIGHT: Actions -->
+    <div class="navActions">
+
+      <!-- Dark / Light toggle -->
+      <button
+        class="themeToggle"
+        type="button"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="'Switch to ' + (themeService.isDark() ? 'light' : 'dark') + ' mode'"
+      >
+        <span class="themeToggle__icon" *ngIf="themeService.isDark()">☀</span>
+        <span class="themeToggle__icon" *ngIf="!themeService.isDark()">☾</span>
+      </button>
+
+      <!-- Resume CTA (desktop) -->
+      <a class="ctaBtn" routerLink="/resume" aria-label="View Resume">
+        <span class="ctaBtn__dot" aria-hidden="true"></span>
+        <span class="ctaBtn__label">Resume</span>
+      </a>
+
+      <!-- Menu button (mobile only via CSS) -->
+      <button
+        class="menuBtn"
+        #menuBtn
+        type="button"
+        [class.isOpen]="isOpen"
+        (click)="toggle()"
+        [attr.aria-expanded]="isOpen"
+        aria-controls="menuPanel"
+        aria-label="Toggle menu"
+      >
+        <span class="menuBtn__label" aria-hidden="true">Menu</span>
+        <span class="menuBtn__icon" aria-hidden="true"><span></span></span>
+      </button>
+
+    </div>
   </nav>
-
-  <!-- Overlay menu -->
-  <div
-    class="menuOverlay"
-    [class.isOpen]="isOpen"
-    (mousedown)="onBackdropClick($event)"
-    [attr.aria-hidden]="!isOpen"
-  >
-    <section
-      id="menuPanel"
-      class="menuPanel"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Site menu"
-      [class.isOpen]="isOpen"
-    >
-      <div class="menuTop">
-        <div class="menuTop__left">
-          <span class="menuTop__title">Menu</span>
-        </div>
-
-        <button class="closeBtn" type="button" (click)="close()" aria-label="Close menu">
-          CLOSE
-        </button>
-      </div>
-
-<div class="menuIcons">
-
-  <a class="menuIcon" href="https://github.com/Amekouuu" target="_blank" rel="noopener">
-    <img src="assets/images/icons/github.png" alt="" />
-  </a>
-
-  <a class="menuIcon" href="https://www.linkedin.com/in/micko-alberto-b49906316/" target="_blank" rel="noopener">
-    <img src="assets/images/icons/linkedin.png" alt="" />
-  </a>
-
-  <a class="menuIcon" href="mailto:mqalberto12@gmail.com">
-    <img src="assets/images/icons/google.png" alt="" />
-  </a>
-
-</div>
-
-
-
-
-      <div class="menuGrid">
-        <!-- Left: big links -->
-        <div class="menuLinks">
-          <a routerLink="/" (click)="close()" routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">
-            Home
-          </a>
-          <a routerLink="/about" (click)="close()" routerLinkActive="isActive">About</a>
-          <a routerLink="/projects" (click)="close()" routerLinkActive="isActive">Projects</a>
-          <a routerLink="/contact" (click)="close()" routerLinkActive="isActive">Contact</a>
-        </div>
-
-        <!-- Right: descriptions (placeholders) -->
-        <div class="menuDesc" aria-hidden="true">
-          <p><span class="menuDesc__hint">Back to the home page.</span></p>
-          <p><span class="menuDesc__hint">A little about me and my background.</span></p>
-          <p><span class="menuDesc__hint">Selected work and project details.</span></p>
-          <p><span class="menuDesc__hint">Send me a message.</span></p>
-        </div>
-      </div>
-    </section>
-  </div>
 </header>
+
+<!-- DRAWER OVERLAY -->
+<div
+  class="menuOverlay"
+  [class.isOpen]="isOpen"
+  (click)="onBackdropClick($event)"
+  role="presentation"
+>
+  <div
+    id="menuPanel"
+    class="menuPanel"
+    [class.isOpen]="isOpen"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Navigation menu"
+  >
+
+    <!-- Panel top bar -->
+    <div class="menuTop">
+      <span class="menuTop__title">Navigation</span>
+      <button class="closeBtn" type="button" (click)="close()" aria-label="Close menu">
+        Close ✕
+      </button>
+    </div>
+
+    <!-- Social icon row -->
+    <div class="menuIcons" aria-label="Social links">
+      <a class="menuIcon" href="https://github.com/Amekouuu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <img src="/assets/icons/github.svg" alt="" aria-hidden="true" width="18" height="18" />
+      </a>
+      <a class="menuIcon" href="https://www.linkedin.com/in/micko-alberto-b49906316/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <img src="/assets/icons/linkedin.svg" alt="" aria-hidden="true" width="18" height="18" />
+      </a>
+      <a class="menuIcon" href="mailto:mqalberto12@gmail.com" aria-label="Email">
+        <img src="/assets/icons/email.svg" alt="" aria-hidden="true" width="18" height="18" />
+      </a>
+    </div>
+
+    <!-- Links + descriptions -->
+    <div class="menuGrid">
+      <nav class="menuLinks" aria-label="Drawer navigation">
+        <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }" (click)="close()">Home</a>
+        <a routerLink="/about"    routerLinkActive="isActive" (click)="close()">About</a>
+        <a routerLink="/projects" routerLinkActive="isActive" (click)="close()">Projects</a>
+        <a routerLink="/blog"     routerLinkActive="isActive" (click)="close()">Blog</a>
+        <a routerLink="/contact"  routerLinkActive="isActive" (click)="close()">Contact</a>
+      </nav>
+
+      <div class="menuDesc" aria-hidden="true">
+        <p class="menuDesc__hint">Start here — who I am and what I do.</p>
+        <p class="menuDesc__hint">My background, skills, and tools.</p>
+        <p class="menuDesc__hint">Selected web dev and UI/UX work.</p>
+        <p class="menuDesc__hint">Notes on Angular, CSS, and SEO.</p>
+        <p class="menuDesc__hint">Let's work together.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

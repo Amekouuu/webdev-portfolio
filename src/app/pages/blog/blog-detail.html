@@ -1,0 +1,49 @@
+<section class="page shell">
+
+  <!-- NOT FOUND -->
+  <div class="blogDetail__notFound" *ngIf="!post">
+    <h1 class="h-serif">Article not found.</h1>
+    <p>This post doesn't exist or may have been moved.</p>
+    <a routerLink="/blog" class="blogDetail__back">← Back to Blog</a>
+  </div>
+
+  <!-- ARTICLE -->
+  <ng-container *ngIf="post">
+
+    <!-- Back link -->
+    <a routerLink="/blog" class="blogDetail__back">← Back to Blog</a>
+
+    <article class="blogDetail">
+
+      <!-- Header -->
+      <header class="blogDetail__header">
+        <div class="blogDetail__tags">
+          <span class="blogDetail__tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+        </div>
+
+        <h1 class="blogDetail__title h-serif">{{ post.title }}</h1>
+
+        <div class="blogDetail__meta">
+          <time [attr.datetime]="post.date">{{ post.date | date:'longDate' }}</time>
+          <span aria-hidden="true">·</span>
+          <span>{{ post.readMinutes }} min read</span>
+        </div>
+
+        <p class="blogDetail__summary">{{ post.summary }}</p>
+
+        <hr class="blogDetail__rule" aria-hidden="true" />
+      </header>
+
+      <!-- Body -->
+      <div class="blogDetail__body" [innerHTML]="post.content"></div>
+
+      <!-- Footer -->
+      <footer class="blogDetail__footer">
+        <a routerLink="/blog" class="blogDetail__back">← Back to Blog</a>
+      </footer>
+
+    </article>
+
+  </ng-container>
+
+</section>

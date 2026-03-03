@@ -1,0 +1,50 @@
+<section class="page shell">
+
+  <div class="pageIntro" appReveal>
+    <h1 class="pageIntro__title h-serif">Blog.</h1>
+    <span class="pageIntro__rule"></span>
+    <p class="pageIntro__blurb">
+      Web development and its stories, written from my perspective.
+    </p>
+  </div>
+
+  <div class="blog__list">
+    <article
+      class="blog__item"
+      *ngFor="let post of posts; let i = index"
+      appReveal
+      [style.--delay]="(i * 80) + 'ms'"
+    >
+      <a [routerLink]="['/blog', post.slug]" class="blog__link">
+
+        <div class="blog__inner">
+          <!-- Left: number -->
+          <div class="blog__num" aria-hidden="true">{{ (i + 1).toString().padStart(2, '0') }}</div>
+
+          <!-- Right: content -->
+          <div class="blog__content">
+            <header class="blog__header">
+              <h2 class="blog__title">{{ post.title }}</h2>
+              <div class="blog__meta">
+                <time [attr.datetime]="post.date">{{ post.date | date:'mediumDate' }}</time>
+                <span class="blog__sep" aria-hidden="true">·</span>
+                <span class="blog__read">{{ post.readMinutes }} min read</span>
+              </div>
+            </header>
+
+            <p class="blog__summary">{{ post.summary }}</p>
+
+            <div class="blog__footer">
+              <div class="blog__tags">
+                <span class="blog__tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+              </div>
+              <span class="blog__cta" aria-hidden="true">Read →</span>
+            </div>
+          </div>
+        </div>
+
+      </a>
+    </article>
+  </div>
+
+</section>

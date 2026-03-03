@@ -20,6 +20,13 @@ type StatusLine = {
   done?: boolean;
 };
 
+type Capability = {
+  title: string;
+  pills: string[];
+  badge: string;
+  desc: string;
+};
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -28,28 +35,47 @@ type StatusLine = {
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
-  name = 'Micko Q. Alberto';
-  tagline = 'Bridging the gap between SEO and front-end development.';
+  name     = 'Micko Q. Alberto';
+  tagline  = 'Bridging the gap between SEO and front-end development.';
 
   intro = `<span class="u-accent">I build clean, simple websites</span> and optimize content for search.
            People know me for turning messy ideas into layouts that feel easy to use.`;
 
   featured = FEATURED_PROJECTS;
 
-  whatIDo = [
-    { title: 'Content\nOptimization', desc: 'I help improve readability and SEO alignment for blogs and landing pages.' },
-    { title: 'Keyword\nResearch', desc: 'I find high-intent, long-tail keywords that match search intent.' },
-    { title: 'UI/UX\nDesigning', desc: 'I design simple, readable layouts that support user experience and SEO.' },
-  ];
+ capabilities: Capability[] = [
+  {
+    title: 'FRONTEND ENGINEERING',
+    pills: ['Angular', 'CSS Architecture', 'Figma'],
+    badge: '< >',
+    desc: 'I build structured, component-driven interfaces using Angular, focusing on scalable layout systems and performance-conscious UI development.',
+  },
+  {
+    title: 'TOOLS & DEPLOYMENT',
+    pills: ['GitHub', 'Vercel', 'Netlify'],
+    badge: '{ }',
+    desc: 'I manage Git-based workflows and production deployments, ensuring organized version control and clean, repeatable builds.',
+  },
+  {
+    title: 'ANALYTICS & SEO',
+    pills: ['Google Analytics 4', 'Google Search Console', 'Google Lighthouse'],
+    badge: '/ /',
+    desc: 'I use analytics and performance tools to measure, refine, and optimize user experience and search visibility.',
+  },
+];
 
-  heroLine1 = 'still learning,';
-  heroLine2 = 'still building';
+  activeCap = 0;
+
+  toggleCap(i: number) {
+    this.activeCap = this.activeCap === i ? -1 : i;
+  }
+
   heroTitleA11y = 'still learning, still building';
 
   statusLines: StatusLine[] = [
-    { icon: '⌁', text: 'CHILLIN’ IN MABALACAT CITY', appearMs: 250, loadMs: 700 },
-    { icon: '◷', text: '', isTime: true, appearMs: 450, loadMs: 500 },
-    { icon: '✶', text: 'CURRENT FOCUS: SEO-FOCUSED FRONT-END DEV', appearMs: 300, loadMs: 950 },
+    { icon: '⌁', text: 'CHILLIN\u2019 IN MABALACAT CITY',              appearMs: 250, loadMs: 700  },
+    { icon: '◷', text: '', isTime: true,                                appearMs: 450, loadMs: 500  },
+    { icon: '✶', text: 'CURRENT FOCUS: SEO-FOCUSED FRONT-END DEV',     appearMs: 300, loadMs: 950  },
     {
       icon: '♫',
       text: 'LISTENING TO: HIPHOP & R&B',
@@ -57,7 +83,7 @@ export class Home implements OnInit, OnDestroy {
       appearMs: 650,
       loadMs: 800,
     },
-    { icon: '↯', text: 'BUILDING: PORTFOLIO V1', appearMs: 520, loadMs: 1100 },
+    { icon: '↯', text: 'BUILDING: PORTFOLIO V2',                        appearMs: 520, loadMs: 1100 },
   ];
 
   private timers: number[] = [];
@@ -76,33 +102,33 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.timers.forEach((t) => clearTimeout(t));
+    this.timers.forEach(t => clearTimeout(t));
     if (this.clockTimer) clearInterval(this.clockTimer);
   }
 
   private bootStatusLines() {
-    this.statusLines.forEach((line) => {
+    this.statusLines.forEach(line => {
       line.visible = false;
       line.loading = false;
-      line.done = false;
+      line.done    = false;
     });
 
     this.cdr.markForCheck();
 
-    this.statusLines.forEach((line) => {
+    this.statusLines.forEach(line => {
       this.timers.push(
         window.setTimeout(() => {
           line.visible = true;
           line.loading = true;
           this.cdr.markForCheck();
 
-          const jitter = Math.floor(Math.random() * 250);
+          const jitter    = Math.floor(Math.random() * 250);
           const finalLoad = Math.max(250, line.loadMs + jitter);
 
           this.timers.push(
             window.setTimeout(() => {
               line.loading = false;
-              line.done = true;
+              line.done    = true;
               this.cdr.markForCheck();
             }, finalLoad)
           );

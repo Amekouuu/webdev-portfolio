@@ -9,7 +9,7 @@ export interface Project {
   repoUrl?: string;
   featured?: boolean;
   type: 'web' | 'design';
-  imgPos?: string; // ✅ add this
+  imgPos?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -41,8 +41,6 @@ export const PROJECTS: Project[] = [
     repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
     featured: true,
     type: 'web',
-
-    // ✅ tweak if you want to bias toward the main UI
     imgPos: '50% 35%',
   },
   {
@@ -58,12 +56,8 @@ export const PROJECTS: Project[] = [
     repoUrl: 'https://github.com/Amekouuu/IntroWeb',
     featured: true,
     type: 'web',
-
-    // ✅ full-page screenshots usually need top bias
-    imgPos: 'center top', // try "center 15%" if needed
+    imgPos: 'center top',
   },
-
-  // ===== UI/UX (Figma) =====
   {
     id: 'sanvera-pharmacy-ui',
     name: 'Sanvera Pharmacy — UI/UX Case Study',
@@ -75,28 +69,24 @@ export const PROJECTS: Project[] = [
       { src: '/assets/images/sanvera-preview.png', alt: 'Sanvera Pharmacy Figma Preview' },
     ],
     liveUrl:
-      'https://www.figma.com/design/YDNl0dApodlhDcRgYAoCPy/Sanvera-Pharmacy?node-id=58-79&t=KCwOxapxyeH6FPQ6-1',
+      'https://www.figma.com/proto/YDNl0dApodlhDcRgYAoCPy/Sanvera-Pharmacy?node-id=58-79&t=bVZoZOl7nbgmtNCc-1',
     featured: false,
     type: 'design',
-
-    // ✅ figma exports often need slight upward bias
     imgPos: 'center 18%',
   },
   {
-    id: 'second-figma-design',
-    name: 'Second UI/UX Design — Case Study',
+    id: 'topchillog-ui',
+    name: 'TopChillog Featured Page - Mockup',
     tag: 'UI/UX Design (Figma)',
     description:
-      'Second Figma case study focusing on layout systems, responsive sections, and clean component consistency.',
+      'Figma design for a featured page of a local food place called TopChillog.',
     tools: ['Figma', 'UI/UX', 'Components'],
     images: [
       { src: '/assets/images/placeholder-1.png', alt: 'Second Figma Design Preview' },
     ],
-    liveUrl: 'https://www.figma.com/', // TODO: replace with your second design link
+    liveUrl: 'https://www.figma.com/design/ZNyCzfEZhhKeH77pwz7WYj/TopChillog-Featured-Page-Mockup?node-id=0-1&t=a5fCXp775fW4lim6-1',
     featured: false,
     type: 'design',
-
-    // ✅ placeholder tends to look empty; bias slightly up
     imgPos: 'center 20%',
   },
 ];
