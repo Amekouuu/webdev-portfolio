@@ -1,11 +1,9 @@
-<div class="appLayout" id="top">
+<div class="appLayout">
+  <app-navbar></app-navbar>        <!-- outside shell -->
   <div class="shell">
-    <app-navbar></app-navbar>
-
-    <main class="main" id="main">
+    <main class="main">
       <router-outlet></router-outlet>
     </main>
   </div>
-
   <app-footer></app-footer>
 </div>

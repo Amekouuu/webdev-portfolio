@@ -1,78 +1,80 @@
 <header class="siteHeader" [class.isOpen]="isOpen">
-  <nav class="nav shell" aria-label="Primary navigation">
+  <div class="siteHeader__inner">
+    <nav class="nav" aria-label="Primary navigation">
 
-    <!-- LEFT: Brand -->
-    <a class="brand" routerLink="/" aria-label="Go to Home">
-      <span class="brand__mark" aria-hidden="true">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
-    <path
-      fill="currentColor"
-      stroke="rgba(255,255,255,.90)"
-      stroke-width="10"
-      stroke-miterlimit="10"
-      d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
-    />
-    <path
-      fill="rgba(255,255,255,.06)"
-      stroke="var(--gold)"
-      stroke-width="3"
-      stroke-miterlimit="10"
-      d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
-    />
-  </svg>
-</span>
-      <span class="brand__stack">
-        <span class="brand__text">Micko</span>
-        <span class="brand__sub">Web Dev • SEO-Focused</span>
-      </span>
-    </a>
-
-    <!-- CENTER: Desktop links -->
-    <div class="navLinks" aria-label="Primary links">
-      <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      <a routerLink="/about"    routerLinkActive="isActive">About</a>
-      <a routerLink="/projects" routerLinkActive="isActive">Projects</a>
-      <a routerLink="/blog"     routerLinkActive="isActive">Blog</a>
-      <a routerLink="/contact"  routerLinkActive="isActive">Contact</a>
-    </div>
-
-    <!-- RIGHT: Actions -->
-    <div class="navActions">
-
-      <!-- Dark / Light toggle -->
-      <button
-        class="themeToggle"
-        type="button"
-        (click)="themeService.toggle()"
-        [attr.aria-label]="'Switch to ' + (themeService.isDark() ? 'light' : 'dark') + ' mode'"
-      >
-        <span class="themeToggle__icon" *ngIf="themeService.isDark()">☀</span>
-        <span class="themeToggle__icon" *ngIf="!themeService.isDark()">☾</span>
-      </button>
-
-      <!-- Resume CTA (desktop) -->
-      <a class="ctaBtn" routerLink="/resume" aria-label="View Resume">
-        <span class="ctaBtn__dot" aria-hidden="true"></span>
-        <span class="ctaBtn__label">Resume</span>
+      <!-- LEFT: Brand -->
+      <a class="brand" routerLink="/" aria-label="Go to Home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
+            <path
+              fill="currentColor"
+              stroke="rgba(255,255,255,.90)"
+              stroke-width="10"
+              stroke-miterlimit="10"
+              d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
+            />
+            <path
+              fill="rgba(255,255,255,.06)"
+              stroke="var(--gold)"
+              stroke-width="3"
+              stroke-miterlimit="10"
+              d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
+            />
+          </svg>
+        </span>
+        <span class="brand__stack">
+          <span class="brand__text">Micko</span>
+          <span class="brand__sub">Web Dev • SEO-Focused</span>
+        </span>
       </a>
 
-      <!-- Menu button (mobile only via CSS) -->
-      <button
-        class="menuBtn"
-        #menuBtn
-        type="button"
-        [class.isOpen]="isOpen"
-        (click)="toggle()"
-        [attr.aria-expanded]="isOpen"
-        aria-controls="menuPanel"
-        aria-label="Toggle menu"
-      >
-        <span class="menuBtn__label" aria-hidden="true">Menu</span>
-        <span class="menuBtn__icon" aria-hidden="true"><span></span></span>
-      </button>
+      <!-- CENTER: Desktop links -->
+      <div class="navLinks" aria-label="Primary links">
+        <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/about"    routerLinkActive="isActive">About</a>
+        <a routerLink="/projects" routerLinkActive="isActive">Projects</a>
+        <a routerLink="/blog"     routerLinkActive="isActive">Blog</a>
+        <a routerLink="/contact"  routerLinkActive="isActive">Contact</a>
+      </div>
 
-    </div>
-  </nav>
+      <!-- RIGHT: Actions -->
+      <div class="navActions">
+
+        <!-- Dark / Light toggle -->
+        <button
+          class="themeToggle"
+          type="button"
+          (click)="themeService.toggle()"
+          [attr.aria-label]="'Switch to ' + (themeService.isDark() ? 'light' : 'dark') + ' mode'"
+        >
+          <span class="themeToggle__icon" *ngIf="themeService.isDark()">☀</span>
+          <span class="themeToggle__icon" *ngIf="!themeService.isDark()">☾</span>
+        </button>
+
+        <!-- Resume CTA (desktop) -->
+        <a class="ctaBtn" routerLink="/resume" aria-label="View Resume">
+          <span class="ctaBtn__dot" aria-hidden="true"></span>
+          <span class="ctaBtn__label">Resume</span>
+        </a>
+
+        <!-- Menu button (mobile only via CSS) -->
+        <button
+          class="menuBtn"
+          #menuBtn
+          type="button"
+          [class.isOpen]="isOpen"
+          (click)="toggle()"
+          [attr.aria-expanded]="isOpen"
+          aria-controls="menuPanel"
+          aria-label="Toggle menu"
+        >
+          <span class="menuBtn__label" aria-hidden="true">Menu</span>
+          <span class="menuBtn__icon" aria-hidden="true"><span></span></span>
+        </button>
+
+      </div>
+    </nav>
+  </div>
 </header>
 
 <!-- DRAWER OVERLAY -->

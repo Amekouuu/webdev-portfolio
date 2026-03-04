@@ -2,54 +2,23 @@
 
   <!-- TOP BAR / QUICK NAV -->
   <nav class="topNav" aria-label="About quick navigation" appReveal>
-    <div
-      class="topNav__brand"
-      (click)="scrollTo('intro')"
-      (keydown.enter)="scrollTo('intro')"
-      (keydown.space)="scrollTo('intro')"
-      role="button"
-      tabindex="0"
-      aria-label="Scroll to intro"
-    >
-      <span class="brandMark" aria-hidden="true"></span>
-      <span class="brandText">{{ profile.name }}</span>
-    </div>
-
     <div class="topNav__chips" role="navigation" aria-label="Jump to section">
-      <button
-        type="button"
-        class="chip"
-        [ngClass]="{ 'isActive': activeSection === 'intro' }"
-        (click)="scrollTo('intro')"
-      >
-        Intro
-      </button>
-
       <button
         type="button"
         class="chip"
         [ngClass]="{ 'isActive': activeSection === 'work' }"
         (click)="scrollTo('work')"
       >
-        How I work
+        How I Work
       </button>
 
       <button
         type="button"
         class="chip"
-        [ngClass]="{ 'isActive': activeSection === 'skills' }"
+        [ngClass]="{ 'isActive': activeSection === 'skills' || activeSection === 'certs' }"
         (click)="scrollTo('skills')"
       >
-        Skills
-      </button>
-
-      <button
-        type="button"
-        class="chip"
-        [ngClass]="{ 'isActive': activeSection === 'certs' }"
-        (click)="scrollTo('certs')"
-      >
-        Certs
+        Skills & Certs
       </button>
 
       <button
@@ -358,18 +327,12 @@
         <span class="kText">Resume</span>
       </div>
       <h2 class="panel__title">Want the full details?</h2>
-      <p class="panel__sub"></p>
     </div>
 
     <div class="resumeCard">
-      <div class="resumeCard__text">
-        <p class="para">
-          
-        </p>
-        <div class="resumeCard__btnRow" aria-label="Resume actions">
-          <a class="btn btn--gold" [href]="resumeUrl" target="_blank" rel="noopener">Get resume PDF</a>
-          <button type="button" class="btn btn--subtle" (click)="scrollTo('intro')">Back to top ↑</button>
-        </div>
+      <div class="resumeCard__btnRow" aria-label="Resume actions">
+        <a class="btn btn--gold" [href]="resumeUrl" target="_blank" rel="noopener">Get resume PDF</a>
+        <button type="button" class="btn btn--subtle" (click)="scrollTo('intro')">Back to top ↑</button>
       </div>
 
       <div class="resumeCard__mini" aria-label="Quick stats">
@@ -392,7 +355,6 @@
   <!-- END CTA -->
   <footer class="endCta" appReveal>
     <h2 class="endCta__title">That's all from me!</h2>
-    <p class="endCta__text"></p>
     <div class="endCta__actions" aria-label="End actions">
       <button type="button" class="btn btn--gold" (click)="scrollTo('intro')">Back to top ↑</button>
     </div>

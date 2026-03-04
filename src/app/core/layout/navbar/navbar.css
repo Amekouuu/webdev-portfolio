@@ -2,20 +2,26 @@
    NAVBAR
 ========================================================= */
 
-.siteHeader{
+/* ── Host element (app-navbar) — sticky lives here ───── */
+:host{
+  display: block;
   position: sticky;
   top: 0;
   z-index: 1100;
-  padding-top: 10px;
-  background: transparent;
-  backdrop-filter: blur(10px);
 }
 
-.siteHeader::after{
-  content:"";
-  display:block;
-  height: 1px;
-  background: rgba(13,27,58,.14);
+.siteHeader{
+  background: transparent;
+  backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+/* Shell-width inner wrapper */
+.siteHeader__inner{
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 10px 18px 0;
+  width: 100%;
 }
 
 .nav{
@@ -231,7 +237,6 @@
 }
 
 /* ── Menu button — mobile only ────────────────────────── */
-/* FIX: single declaration, no duplicate display:none */
 .menuBtn{
   display: none;
   align-items:center;
@@ -443,7 +448,6 @@
   padding: 12px 0;
 }
 
-/* Cascade animation */
 .menuLinks a,
 .menuDesc__hint{
   opacity: 0;
@@ -484,7 +488,7 @@
 }
 
 @media (max-width: 520px){
-  .siteHeader{ padding-top: 0; }
+  .siteHeader__inner{ padding: 0; }
 
   .nav{
     border-radius: 0;
@@ -552,10 +556,6 @@
 }
 
 /* ── Dark mode ────────────────────────────────────────── */
-:host-context([data-theme='dark']) .siteHeader::after{
-  background: rgba(255,255,255,.08);
-}
-
 :host-context([data-theme='dark']) .nav{
   border-color: rgba(255,255,255,.08);
   background:
@@ -599,7 +599,6 @@
   color: var(--hero-text);
 }
 
-/* FIX: dark drawer panel */
 :host-context([data-theme='dark']) .menuPanel{
   background:
     radial-gradient(closest-side at 20% 10%, rgba(202,163,58,.10), transparent 60%),
@@ -608,9 +607,7 @@
   border-color: rgba(255,255,255,.08);
 }
 
-:host-context([data-theme='dark']) .menuTop{
-  border-color: rgba(255,255,255,.08);
-}
+:host-context([data-theme='dark']) .menuTop{ border-color: rgba(255,255,255,.08); }
 
 :host-context([data-theme='dark']) .menuTop__title{
   color: var(--hero-muted);

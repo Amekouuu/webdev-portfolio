@@ -1,66 +1,33 @@
 /* =========================================================
    APP LAYOUT (app.component.css)
-   - Full-height layout so footer stays at bottom
-   - Main grows to fill remaining space
-   - Footer stays full-bleed (outside shell width constraint)
 ========================================================= */
 
-/* Root: full height vertical stack */
 .appLayout{
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
-/* Shell keeps your centered max-width layout for navbar + pages */
 .shell{
-  /* your existing shell sizing */
   --shell: clamp(980px, 88vw, 1380px);
   max-width: var(--shell);
-
   margin: 0 auto;
-
-  /* Desktop frame padding */
   padding: 0 18px 24px;
-
-  /* ✅ important: make the shell participate in the flex layout */
   flex: 1;
   width: 100%;
-
-  display: flex;
-  flex-direction: column;
 }
 
-/* Main content grows so footer is pushed to the bottom */
 .main{
   padding: 14px 0 0;
-
-  /* ✅ important */
-  flex: 1;
-  min-height: 0;
 }
 
-/* =========================================================
-   MOBILE 520px
-   - Remove the framed look
-   - Still keeps footer pushed to bottom
-========================================================= */
 @media (max-width: 520px){
   .shell{
     max-width: 100%;
     width: 100%;
     margin: 0;
-
-    /* No outer padding on mobile */
     padding: 0;
   }
 
-  .main{
-    /* Let each page decide its padding */
-    padding: 0;
-
-    /* keep grow behavior */
-    flex: 1;
-    min-height: 0;
-  }
+  .main{ padding: 0; }
 }

@@ -61,7 +61,7 @@ type FeaturedProject = {
 })
 export class About implements AfterViewInit, OnDestroy {
   title = 'About';
-  subtitle = 'A quick story about me — and how I build things.';
+  subtitle = 'A quick story about me — and how I approach things.';
 
   heroName = 'Micko';
 
@@ -77,18 +77,18 @@ export class About implements AfterViewInit, OnDestroy {
   };
 
   featuredProject: FeaturedProject | null = {
-    title: 'LoFu — Community Lost & Found (Angeles City)',
-    desc: 'A simple, searchable lost-and-found concept with clean UI patterns and practical filtering.',
+    title: 'M&J Quality Used Cars Website (Angular)',
+    desc: 'SEO optimized site + responsive UI for a used car dealership in Mabalacat.',
     tech: ['Angular', 'UI', 'SEO-ready'],
-    primaryLabel: 'View case study',
-    primaryUrl: '#',
-    secondaryLabel: 'View repo',
-    secondaryUrl: '#',
+    primaryLabel: 'View Website',
+    primaryUrl: 'https://www.mjqualitycars.com/',
+    secondaryLabel: 'View Repository',
+    secondaryUrl: 'https://github.com/Jex-beep/done-WSEA',
   };
 
   introParagraphs: string[] = [
-    "I build clean, fast, and easy-to-navigate websites — with practical SEO so the site doesn't just look good, it gets found.",
-    'I focus on readable structure, performance basics, and UI details that feel premium without being distracting.'
+    "I aspire to build clean, fast, and easy-to-navigate websites — with practical SEO so the site doesn't just look good, it gets found.",
+    'I focus on readable structure, performance basics, and details that don\'t feel distracting.'
   ];
 
   quickFacts = [
@@ -104,51 +104,52 @@ export class About implements AfterViewInit, OnDestroy {
       school: 'Holy Angel University',
       program: 'BS Information Technology (Web Development)',
       highlights: [
-        'Focused on front-end development, UI structure, and practical SEO.',
-        'Building portfolio projects with Angular and performance best practices.',
-        'Learning design workflows (Figma) and content/SEO fundamentals.',
-      ],
+  'Developing scalable front-end solutions with attention to UI clarity, accessibility, and performance.',
+  'Applying technical SEO fundamentals and structured content strategies in academic and client-based projects.',
+],
     },
     {
-      years: 'Optional',
-      school: 'Add more later',
-      program: 'Awards / orgs / notable coursework',
-      highlights: ['If you share your awards/orgs/key subjects, I can format them cleanly here.'],
+      years: 'Awards & Notable Coursework',
+      school: '',
+      program: '',
+      highlights: ['Dean\'s Lister (2023-2025)', 'SEO Case Study: M&J Quality Used Cars', 'Vue.JS Case Study: DoMore Student Planner'],
     },
   ];
 
+    // add more soon
   gamer = {
-    title: 'Gaming & the "Amekou" name',
+    title: 'Interests & the "Amekou" name',
     body: [
       'I love gaming, and my in-game handle is "Amekou".',
       'It matches the vibe of my best friend\'s IGN "Neku", so it\'s kind of our thing — it\'s small, but it makes my username unique but a bit more… me.',
     ],
   };
 
-  aboutTitle = 'What I optimize for';
+  aboutTitle = 'What I focus on';
   aboutBody: string[] = [
-    'Clear structure first: I aim for pages that scan well, read well, and feel straightforward.',
-    'Performance + SEO basics: clean markup, predictable UI patterns, and careful content hierarchy.',
-    'Consistency: spacing, type, and interactions should feel intentional across the site.',
+  'Clear structure first: I aim for layouts that scan well and feel easy to understand.',
+  'Foundational performance and SEO practices: semantic markup, consistent hierarchy, and organized components.',
+  'Simplicity and functionality: I avoid unnecessary complexity and focus on what makes a site truly useful.',
   ];
 
   aboutNote = 'My goal is "simple but premium": fewer distractions, stronger clarity, and better usability.';
 
-  howIWorkTitle = 'How I work';
-  howIWorkPoints = [
-    {
-      title: 'User-first thinking',
-      desc: 'I try to "wear the user\'s shoes" so navigation feels natural and everything is easy to find.',
-    },
-    {
-      title: 'Simple, clean design',
-      desc: 'I avoid flashy movement/layout unless it actually improves the experience.',
-    },
-    {
-      title: 'Open to new tech (AI included)',
-      desc: 'I enjoy learning and experimenting with modern tools, especially AI innovations, as long as the output stays clean and useful.',
-    },
-  ];
+howIWorkTitle = 'How I approach projects';
+
+howIWorkPoints = [
+  {
+    title: 'User-aware thinking',
+    desc: 'I try to see projects from a user’s perspective so navigation feels clear and predictable.',
+  },
+  {
+    title: 'Clarity over complexity',
+    desc: 'I prioritize clean structure and readable layouts over unnecessary visual effects.',
+  },
+  {
+    title: 'Continuous learning',
+    desc: 'I actively explore new tools and technologies — including AI — while focusing on building solid fundamentals.',
+  },
+];
 
   socials: Social[] = [
     {

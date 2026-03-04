@@ -65,11 +65,10 @@
   border-radius: 12px;
   display:grid;
   place-items:center;
-  background: var(--card-bg);
-  color: var(--royal-deep);
+  background: var(--royal-deep);
+  color: #fff;
   font-weight: var(--weight-black);
 }
-
 .footSig__name{
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wider);

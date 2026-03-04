@@ -44,52 +44,21 @@
   z-index: 30;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   padding: 10px 12px;
-  margin: 6px 0 14px;
+  margin: 6px auto 14px;
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 999px;
   background: var(--nav-bg);
   backdrop-filter: blur(10px);
   box-shadow: var(--card-shadow);
-}
-
-.topNav__brand{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  user-select: none;
-  cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 12px;
-  transition: background .16s ease, transform .16s ease;
-}
-
-.topNav__brand:hover{
-  background: var(--royal-soft);
-  transform: translateY(-1px);
-}
-
-.brandMark{
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-faint);
-}
-
-.brandText{
-  font-weight: var(--weight-black);
-  letter-spacing: -0.2px;
-  font-size: var(--text-sm);
-  color: var(--text);
+  width: fit-content;
 }
 
 .topNav__chips{
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
   gap: 8px;
 }
 
@@ -876,31 +845,22 @@
   box-shadow: var(--card-shadow);
 }
 
+/* FIX: flat grid — no wrapper div, buttons sit directly alongside mini stats */
 .resumeCard{
-  display: grid;
-  grid-template-columns: 1fr 280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
-  border-radius: 18px;
-  padding: 12px;
-  border: 1px solid var(--card-border);
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
-}
-
-.resumeCard__text .para{
-  margin: 0 0 12px;
-  color: var(--text);
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
 }
 
 .resumeCard__btnRow{ display: flex; flex-wrap: wrap; gap: 10px; }
-.resumeCard__mini{ display: grid; gap: 10px; }
+.resumeCard__mini{ display: flex; gap: 10px; flex-wrap: wrap; }
 
 .miniStat{
   border-radius: 16px;
-  padding: 10px;
+  padding: 14px 14px;
   border: 1px solid var(--border);
   background: var(--bg-sunken);
 }
@@ -931,17 +891,10 @@
 }
 
 .endCta__title{
-  margin: 0 0 6px;
+  margin: 0 0 12px;
   color: var(--text);
   font-size: var(--text-lg);
   letter-spacing: -0.4px;
-}
-
-.endCta__text{
-  margin: 0 0 12px;
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
 }
 
 .endCta__actions{ display: flex; justify-content: center; }
@@ -981,8 +934,6 @@
 @media (max-width: 520px){
   .aboutPage{ padding: 10px 10px 74px; }
   .topNav{ top: 8px; padding: 10px; border-radius: 14px; }
-  .brandText{ font-size: var(--text-xs); max-width: 18ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .topNav__chips{ justify-content: flex-start; }
   .chip{ padding: 8px 10px; font-size: var(--text-xs); }
   .hero{ border-radius: 20px; }
   .hero__inner{ grid-template-columns: 1fr; padding: 12px; }

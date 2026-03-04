@@ -66,13 +66,13 @@ export const PROJECTS: Project[] = [
       'Designed a complete pharmacy website experience including landing, product listings, contact, email template, maps, and social mockups.',
     tools: ['Figma', 'UI/UX', 'Design System'],
     images: [
-      { src: '/assets/images/sanvera-preview.png', alt: 'Sanvera Pharmacy Figma Preview' },
+      { src: '/assets/images/sanvera-background.png', alt: 'Sanvera Pharmacy Figma Preview' },
     ],
     liveUrl:
       'https://www.figma.com/proto/YDNl0dApodlhDcRgYAoCPy/Sanvera-Pharmacy?node-id=58-79&t=bVZoZOl7nbgmtNCc-1',
     featured: false,
     type: 'design',
-    imgPos: 'center 18%',
+    imgPos: 'center 1%',
   },
   {
     id: 'topchillog-ui',
@@ -82,12 +82,12 @@ export const PROJECTS: Project[] = [
       'Figma design for a featured page of a local food place called TopChillog.',
     tools: ['Figma', 'UI/UX', 'Components'],
     images: [
-      { src: '/assets/images/placeholder-1.png', alt: 'Second Figma Design Preview' },
+      { src: '/assets/images/topchillog-landing.png', alt: 'TopChillog Figma Preview' },
     ],
     liveUrl: 'https://www.figma.com/design/ZNyCzfEZhhKeH77pwz7WYj/TopChillog-Featured-Page-Mockup?node-id=0-1&t=a5fCXp775fW4lim6-1',
     featured: false,
     type: 'design',
-    imgPos: 'center 20%',
+    imgPos: 'center 10%',
   },
 ];
 
