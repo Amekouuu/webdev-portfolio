@@ -677,3 +677,13 @@
 @media (prefers-reduced-motion: reduce){
   .reveal{ transition: none; transform: none; opacity: 1; }
 }
+
+@supports (-webkit-touch-callout: none){
+  .heroWord,
+  .heroWord--sub{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}

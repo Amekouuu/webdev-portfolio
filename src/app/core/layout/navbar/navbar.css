@@ -416,6 +416,8 @@
 
 .menuLinks{ display:grid; gap: 20px; }
 
+/* FIX: removed opacity:0 initial state — iOS Chrome won't animate forwards
+   reliably, leaving links invisible. Links are visible by default now. */
 .menuLinks a{
   font-size: clamp(36px, 4.5vw, 60px);
   font-weight: var(--weight-black);
@@ -424,6 +426,8 @@
   letter-spacing: -0.5px;
   line-height: 1;
   padding: 6px 0;
+  opacity: 1;
+  transform: none;
   transition: transform .18s ease, color .18s ease;
 }
 
@@ -446,33 +450,8 @@
   line-height: var(--leading-snug);
   color: rgba(13,27,58,.72);
   padding: 12px 0;
-}
-
-.menuLinks a,
-.menuDesc__hint{
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.menuPanel.isOpen .menuLinks a,
-.menuPanel.isOpen .menuDesc__hint{
-  animation: menuFadeUp .5s ease forwards;
-}
-
-.menuPanel.isOpen .menuLinks a:nth-child(1){ animation-delay: .05s; }
-.menuPanel.isOpen .menuLinks a:nth-child(2){ animation-delay: .10s; }
-.menuPanel.isOpen .menuLinks a:nth-child(3){ animation-delay: .15s; }
-.menuPanel.isOpen .menuLinks a:nth-child(4){ animation-delay: .20s; }
-.menuPanel.isOpen .menuLinks a:nth-child(5){ animation-delay: .25s; }
-
-.menuPanel.isOpen .menuDesc__hint:nth-child(1){ animation-delay: .10s; }
-.menuPanel.isOpen .menuDesc__hint:nth-child(2){ animation-delay: .15s; }
-.menuPanel.isOpen .menuDesc__hint:nth-child(3){ animation-delay: .20s; }
-.menuPanel.isOpen .menuDesc__hint:nth-child(4){ animation-delay: .25s; }
-.menuPanel.isOpen .menuDesc__hint:nth-child(5){ animation-delay: .30s; }
-
-@keyframes menuFadeUp{
-  to{ opacity: 1; transform: translateY(0); }
+  opacity: 1;
+  transform: none;
 }
 
 /* ── Responsive ───────────────────────────────────────── */
