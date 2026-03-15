@@ -59,15 +59,22 @@
   width: fit-content;
 }
 
+/* Light mode: white bg, dark icon — matches navbar */
 .footSig__mark{
   width: 36px;
   height: 36px;
   border-radius: 12px;
   display:grid;
   place-items:center;
+  background: var(--card-bg);
+  color: var(--royal-deep);
+  font-weight: var(--weight-black);
+}
+
+/* Dark mode: dark bg, white icon */
+[data-theme='dark'] .footSig__mark{
   background: var(--royal-deep);
   color: #fff;
-  font-weight: var(--weight-black);
 }
 
 .footSig__name{
@@ -205,10 +212,6 @@
   max-width: 90ch;
 }
 
-[data-theme='dark'] .footSig__mark{
-  color: var(--hero-text);
-}
-
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 900px){
   .siteFooter__grid{
@@ -219,7 +222,7 @@
 
 @media (max-width: 520px){
   .siteFooter{ margin-top: 32px; }
-  .siteFooter__inner{ padding: 20px 0 14px; text-align: center; }
+  .siteFooter__inner{ padding: 20px 0 16px; }
   .siteFooter__container{ max-width: 100%; padding: 0 16px; }
 
   .siteFooter__grid{
@@ -227,21 +230,25 @@
     gap: 0;
   }
 
-  /* Divider between each section */
-  .siteFooter__grid > * + *{
-    border-top: 1px solid var(--footer-border);
-    padding-top: 14px;
-    margin-top: 14px;
+  /* ── Signature block ── */
+  .footSig{
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--footer-border);
   }
 
-  /* Signature */
-  .footSig{ gap: 10px; align-items: center; }
-  .footSig__badge{ width: auto; justify-content: center; }
-  .footSig__blurb{ text-align: center; font-size: var(--text-xs); }
+  .footSig__badge{
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-  /* Chips — single row, no wrap, smaller */
+  .footSig__blurb{
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Chips — single row, no wrap */
   .footSig__chips{
-    justify-content: center;
     flex-wrap: nowrap;
     gap: 6px;
   }
@@ -251,22 +258,76 @@
     white-space: nowrap;
   }
 
-  /* Nav columns — tighter links */
-  .footCol{ width: 100%; align-items: center; gap: 2px; }
-  .footCol__title{ margin-bottom: 4px; }
-  .footCol a{
-    width: 100%;
-    text-align: center;
-    padding: 6px 10px;
-    font-size: var(--text-xs);
+  /* ── Middle two columns side by side ── */
+  .siteFooter__grid{
+    display: grid;
+    grid-template-areas:
+      "sig   sig"
+      "links contact"
+      "social social"
+      "bottom bottom";
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
   }
 
-  /* Social */
-  .footSocial{ width: 100%; align-items: center; gap: 8px; }
+  .footSig   { grid-area: sig; }
+  .footSocial{ grid-area: social; }
+  .siteFooter__bottom{ grid-area: bottom; }
+
+  /* Quick links + Contact sit side by side */
+  .siteFooter__grid > .footCol:nth-child(2){ grid-area: links; }
+  .siteFooter__grid > .footCol:nth-child(3){ grid-area: contact; }
+
+  .siteFooter__grid > .footCol:nth-child(2),
+  .siteFooter__grid > .footCol:nth-child(3){
+    padding-top: 16px;
+    margin-top: 0;
+    border-top: none;
+  }
+
+  /* Shared row separator above the two columns */
+  .siteFooter__grid::before{
+    content: "";
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 1px;
+    background: var(--footer-border);
+    margin-bottom: -1px;
+    display: block;
+  }
+
+  .footCol{ gap: 4px; }
+  .footCol__title{
+    font-size: 10px;
+    margin-bottom: 6px;
+    width: 100%;
+    border-bottom-color: var(--footer-border);
+  }
+  .footCol a{
+    padding: 5px 0;
+    font-size: var(--text-xs);
+  }
+  .footCol__note{
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  /* ── Social row ── */
+  .footSocial{
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid var(--footer-border);
+    gap: 8px;
+  }
+
+  .footSocial .footCol__title{
+    width: 100%;
+    text-align: center;
+  }
 
   .footSocial__row{
     width: 100%;
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
@@ -280,5 +341,10 @@
 
   .socialBtn__arrow{ display:none; }
 
-  .siteFooter__bottom{ margin-top: 14px; padding-top: 12px; }
+  /* ── Bottom ── */
+  .siteFooter__bottom{
+    grid-column: 1 / -1;
+    margin-top: 16px;
+    padding-top: 12px;
+  }
 }
