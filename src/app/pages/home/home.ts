@@ -73,7 +73,7 @@ export class Home implements OnInit, OnDestroy {
   heroTitleA11y = 'still learning, still building';
 
   statusLines: StatusLine[] = [
-    { icon: '⌁', text: 'CHILLIN\u2019 IN MABALACAT CITY',              appearMs: 250, loadMs: 700  },
+    { icon: '⌁', text: 'BASED IN MABALACAT CITY',              appearMs: 250, loadMs: 700  },
     { icon: '◷', text: '', isTime: true,                                appearMs: 450, loadMs: 500  },
     { icon: '✶', text: 'CURRENT FOCUS: SEO-FOCUSED FRONT-END DEV',     appearMs: 300, loadMs: 950  },
     {
