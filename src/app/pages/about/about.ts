@@ -200,7 +200,13 @@ howIWorkPoints = [
     { name: 'GA4',                   iconSrc: 'assets/icons/skills/ga4.png',         iconAlt: 'Google Analytics 4 icon' },
   ];
 
-  certs: Cert[] = [
+  certs: Cert[] = [{
+      name: 'Google Analytics Certified',
+      issuer: 'Google',
+      url: 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/176814946',
+      validFrom: 'March 12, 2026',
+      validTo: 'March 12, 2027',
+  }
     {
       name: 'HubSpot SEO Certified',
       issuer: 'HubSpot Academy',
