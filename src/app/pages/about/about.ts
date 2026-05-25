@@ -274,6 +274,7 @@ howIWorkPoints = [
 
     this.certGroups = this.groupCertsByIssuer(this.certs);
     this.activeIssuerIndex = 0;
+    console.log('certGroups:', JSON.stringify(this.certGroups.map(g => ({ issuer: g.issuer, count: g.certs.length }))));
 
     if (this.includeSeoTools) {
       const tools = this.techGroups.find(g => g.title === 'Tools');
