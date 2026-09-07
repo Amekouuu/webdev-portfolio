@@ -35,7 +35,7 @@ type Capability = {
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
-  name     = 'Micko Q. Alberto';
+  name     = 'Micko Alberto';
   tagline  = 'Bridging the gap between SEO and front-end development.';
 
   intro = `<span class="u-accent">I build clean, simple websites</span> and optimize content for search.
@@ -91,8 +91,8 @@ export class Home implements OnInit, OnDestroy {
 
   constructor(private seo: SeoService, private cdr: ChangeDetectorRef) {
     this.seo.set({
-      title: 'Home | Micko Q. Alberto',
-      description: 'Portfolio of Micko Q. Alberto — web development, SEO-focused work, and projects.',
+      title: 'Home | Micko Alberto',
+      description: 'Portfolio of Micko Alberto — web development, SEO-focused work, and projects.',
     });
   }
 

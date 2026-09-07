@@ -70,11 +70,11 @@ export class About implements AfterViewInit, OnDestroy {
   resumeUrl = '/assets/Micko_Alberto_Resume.pdf';
 
   profile = {
-    name: 'Micko Q. Alberto',
+    name: 'Micko Alberto',
     role: 'SEO-Focused Front-End Developer',
     imageUrl: 'assets/images/about-profile-transparent.png',
     imageWebp: 'assets/images/about-profile-transparent.webp',
-    imageAlt: 'Profile picture of Micko Q. Alberto',
+    imageAlt: 'Profile picture of Micko Alberto',
   };
 
   featuredProject: FeaturedProject | null = {
@@ -260,9 +260,9 @@ howIWorkPoints = [
 
   constructor(private seo: SeoService) {
     this.seo.set({
-      title: 'About | Micko Q. Alberto',
+      title: 'About | Micko Alberto',
       description:
-        'About Micko Q. Alberto — SEO-focused front-end developer. Skills, certifications, education, and approach.',
+        'About Micko Alberto — SEO-focused front-end developer. Skills, certifications, education, and approach.',
     });
 
     this.certGroups = this.groupCertsByIssuer(this.certs);

@@ -17,9 +17,9 @@ export class Resume {
 
   constructor(private seo: SeoService, private sanitizer: DomSanitizer) {
     this.seo.set({
-      title: 'Resume | Micko Q. Alberto',
+      title: 'Resume | Micko Alberto',
       description:
-        'Download or view the resume of Micko Q. Alberto — front-end developer and SEO specialist.',
+        'Download or view the resume of Micko Alberto — front-end developer and SEO specialist.',
     });
 
     // Required: Angular blocks iframe src unless sanitized

@@ -70,7 +70,7 @@ import { SeoService } from '../../core/services/seo.service';
 export class NotFound {
   constructor(private seo: SeoService) {
     this.seo.set({
-      title: 'Page not found | Micko Q. Alberto',
+      title: 'Page not found | Micko Alberto',
       description: 'That page could not be found.',
     });
   }

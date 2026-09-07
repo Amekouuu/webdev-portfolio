@@ -22,7 +22,7 @@ export class BlogDetail implements OnInit {
 
     if (this.post) {
       this.seo.set({
-        title: `${this.post.title} | Micko Q. Alberto`,
+        title: `${this.post.title} | Micko Alberto`,
         description: this.post.summary,
         type: 'article',
       });

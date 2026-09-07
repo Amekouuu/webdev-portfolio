@@ -42,7 +42,7 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image',        content: image });
     this.meta.updateTag({ property: 'og:url',          content: url });
     this.meta.updateTag({ property: 'og:type',         content: type });
-    this.meta.updateTag({ property: 'og:site_name',    content: 'Micko Q. Alberto' });
+    this.meta.updateTag({ property: 'og:site_name',    content: 'Micko Alberto' });
 
     // ── Twitter Card ──────────────────────────────────────────────────────
     this.meta.updateTag({ name: 'twitter:card',        content: 'summary_large_image' });

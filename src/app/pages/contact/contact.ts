@@ -45,8 +45,8 @@ export class Contact {
     });
 
     this.seo.set({
-      title: 'Contact | Micko Q. Alberto',
-      description: 'Contact Micko Q. Alberto — send a message or connect via social links.',
+      title: 'Contact | Micko Alberto',
+      description: 'Contact Micko Alberto — send a message or connect via social links.',
     });
 
     emailjs.init(this.PUBLIC_KEY);

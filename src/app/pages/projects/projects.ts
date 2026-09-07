@@ -20,8 +20,8 @@ export class Projects {
 
   constructor(private seo: SeoService) {
     this.seo.set({
-      title: 'Projects | Micko Q. Alberto',
-      description: 'Projects by Micko Q. Alberto — selected web dev and UI/UX work.',
+      title: 'Projects | Micko Alberto',
+      description: 'Projects by Micko Alberto — selected web dev and UI/UX work.',
     });
   }
 

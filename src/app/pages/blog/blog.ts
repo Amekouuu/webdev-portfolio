@@ -17,9 +17,9 @@ export class Blog {
 
   constructor(private seo: SeoService) {
     this.seo.set({
-      title: 'Blogs | Micko Q. Alberto',
+      title: 'Blogs | Micko Alberto',
       description:
-        'Articles and insights on web development, programming, and technology by Micko Q. Alberto.',
+        'Articles and insights on web development, programming, and technology by Micko Alberto.',
     });
   }
 }
