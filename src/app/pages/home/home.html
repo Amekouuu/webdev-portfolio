@@ -84,11 +84,14 @@
       <!-- RIGHT VISUAL -->
       <div class="hero__grid heroIntro heroIntro--visual" aria-hidden="true">
         <div class="hero__gridLines heroIntro__gridLines"></div>
-        <img
-          src="/assets/images/profile-photo-transparent.png"
-          alt=""
-          class="hero__portrait heroIntro__portrait"
-        />
+        <picture>
+          <source srcset="/assets/images/profile-photo-transparent.webp" type="image/webp" />
+          <img
+            src="/assets/images/profile-photo-transparent.png"
+            alt=""
+            class="hero__portrait heroIntro__portrait"
+          />
+        </picture>
       </div>
 
     </div>

@@ -44,6 +44,10 @@
   margin-bottom: 12px;
 }
 
+/* <picture> must not generate a box, or it becomes the flex child of .pc__img
+   and .pc__imgEl's height:100% resolves against it instead of the container. */
+.pc__img picture{ display: contents; }
+
 .pc__imgEl{
   width: 100%;
   height: 100%;

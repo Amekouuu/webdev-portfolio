@@ -1,13 +1,19 @@
 <article class="pc">
   <div class="pc__img">
-    <img
-      *ngIf="project.images.length"
-      [src]="project.images[0].src"
-      [alt]="project.images[0].alt"
-      class="pc__imgEl"
-      loading="lazy"
-      decoding="async"
-    />
+    <picture *ngIf="project.images.length">
+      <source
+        *ngIf="project.images[0].webp"
+        [srcset]="project.images[0].webp"
+        type="image/webp"
+      />
+      <img
+        [src]="project.images[0].src"
+        [alt]="project.images[0].alt"
+        class="pc__imgEl"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
     <span *ngIf="!project.images.length">Image Placeholder</span>
   </div>
 

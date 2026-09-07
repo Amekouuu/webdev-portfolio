@@ -4,7 +4,8 @@ export interface Project {
   tag?: string;
   description: string;
   tools: string[];
-  images: { src: string; alt: string }[];
+  /** `webp` is served first via <picture>; `src` is the fallback for older browsers. */
+  images: { src: string; alt: string; webp?: string }[];
   liveUrl: string;
   repoUrl?: string;
   featured?: boolean;
@@ -20,7 +21,7 @@ export const PROJECTS: Project[] = [
     description: 'SEO blog + responsive UI for a used car dealership in Mabalacat.',
     tools: ['Angular', 'HTML', 'CSS', 'SEO'],
     images: [
-      { src: '/assets/images/mjqualitycars-background.png', alt: 'M&J Quality Used Cars Website Screenshot' },
+      { src: '/assets/images/mjqualitycars-background.png', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
     liveUrl: 'https://www.mjqualitycars.com/',
     repoUrl: 'https://github.com/Jex-beep/done-WSEA',
@@ -35,7 +36,7 @@ export const PROJECTS: Project[] = [
     description: 'A student planner app concept with simple task tracking and clean UI.',
     tools: ['Vue.js', 'JavaScript', 'CSS'],
     images: [
-      { src: '/assets/images/domore-background.png', alt: 'Do More Student Planner Screenshot' },
+      { src: '/assets/images/domore-background.png', webp: '/assets/images/domore-background.webp', alt: 'Do More Student Planner Screenshot' },
     ],
     liveUrl: 'https://domore-student-planner.netlify.app/login',
     repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
@@ -50,7 +51,7 @@ export const PROJECTS: Project[] = [
     description: 'Mock coffee shop blog site with a focus on clean design and responsive layout made to simulate a real-world experience.',
     tools: ['HTML', 'CSS', 'JavaScript'],
     images: [
-      { src: '/assets/images/cafe-crawl-background.png', alt: 'Cafe Crawl Blog Site Screenshot' },
+      { src: '/assets/images/cafe-crawl-background.png', webp: '/assets/images/cafe-crawl-background.webp', alt: 'Cafe Crawl Blog Site Screenshot' },
     ],
     liveUrl: 'https://cafe-crawl.netlify.app/',
     repoUrl: 'https://github.com/Amekouuu/IntroWeb',
@@ -66,7 +67,7 @@ export const PROJECTS: Project[] = [
       'Designed a complete pharmacy website experience including landing, product listings, contact, email template, maps, and social mockups.',
     tools: ['Figma', 'UI/UX', 'Design System'],
     images: [
-      { src: '/assets/images/sanvera-background.png', alt: 'Sanvera Pharmacy Figma Preview' },
+      { src: '/assets/images/sanvera-background.png', webp: '/assets/images/sanvera-background.webp', alt: 'Sanvera Pharmacy Figma Preview' },
     ],
     liveUrl:
       'https://www.figma.com/proto/YDNl0dApodlhDcRgYAoCPy/Sanvera-Pharmacy?node-id=58-79&t=bVZoZOl7nbgmtNCc-1',
@@ -82,7 +83,7 @@ export const PROJECTS: Project[] = [
       'Figma design for a featured page of a local food place called TopChillog.',
     tools: ['Figma', 'UI/UX', 'Components'],
     images: [
-      { src: '/assets/images/topchillog-landing.png', alt: 'TopChillog Figma Preview' },
+      { src: '/assets/images/topchillog-landing.png', webp: '/assets/images/topchillog-landing.webp', alt: 'TopChillog Figma Preview' },
     ],
     liveUrl: 'https://www.figma.com/design/ZNyCzfEZhhKeH77pwz7WYj/TopChillog-Featured-Page-Mockup?node-id=0-1&t=a5fCXp775fW4lim6-1',
     featured: false,

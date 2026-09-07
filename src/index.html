@@ -2,15 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Micko Q. Alberto | Web Developer</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="/assets/amekou-logo.svg">
-  <!-- src/index.html (inside <head>) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
+  <title>Micko Q. Alberto | Front-End Developer &amp; SEO</title>
+  <meta name="description" content="Micko Q. Alberto — front-end developer in Pampanga, PH. Angular, UI/UX, and SEO-focused builds with a bias toward clean structure and fast pages.">
+  <link rel="canonical" href="https://amekou-dev.vercel.app/">
+
+  <!-- Crawler-visible fallbacks. Social scrapers (LinkedIn, Facebook, X, Discord,
+       Slack) do not run JavaScript, so SeoService cannot reach them on a
+       client-rendered SPA. These static tags are what those platforms actually read. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Micko Q. Alberto">
+  <meta property="og:title" content="Micko Q. Alberto | Front-End Developer &amp; SEO">
+  <meta property="og:description" content="Front-end developer in Pampanga, PH. Angular, UI/UX, and SEO-focused builds with a bias toward clean structure and fast pages.">
+  <meta property="og:url" content="https://amekou-dev.vercel.app/">
+  <!-- TODO(og-image): temporary placeholder. Swap for a purpose-built 1200x630
+       card and update the width/height below. See also SeoService.DEFAULT_IMAGE. -->
+  <meta property="og:image" content="https://amekou-dev.vercel.app/assets/images/mjqualitycars-background.png">
+  <meta property="og:image:width" content="1900">
+  <meta property="og:image:height" content="940">
+  <meta property="og:image:alt" content="M&amp;J Quality Used Cars website, built by Micko Q. Alberto">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Micko Q. Alberto | Front-End Developer &amp; SEO">
+  <meta name="twitter:description" content="Front-end developer in Pampanga, PH. Angular, UI/UX, and SEO-focused builds with a bias toward clean structure and fast pages.">
+  <meta name="twitter:image" content="https://amekou-dev.vercel.app/assets/images/mjqualitycars-background.png">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/amekou-logo.svg">
+  <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#070c18" media="(prefers-color-scheme: dark)">
+
+  <!-- Applies the saved/OS theme before first paint. Prerendered HTML ships with
+       no data-theme, so without this a dark-mode visitor sees a light flash
+       until Angular hydrates. Key must match ThemeService.STORAGE_KEY. -->
+  <script>
+    (function () {
+      // Marks JS as available before first paint. Scroll-reveal CSS keys off
+      // this so prerendered HTML is visible to crawlers and no-JS visitors.
+      document.documentElement.classList.add('js');
+      try {
+        var k = 'portfolio-theme';
+        var t = localStorage.getItem(k);
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        /* private mode / storage blocked — fall through to CSS defaults */
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Micko Q. Alberto",
+    "url": "https://amekou-dev.vercel.app/",
+    "jobTitle": "Front-End Developer",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Pampanga",
+      "addressCountry": "PH"
+    },
+    "sameAs": [
+      "https://github.com/Amekouuu",
+      "https://www.linkedin.com/in/micko-alberto-b49906316/"
+    ]
+  }
+  </script>
 </head>
 <body class="themeFx">
   <app-root></app-root>

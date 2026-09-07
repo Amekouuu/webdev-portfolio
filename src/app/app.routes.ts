@@ -36,5 +36,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/contact/contact').then(m => m.Contact),
     title: 'Contact | Micko Q. Alberto',
   },
-  { path: '**', redirectTo: '' },
+  // Renders a real 404 page instead of silently redirecting to home, which made
+  // every mistyped URL look like duplicate content. Note: the host still returns
+  // HTTP 200 for this (SPA catch-all), so it is a soft 404 until prerendering
+  // emits a real 404.html.
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFound),
+    title: 'Page not found | Micko Q. Alberto',
+  },
 ];

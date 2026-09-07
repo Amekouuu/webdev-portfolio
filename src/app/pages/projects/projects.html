@@ -52,14 +52,21 @@
       >
         <!-- MEDIA -->
         <div class="pCard__media">
-          <img
-            class="pCard__img"
-            [src]="p.images.length ? p.images[0].src : '/assets/images/placeholder-1.png'"
-            [alt]="p.images.length ? (p.images[0].alt || (p.name + ' preview')) : (p.name + ' preview')"
-            loading="lazy"
-            decoding="async"
-            [style.object-position]="p.imgPos || 'center'"
-          />
+          <picture *ngIf="p.images.length">
+            <source
+              *ngIf="p.images[0].webp"
+              [srcset]="p.images[0].webp"
+              type="image/webp"
+            />
+            <img
+              class="pCard__img"
+              [src]="p.images[0].src"
+              [alt]="p.images[0].alt || (p.name + ' preview')"
+              loading="lazy"
+              decoding="async"
+              [style.object-position]="p.imgPos || 'center'"
+            />
+          </picture>
 
           <span class="pCard__sheen" aria-hidden="true"></span>
 

@@ -295,6 +295,9 @@
 }
 
 /* ── Hero grid bg ─────────────────────────────────────── */
+/* Keep <picture> out of the box tree so the portrait stays the flex child. */
+.hero__grid picture{ display: contents; }
+
 .hero__grid{
   display: flex;
   align-items: flex-end;

@@ -605,6 +605,10 @@
   overflow: hidden;
 }
 
+/* Keep <picture> out of the box tree so .pCard__img's height:100% still
+   resolves against .pCard__media. */
+.pCard__media picture{ display: contents; }
+
 .pCard__img{
   width: 100%; height: 100%;
   display: block;

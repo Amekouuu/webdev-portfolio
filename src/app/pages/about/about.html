@@ -39,12 +39,19 @@
       <!-- LEFT: Portrait + socials -->
       <aside class="heroMedia" aria-label="Profile photo">
         <div class="heroMedia__frame">
-          <img
-            class="heroMedia__img"
-            [src]="profile.imageUrl || 'assets/images/about-profile-transparent.png'"
-            [alt]="profile.imageAlt"
-            loading="lazy"
-          />
+          <picture>
+            <source
+              *ngIf="profile.imageWebp"
+              [srcset]="profile.imageWebp"
+              type="image/webp"
+            />
+            <img
+              class="heroMedia__img"
+              [src]="profile.imageUrl || 'assets/images/about-profile-transparent.png'"
+              [alt]="profile.imageAlt"
+              loading="lazy"
+            />
+          </picture>
         </div>
 
         <div class="heroMedia__meta">

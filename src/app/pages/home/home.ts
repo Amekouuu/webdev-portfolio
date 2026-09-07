@@ -107,6 +107,10 @@ export class Home implements OnInit, OnDestroy {
   }
 
   private bootStatusLines() {
+    // Timer-driven entrance animation — client only. During prerender there is
+    // no window, and the animated states would be captured mid-flight anyway.
+    if (typeof window === 'undefined') return;
+
     this.statusLines.forEach(line => {
       line.visible = false;
       line.loading = false;

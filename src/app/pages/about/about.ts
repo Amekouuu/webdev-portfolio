@@ -73,6 +73,7 @@ export class About implements AfterViewInit, OnDestroy {
     name: 'Micko Q. Alberto',
     role: 'SEO-Focused Front-End Developer',
     imageUrl: 'assets/images/about-profile-transparent.png',
+    imageWebp: 'assets/images/about-profile-transparent.webp',
     imageAlt: 'Profile picture of Micko Q. Alberto',
   };
 
@@ -192,14 +193,6 @@ howIWorkPoints = [
     },
   ];
 
-  includeSeoTools = false;
-
-  private optionalSeoTools: TechItem[] = [
-    { name: 'Google Search Console', iconSrc: 'assets/icons/skills/gsc.png',        iconAlt: 'Google Search Console icon' },
-    { name: 'Lighthouse',            iconSrc: 'assets/icons/skills/lighthouse.png',  iconAlt: 'Lighthouse icon' },
-    { name: 'GA4',                   iconSrc: 'assets/icons/skills/ga4.png',         iconAlt: 'Google Analytics 4 icon' },
-  ];
-
   certs: Cert[] = [{
       name: 'Google Analytics Certified',
       issuer: 'Google',
@@ -274,17 +267,16 @@ howIWorkPoints = [
 
     this.certGroups = this.groupCertsByIssuer(this.certs);
     this.activeIssuerIndex = 0;
-    console.log('certGroups:', JSON.stringify(this.certGroups.map(g => ({ issuer: g.issuer, count: g.certs.length }))));
-
-    if (this.includeSeoTools) {
-      const tools = this.techGroups.find(g => g.title === 'Tools');
-      if (tools) tools.items = [...tools.items, ...this.optionalSeoTools];
-    }
 
     this.onScrollBound = this.onScroll.bind(this);
   }
 
   ngAfterViewInit(): void {
+    // Angular 21 runs ngAfterViewInit during prerendering, where document and
+    // IntersectionObserver do not exist. The `.js` guard in about.css keeps the
+    // prerendered content visible when this is skipped.
+    if (typeof document === 'undefined') return;
+
     const revealEls = Array.from(document.querySelectorAll('[appReveal]')) as HTMLElement[];
 
     this.ioReveal = new IntersectionObserver(
@@ -334,7 +326,10 @@ howIWorkPoints = [
     this.ioReveal?.disconnect();
     this.ioActive = null;
     this.ioReveal = null;
-    window.removeEventListener('scroll', this.onScrollBound);
+    // ngOnDestroy runs on the server after prerendering, where window is absent.
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', this.onScrollBound);
+    }
   }
 
   private onScroll(): void {

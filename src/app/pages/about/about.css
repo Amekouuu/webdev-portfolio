@@ -27,15 +27,18 @@
   *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
-/* ── Scroll reveal ────────────────────────────────────── */
-[appReveal]{
+/* ── Scroll reveal ──────────────────────────────────────
+   Scoped to .js (set pre-paint by the inline script in index.html) so the
+   prerendered HTML stays visible to crawlers and no-JS visitors. Without this
+   guard the whole page ships at opacity 0. */
+:host-context(.js) [appReveal]{
   opacity: 0;
   transform: translateY(10px);
   transition: opacity .42s ease, transform .42s ease;
   will-change: opacity, transform;
 }
 
-[appReveal].isInView{ opacity: 1; transform: translateY(0); }
+:host-context(.js) [appReveal].isInView{ opacity: 1; transform: translateY(0); }
 
 /* ── Top nav ──────────────────────────────────────────── */
 .topNav{
@@ -161,6 +164,7 @@
   box-shadow: 0 16px 30px rgba(0,0,0,.18);
 }
 
+.heroMedia__frame picture{ display: contents; }
 .heroMedia__img{ width: 100%; height: auto; display: block; }
 .heroMedia__meta{ padding: 10px 4px 2px; }
 
