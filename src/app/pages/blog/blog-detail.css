@@ -37,30 +37,8 @@
 /* ── Header ───────────────────────────────────────────── */
 .blogDetail__header{ margin-bottom: 36px; }
 
-.blogDetail__tags{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 14px;
-}
-
-.blogDetail__tag{
-  padding: 4px 10px;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  border: 1px solid rgb(var(--accent-rgb) / .35);
-  color: var(--accent-deep);
-  border-radius: 999px;
-  background: var(--accent-faint);
-}
-
-/* Dark: tags lighten */
-[data-theme='dark'] .blogDetail__tag{
-  border-color: rgb(var(--accent-rgb) / .25);
-  color: var(--accent);
-}
+/* Spacing only — .toolList in styles.css carries the middot rendering. */
+.blogDetail__tags{ margin-bottom: var(--space-4); }
 
 .blogDetail__title{
   margin: 0 0 12px;
@@ -94,91 +72,97 @@
   width: 60px;
 }
 
-/* ── Prose body ───────────────────────────────────────── */
+/* ── Prose body ───────────────────────────────────────────────────
+   Every rule below needs ::ng-deep. The article arrives via
+   [innerHTML]="post.content", so Angular never stamps its _ngcontent
+   attribute on those nodes — a plain `.blogDetail__body h2` compiles to
+   `.blogDetail__body[_ngcontent-x] h2[_ngcontent-x]` and matches nothing.
+   Before this, the whole article rendered at browser defaults: h2 came out
+   at 24px instead of 22, paragraphs took the global 16px margin instead of
+   18, and the code, pre and blockquote styling never appeared at all.
+
+   ::ng-deep is deprecated but remains the only mechanism for this, and the
+   `.blogDetail__body` ancestor keeps its own attribute, so these rules stay
+   scoped to this component rather than leaking site-wide. */
 .blogDetail__body{
   font-size: var(--text-md);
   line-height: var(--leading-loose);
   color: var(--text);
 }
 
-.blogDetail__body h2{
-  margin: 36px 0 12px;
+.blogDetail__body ::ng-deep h2{
+  margin: var(--space-7) 0 var(--space-3);
   font-size: var(--text-xl);
   font-weight: var(--weight-black);
-  letter-spacing: -0.3px;
+  letter-spacing: var(--tracking-tight);
   color: var(--text);
 }
 
-.blogDetail__body h3{
-  margin: 28px 0 10px;
+.blogDetail__body ::ng-deep h3{
+  margin: var(--space-6) 0 var(--space-2);
   font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   color: var(--text);
 }
 
-.blogDetail__body p{ margin: 0 0 18px; }
+.blogDetail__body ::ng-deep p{ margin: 0 0 var(--space-4); }
 
-.blogDetail__body a{
-  color: var(--royal);
+.blogDetail__body ::ng-deep a{
+  color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
-  transition: color .15s ease;
+  transition: color .18s var(--ease-out);
 }
 
-.blogDetail__body a:hover{ color: var(--accent-deep); }
-
-[data-theme='dark'] .blogDetail__body a{ color: var(--accent-soft); }
+.blogDetail__body ::ng-deep a:hover{ color: var(--accent-deep); }
 
 /* ── Code ─────────────────────────────────────────────── */
-.blogDetail__body code{
+.blogDetail__body ::ng-deep code{
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xs);
+  background: var(--bg-sunken);
+  color: var(--text);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  background: var(--bg-sunken);
-  padding: 2px 6px;
-  border-radius: 5px;
-  border: 1px solid var(--border);
-  color: var(--text);
 }
 
-[data-theme='dark'] .blogDetail__body code{
-  color: var(--accent-soft);
-}
-
-.blogDetail__body pre{
+.blogDetail__body ::ng-deep pre{
+  overflow-x: auto;
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--r-md);
   background: var(--royal-deep);
   color: #f5f7ff;
-  padding: 18px 20px;
-  border-radius: 12px;
-  overflow-x: auto;
-  margin: 0 0 20px;
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
 }
 
-.blogDetail__body pre code{
-  background: none;
-  border: none;
+.blogDetail__body ::ng-deep pre code{
   padding: 0;
-  font-size: inherit;
+  border: none;
+  background: none;
   color: inherit;
+  font-size: inherit;
 }
 
 /* ── Lists ────────────────────────────────────────────── */
-.blogDetail__body ul,
-.blogDetail__body ol{
-  margin: 0 0 18px;
-  padding-left: 24px;
+.blogDetail__body ::ng-deep ul,
+.blogDetail__body ::ng-deep ol{
+  margin: 0 0 var(--space-4);
+  padding-left: var(--space-5);
 }
 
-.blogDetail__body li{ margin-bottom: 6px; }
+.blogDetail__body ::ng-deep li{ margin-bottom: var(--space-2); }
+.blogDetail__body ::ng-deep li::marker{ color: var(--accent); }
 
 /* ── Blockquote ───────────────────────────────────────── */
-.blogDetail__body blockquote{
-  margin: 0 0 20px;
-  padding: 14px 18px;
+.blogDetail__body ::ng-deep blockquote{
+  margin: 0 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
   border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
   background: var(--accent-faint);
-  border-radius: 0 10px 10px 0;
   color: var(--text-muted);
   font-style: italic;
 }

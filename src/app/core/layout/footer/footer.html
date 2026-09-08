@@ -27,20 +27,17 @@
     />
   </svg>
 </span>
-            <div class="footSig__txt">
-              <span class="footSig__name">Micko Alberto </span>
-            </div>
+            <span class="footSig__name">Micko Alberto</span>
           </div>
 
           <p class="footSig__blurb">
             Building clean, performance-first web experiences — with technical SEO baked in.
           </p>
 
-          <div class="footSig__chips" aria-label="Highlights">
-            <span class="chip">PH-based</span>
-            <span class="chip">Open to opportunities</span>
-            <span class="chip chip--accent">Lighthouse-minded</span>
-          </div>
+          <!-- Was three pills: "PH-based", "Open to opportunities" and
+               "Lighthouse-minded". The first two are real signal for anyone
+               hiring, so they stay as a plain line; the third was filler. -->
+          <p class="footSig__status">Open to opportunities · Pampanga, PH</p>
         </section>
 
         <!-- Quick Links -->
@@ -58,34 +55,26 @@
           <div class="footCol__title">Contact</div>
           <a href="mailto:mqalberto12@gmail.com">mqalberto12@gmail.com</a>
           <a href="#top">Back to top</a>
-          <div class="footCol__note">Fast • Accessible • SEO-ready</div>
         </section>
 
-        <!-- Socials -->
-        <section class="footSocial" aria-label="Footer socials">
-          <div class="footCol__title">Find me here</div>
-
-          <div class="footSocial__row">
-            <a
-              *ngFor="let s of socials"
-              class="socialBtn"
-              [href]="s.href"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span class="socialBtn__label">{{ s.label }}</span>
-              <span class="socialBtn__arrow" aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </section>
+        <!-- Socials — plain links now. These were pill buttons with a ↗ glyph
+             that repeated what target="_blank" already conveys. -->
+        <nav class="footCol" aria-label="Footer socials">
+          <div class="footCol__title">Elsewhere</div>
+          <a
+            *ngFor="let s of socials"
+            [href]="s.href"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ s.label }}</a>
+        </nav>
 
       </div>
 
       <!-- Bottom line -->
-      <div class="siteFooter__bottom" aria-label="Footer bottom">
-        <span class="fineprint">
-          © {{ year }} • Designed &amp; built by Amekou • 
-        </span>
+      <div class="siteFooter__bottom">
+        <span class="fineprint">© {{ year }} Micko Alberto</span>
+        <span class="fineprint">Built with Angular</span>
       </div>
 
     </div>

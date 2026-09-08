@@ -50,6 +50,13 @@ type EducationItem = {
   highlights: string[];
 };
 
+/**
+ * Issuer whose certification group renders expanded on load.
+ * Named here rather than inline so a rename in `certs` is one edit, not two —
+ * see isOpenByDefault() for why this issuer.
+ */
+const PREFERRED_ISSUER = 'HubSpot Academy';
+
 /** One command in the fun-facts terminal. */
 type TermCommand = {
   cmd: string;
@@ -368,16 +375,26 @@ export class About implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Which issuer groups start expanded when the page loads.
+   * Which issuer group starts expanded when the page loads.
+   *
+   * HubSpot Academy by name, because those are the SEO and content credentials
+   * that back the "SEO-focused" claim the rest of the site makes — the group
+   * worth reading without a click. Deliberately *not* "whichever group is
+   * largest": that would quietly change on its own as certificates expire,
+   * eventually promoting a group nobody chose.
+   *
+   * Falls back to the first group when the preferred issuer is absent, so the
+   * section never renders fully collapsed once every HubSpot certificate has
+   * lapsed (the last expires 2028-03-02).
    *
    * Must return a stable value per group: Angular only writes the `open`
    * property when the bound expression changes, which is what stops it from
-   * re-closing a group the visitor just opened. A rule that flip-flops across
-   * change-detection runs would fight the visitor's clicks.
+   * re-closing a group the visitor just opened. A rule that flip-flopped
+   * across change-detection runs would fight the visitor's clicks.
    */
   isOpenByDefault(group: CertGroup, index: number): boolean {
-    // TODO(human)
-    return index === 0;
+    const preferred = this.certGroups.find(g => g.issuer === PREFERRED_ISSUER);
+    return preferred ? group === preferred : index === 0;
   }
 
   private groupCertsByIssuer(list: Cert[]): CertGroup[] {

@@ -1,4 +1,6 @@
-<section class="page shell">
+<!-- No `shell` class here: app.html already wraps the router outlet in one, and
+     nesting a second max-width container narrowed the article for no reason. -->
+<section class="page">
 
   <!-- NOT FOUND -->
   <div class="blogDetail__notFound" *ngIf="!post">
@@ -17,9 +19,10 @@
 
       <!-- Header -->
       <header class="blogDetail__header">
-        <div class="blogDetail__tags">
-          <span class="blogDetail__tag" *ngFor="let tag of post.tags">{{ tag }}</span>
-        </div>
+        <!-- Was a row of pill tags. -->
+        <ul class="toolList blogDetail__tags" aria-label="Topics">
+          <li *ngFor="let tag of post.tags">{{ tag }}</li>
+        </ul>
 
         <h1 class="blogDetail__title h-serif">{{ post.title }}</h1>
 

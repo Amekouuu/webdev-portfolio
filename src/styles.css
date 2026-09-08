@@ -147,6 +147,15 @@
   --tracking-wider:   0.14em;
   --tracking-widest:  0.20em;
 
+  /* ── Status ───────────────────────────────────────────────────
+     Form feedback used to hardcode #9ff5c6 / #ffb4b4, chosen against the dark
+     card the contact form sat inside — they were unreadable anywhere else.
+     These clear AA on --card-bg in both themes. */
+  --success:      #1B7F4B;
+  --success-soft: rgb(27 127 75 / .10);
+  --danger:       #B3261E;
+  --danger-soft:  rgb(179 38 30 / .08);
+
   /* ── Spacing scale ────────────────────────────────────────────
      One scale, used everywhere. Anything that isn't on it (37px, 53px)
      is what makes spacing read as accidental rather than authored. */
@@ -253,6 +262,12 @@
 
   --grid:         rgba(255,255,255,.05);
   --muted:        var(--text-muted);
+
+  /* Lifted for contrast against the dark surfaces. */
+  --success:      #6EDFA4;
+  --success-soft: rgb(110 223 164 / .12);
+  --danger:       #FF9A93;
+  --danger-soft:  rgb(255 154 147 / .10);
 }
 
 /* Optional explicit light hook (safe to keep) */
@@ -513,8 +528,11 @@ button.actionLink{
 
 .actionLink:hover .actionLink__arrow{ transform: translateX(4px); }
 
-/* One filled action per view, so primary vs secondary is unambiguous. */
-.actionLink--primary{
+/* One filled action per view, so primary vs secondary is unambiguous.
+   Doubled class for specificity: `button.actionLink` above is (0,1,1) and would
+   otherwise strip the fill and border off a <button> carrying this modifier —
+   which is exactly what happened to the Resume download button. */
+.actionLink.actionLink--primary{
   padding: var(--space-2) var(--space-4);
   border: 1px solid var(--accent);
   border-radius: var(--r-sm);
@@ -522,7 +540,7 @@ button.actionLink{
   color: var(--accent-on);
 }
 
-.actionLink--primary:hover{
+.actionLink.actionLink--primary:hover{
   background: var(--accent-deep);
   border-color: var(--accent-deep);
   color: var(--accent-on);

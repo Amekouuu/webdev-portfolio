@@ -1,350 +1,169 @@
 /* =========================================================
    FOOTER
+   Appears on all 9 routes, so its visual language is the one
+   thing every page shares. Rules and type only — the pills,
+   the rounded link chips and the two radial gradient washes
+   are gone.
 ========================================================= */
 
 .siteFooter{
-  margin-top: 64px;
   position: relative;
-  overflow: hidden;
+  margin-top: var(--section-gap);
   color: var(--footer-text);
+  border-top: 1px solid var(--border-strong);
+  background: var(--footer-bg);
 }
 
-.siteFooter__inner{
-  padding: 34px 0 22px;
-  background:
-    radial-gradient(closest-side at 18% 0%, rgb(var(--accent-rgb) / .10), transparent 65%),
-    radial-gradient(closest-side at 82% 0%, rgba(15,31,74,.18), transparent 65%),
-    var(--footer-bg);
-}
-
-.siteFooter::before{
-  content:"";
-  position:absolute;
-  left: 0; right: 0; top: 0;
-  height: 1px;
-  background: var(--footer-border);
-}
+.siteFooter__inner{ padding: var(--space-7) 0 var(--space-5); }
 
 .siteFooter__container{
   width: 100%;
-  margin: 0 auto;
-  padding: 0 18px;
   max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
 }
 
 .siteFooter__grid{
-  display:grid;
-  grid-template-columns: 1.4fr .8fr .9fr 1.2fr;
-  gap: 26px;
-  align-items:start;
+  display: grid;
+  grid-template-columns: 1.6fr .8fr 1fr .8fr;
+  gap: var(--space-7);
+  align-items: start;
 }
 
 /* ── Signature ────────────────────────────────────────── */
 .footSig{
-  display:flex;
+  display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--space-3);
   min-width: 0;
 }
 
+/* Was a rounded card wrapping the mark and the name. */
 .footSig__badge{
-  display:flex;
-  align-items:center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: var(--footer-surface);
-  border: 1px solid var(--footer-border);
-  box-shadow: var(--footer-shadow);
-  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
-/* Light mode: white bg, dark icon — matches navbar */
 .footSig__mark{
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  display:grid;
-  place-items:center;
-  background: var(--card-bg);
-  color: var(--royal-deep);
-  font-weight: var(--weight-black);
-}
-
-/* Dark mode: dark bg, white icon */
-[data-theme='dark'] .footSig__mark{
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
   background: var(--royal-deep);
-  color: #fff;
+  color: #ffffff;
 }
 
 .footSig__name{
   font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--footer-text);
 }
 
-.footSig__role{
+.footSig__blurb{
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--footer-muted);
+}
+
+.footSig__status{
+  margin: 0;
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--footer-muted);
-}
-
-.footSig__blurb{
-  margin: 0;
-  color: var(--footer-muted);
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
-  max-width: 56ch;
-}
-
-/* ── Chips — scoped to footer ─────────────────────────── */
-.footSig__chips{
-  display:flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.siteFooter .chip{
-  font-size: var(--text-xs);
-  padding: 8px 11px;
-  border-radius: 999px;
-  border: 1px solid var(--footer-border);
-  background: var(--footer-surface);
-  color: var(--footer-text);
-}
-
-.siteFooter .chip--accent{
-  background: var(--footer-accent);
-  border-color: rgb(var(--accent-rgb) / .35);
-  color: var(--footer-text);
+  color: var(--text-faint);
 }
 
 /* ── Columns ──────────────────────────────────────────── */
 .footCol{
-  display:flex;
+  display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
 }
 
 .footCol__title{
+  margin-bottom: var(--space-2);
   font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
   color: var(--footer-title);
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--footer-border);
-  width: fit-content;
 }
 
+/* min-height holds the 24px WCAG 2.2 target floor without the rounded hover
+   pad these links used to carry. */
 .footCol a{
-  text-decoration:none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-bottom: 1px solid transparent;
   color: var(--footer-link);
   font-size: var(--text-sm);
-  line-height: var(--leading-snug);
-  padding: 8px 10px;
-  border-radius: 12px;
-  transition: transform .16s ease, background .16s ease, color .16s ease;
+  text-decoration: none;
+  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
 }
 
 .footCol a:hover{
-  background: var(--footer-hover);
-  color: var(--footer-text);
-  transform: translateY(-1px);
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
-.footCol__note{
-  margin-top: 6px;
-  font-size: var(--text-xs);
-  color: var(--footer-muted);
+.footCol a:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
-
-/* ── Socials — scoped to footer ───────────────────────── */
-.footSocial{
-  display:flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footSocial__row{
-  display:flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.siteFooter .socialBtn{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  text-decoration:none;
-  color: var(--footer-text);
-  border: 1px solid var(--footer-border);
-  background: var(--footer-surface);
-  box-shadow: var(--footer-shadow);
-  transition: transform .16s ease, background .16s ease, border-color .16s ease;
-}
-
-.siteFooter .socialBtn:hover{
-  transform: translateY(-2px);
-  background: var(--footer-accent);
-  border-color: rgb(var(--accent-rgb) / .45);
-}
-
-.socialBtn__arrow{ opacity: .7; }
 
 /* ── Bottom ───────────────────────────────────────────── */
 .siteFooter__bottom{
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid var(--footer-border);
-  display:flex;
-  justify-content:center;
-  text-align:center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--space-7);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .fineprint{
   font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
   color: var(--footer-muted);
-  line-height: var(--leading-relaxed);
-  max-width: 90ch;
 }
 
 /* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 900px){
   .siteFooter__grid{
-    grid-template-columns: 1.2fr 1fr;
-    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
   }
+
+  /* Signature spans the row; the three link lists share the one below. */
+  .footSig{ grid-column: 1 / -1; }
 }
 
-@media (max-width: 520px){
-  .siteFooter{ margin-top: 32px; }
-  .siteFooter__inner{ padding: 20px 0 16px; }
-  .siteFooter__container{ max-width: 100%; padding: 0 16px; }
+@media (max-width: 560px){
+  .siteFooter__inner{ padding: var(--space-6) 0 var(--space-5); }
 
   .siteFooter__grid{
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  /* ── Signature block ── */
-  .footSig{
-    gap: 12px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--footer-border);
-  }
-
-  .footSig__badge{
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .footSig__blurb{
-    font-size: var(--text-xs);
-    line-height: var(--leading-relaxed);
-  }
-
-  /* Chips — single row, no wrap */
-  .footSig__chips{
-    flex-wrap: nowrap;
-    gap: 6px;
-  }
-  .siteFooter .chip{
-    font-size: 10px;
-    padding: 5px 9px;
-    white-space: nowrap;
-  }
-
-  /* ── Middle two columns side by side ── */
-  .siteFooter__grid{
-    display: grid;
-    grid-template-areas:
-      "sig   sig"
-      "links contact"
-      "social social"
-      "bottom bottom";
     grid-template-columns: 1fr 1fr;
-    gap: 0;
+    gap: var(--space-5);
   }
 
-  .footSig   { grid-area: sig; }
-  .footSocial{ grid-area: social; }
-  .siteFooter__bottom{ grid-area: bottom; }
-
-  /* Quick links + Contact sit side by side */
-  .siteFooter__grid > .footCol:nth-child(2){ grid-area: links; }
-  .siteFooter__grid > .footCol:nth-child(3){ grid-area: contact; }
-
-  .siteFooter__grid > .footCol:nth-child(2),
-  .siteFooter__grid > .footCol:nth-child(3){
-    padding-top: 16px;
-    margin-top: 0;
-    border-top: none;
+  .footSig{
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--border);
   }
 
-  /* Shared row separator above the two columns */
-  .siteFooter__grid::before{
-    content: "";
-    grid-column: 1 / -1;
-    grid-row: 2;
-    height: 1px;
-    background: var(--footer-border);
-    margin-bottom: -1px;
-    display: block;
-  }
-
-  .footCol{ gap: 4px; }
-  .footCol__title{
-    font-size: 10px;
-    margin-bottom: 6px;
-    width: 100%;
-    border-bottom-color: var(--footer-border);
-  }
-  .footCol a{
-    padding: 5px 0;
-    font-size: var(--text-xs);
-  }
-  .footCol__note{
-    font-size: 10px;
-    margin-top: 4px;
-  }
-
-  /* ── Social row ── */
-  .footSocial{
-    padding-top: 16px;
-    margin-top: 16px;
-    border-top: 1px solid var(--footer-border);
-    gap: 8px;
-  }
-
-  .footSocial .footCol__title{
-    width: 100%;
-    text-align: center;
-  }
-
-  .footSocial__row{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .siteFooter .socialBtn{
-    justify-content: center;
-    padding: 10px 8px;
-    border-radius: 14px;
-    font-size: var(--text-xs);
-  }
-
-  .socialBtn__arrow{ display:none; }
-
-  /* ── Bottom ── */
   .siteFooter__bottom{
-    grid-column: 1 / -1;
-    margin-top: 16px;
-    padding-top: 12px;
+    margin-top: var(--space-6);
+    justify-content: flex-start;
   }
 }
