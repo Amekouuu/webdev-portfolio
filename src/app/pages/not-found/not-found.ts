@@ -35,7 +35,7 @@ import { SeoService } from '../../core/services/seo.service';
       font-family: 'JetBrains Mono', ui-monospace, monospace;
       font-size: var(--text-sm, 12px);
       letter-spacing: .18em;
-      color: var(--gold, #caa33a);
+      color: var(--accent, #2F6FA8);
     }
     .nf__title {
       margin: 0 0 .75rem;
@@ -63,7 +63,7 @@ import { SeoService } from '../../core/services/seo.service';
     }
     .nf__links a:hover,
     .nf__links a:focus-visible {
-      color: var(--gold, #caa33a);
+      color: var(--accent, #2F6FA8);
     }
   `],
 })

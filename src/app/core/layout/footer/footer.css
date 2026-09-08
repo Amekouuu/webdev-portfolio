@@ -12,7 +12,7 @@
 .siteFooter__inner{
   padding: 34px 0 22px;
   background:
-    radial-gradient(closest-side at 18% 0%, rgba(202,163,58,.10), transparent 65%),
+    radial-gradient(closest-side at 18% 0%, rgb(var(--accent-rgb) / .10), transparent 65%),
     radial-gradient(closest-side at 82% 0%, rgba(15,31,74,.18), transparent 65%),
     var(--footer-bg);
 }
@@ -117,7 +117,7 @@
 
 .siteFooter .chip--accent{
   background: var(--footer-accent);
-  border-color: rgba(202,163,58,.35);
+  border-color: rgb(var(--accent-rgb) / .35);
   color: var(--footer-text);
 }
 
@@ -190,7 +190,7 @@
 .siteFooter .socialBtn:hover{
   transform: translateY(-2px);
   background: var(--footer-accent);
-  border-color: rgba(202,163,58,.45);
+  border-color: rgb(var(--accent-rgb) / .45);
 }
 
 .socialBtn__arrow{ opacity: .7; }

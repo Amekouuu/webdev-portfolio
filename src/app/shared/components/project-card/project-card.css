@@ -124,7 +124,7 @@
 }
 
 .pc__btn:focus-visible{
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -133,8 +133,8 @@
 }
 
 .pc__btn--ghost:hover{
-  border-color: var(--gold);
-  color: var(--gold-deep);
+  border-color: var(--accent);
+  color: var(--accent-deep);
 }
 
 @media (max-width: 520px){
@@ -153,7 +153,7 @@
 }
 
 [data-theme='dark'] .pc:hover{
-  border-color: rgba(202,163,58,.28);
+  border-color: rgb(var(--accent-rgb) / .28);
   box-shadow: 0 16px 30px rgba(0,0,0,.28);
 }
 
@@ -187,6 +187,6 @@
 }
 
 [data-theme='dark'] .pc__btn--ghost:hover{
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--accent);
+  color: var(--accent);
 }

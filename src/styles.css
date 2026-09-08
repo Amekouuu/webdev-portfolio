@@ -28,11 +28,18 @@
   --royal-soft:   #dfe6ff;
   --royal-mid:    #2a4a9f;
 
-  /* ── Brand: Gold ──────────────────────────────────────────── */
-  --gold:         #caa33a;
-  --gold-soft:    #f4d98b;
-  --gold-deep:    #8b6b1f;
-  --gold-faint:   rgba(202,163,58,.10);
+  /* ── Brand: Accent (steel blue) ───────────────────────────────
+     Light and dark carry different values on purpose. One accent cannot
+     clear contrast on both: the old gold scored 8.2:1 on dark but only
+     2.2:1 on light. --accent-rgb backs the rgb(... / alpha) usages. */
+  --accent:         #2F6FA8;   /* 4.8:1 on --bg — passes AA */
+  --accent-rgb:     47 111 168;
+  --accent-soft:    #D6E7F5;
+  --accent-deep:    #1F4E78;
+  /* Text drawn ON an accent fill. Flips per theme: the light accent is dark so
+     it needs white text; the dark accent is pale so it needs dark text. */
+  --accent-on:      #ffffff;   /* 5.2:1 on --accent */
+  --accent-faint:   rgb(var(--accent-rgb) / .10);
 
   /* ── Lines / borders ──────────────────────────────────────── */
   --border:       rgba(13,27,58,.12);
@@ -62,7 +69,10 @@
   --hero-bg:      var(--royal-deep);
   --hero-text:    #f5f7ff;
   --hero-muted:   rgba(245,247,255,.75);
-  --hero-accent:  var(--gold);
+  /* This surface is dark in BOTH themes, so its accent is always the pale blue.
+     var(--accent) put the dark light-mode blue on a navy card at 3.8:1 — the
+     name in the hero title was barely legible. */
+  --hero-accent:  #9EC5E8;   /* 8.8:1 on --royal-deep */
 
   /* Logo */
   --logo-outer-stroke: rgba(255,255,255,.90);
@@ -83,7 +93,7 @@
   /* ✅ ADDED: footer UI tokens (chips/pills/links) */
   --footer-surface: rgba(255,255,255,.72);
   --footer-hover:   rgba(24,47,104,.10);
-  --footer-accent:  rgba(202,163,58,.10);
+  --footer-accent:  rgb(var(--accent-rgb) / .10);
   --footer-title:   rgba(13,27,58,.92);
   --footer-link:    rgba(13,27,58,.72);
   --footer-shadow:  0 12px 26px rgba(0,0,0,.06);
@@ -97,7 +107,7 @@
   --grid:         rgba(255,255,255,.19);
   --accent:       var(--royal);
   --accentText:   #ffffff;
-  --cta:          var(--gold);
+  --cta:          var(--accent);
   --muted:        var(--text-muted);
 
   /* ── Typography ───────────────────────────────────────────── */
@@ -154,6 +164,13 @@
   --royal-soft:   #1a2545;
   --royal-mid:    #4a6abf;
 
+  /* Paler accent for dark surfaces — the light-mode blue is too dark here. */
+  --accent:       #9EC5E8;   /* 10.9:1 on --bg */
+  --accent-rgb:   158 197 232;
+  --accent-soft:  #C9E0F2;
+  --accent-deep:  #5F93C4;
+  --accent-on:    var(--royal-deep);   /* 8.8:1 on the pale accent */
+
   /* ✅ FIXED: remove the accidental red border */
   --border:       rgba(255,255,255,.08);
   --border-soft:  rgba(255,255,255,.04);
@@ -174,12 +191,12 @@
   --input-border:      rgba(255,255,255,.12);
   --input-text:        #e8ecf7;
   --input-placeholder: #4f5a70;
-  --input-focus:       var(--gold);
+  --input-focus:       var(--accent);
 
   --hero-bg:      #060d1f;
   --hero-text:    #f5f7ff;
   --hero-muted:   rgba(245,247,255,.60);
-  --hero-accent:  var(--gold);
+  --hero-accent:  var(--accent);
 
   --nav-bg:       rgba(7,12,24,.92);
   --nav-border:   rgba(255,255,255,.08);
@@ -195,7 +212,7 @@
   /* ✅ ADDED: footer UI tokens (dark) */
   --footer-surface: rgba(255,255,255,.06);
   --footer-hover:   rgba(255,255,255,.08);
-  --footer-accent:  rgba(202,163,58,.14);
+  --footer-accent:  rgb(var(--accent-rgb) / .14);
   --footer-title:   rgba(245,247,255,.84);
   --footer-link:    rgba(245,247,255,.70);
   --footer-shadow:  none;
@@ -293,7 +310,7 @@ a{
   transition: color .15s ease, text-decoration-color .15s ease, opacity .15s ease;
 }
 
-a:hover{ color: var(--gold-deep); }
+a:hover{ color: var(--accent-deep); }
 
 [data-theme='dark'] a{
   color: rgba(245,247,255,.72);
@@ -308,13 +325,13 @@ a:hover{ color: var(--gold-deep); }
 }
 
 [data-theme='dark'] a:focus-visible{
-  outline: 3px solid rgba(202,163,58,.65);
+  outline: 3px solid rgb(var(--accent-rgb) / .65);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
-a.u-accentLink{ color: var(--gold); }
-a.u-accentLink:hover{ color: var(--gold-soft); }
+a.u-accentLink{ color: var(--accent); }
+a.u-accentLink:hover{ color: var(--accent-soft); }
 
 img{
   max-width: 100%;
@@ -342,7 +359,7 @@ textarea::placeholder{
 input:focus,
 textarea:focus{
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(202,163,58,.12);
+  box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / .12);
 }
 
 /* ================================================================
@@ -432,7 +449,7 @@ body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
   display: block;
   width: 200px;
   height: 2px;
-  background: linear-gradient(90deg, var(--royal) 0%, var(--gold) 100%);
+  background: linear-gradient(90deg, var(--royal) 0%, var(--accent) 100%);
   border-radius: 999px;
   margin-bottom: 16px;
   transform-origin: left;
@@ -482,7 +499,7 @@ body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
   inset: 0;
   background:
     radial-gradient(circle at 30% 10%, rgba(255,255,255,.06), transparent 55%),
-    radial-gradient(circle at 70% 35%, rgba(202,163,58,.06), transparent 60%);
+    radial-gradient(circle at 70% 35%, rgb(var(--accent-rgb) / .06), transparent 60%);
   pointer-events: none;
 }
 

@@ -18,7 +18,7 @@
 }
 
 :where(.aboutPage) :focus-visible{
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 12px;
 }
@@ -27,18 +27,12 @@
   *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
-/* ── Scroll reveal ──────────────────────────────────────
-   Scoped to .js (set pre-paint by the inline script in index.html) so the
-   prerendered HTML stays visible to crawlers and no-JS visitors. Without this
-   guard the whole page ships at opacity 0. */
-:host-context(.js) [appReveal]{
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .42s ease, transform .42s ease;
-  will-change: opacity, transform;
-}
-
-:host-context(.js) [appReveal].isInView{ opacity: 1; transform: translateY(0); }
+/* Scroll reveal is handled globally by RevealDirective (.reveal / .is-visible
+   in styles.css). This page previously layered a second system on top —
+   [appReveal] at opacity 0, revealed by an .isInView class from about.ts's own
+   observer. After prerendering, that observer stopped applying the class on
+   hydration and the entire page rendered blank. Removed rather than patched:
+   one reveal mechanism, not two. */
 
 /* ── Top nav ──────────────────────────────────────────── */
 .topNav{
@@ -93,12 +87,12 @@
 }
 
 .chip--primary{
-  border-color: rgba(202,163,58,.45);
-  background: var(--gold-faint);
+  border-color: rgb(var(--accent-rgb) / .45);
+  background: var(--accent-faint);
   color: var(--text);
 }
 
-.chip--primary:hover{ background: rgba(202,163,58,.20); }
+.chip--primary:hover{ background: rgb(var(--accent-rgb) / .20); }
 
 /* ── Hero card ────────────────────────────────────────── */
 .hero{
@@ -128,7 +122,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(900px 520px at 18% 20%, rgba(202,163,58,.16), transparent 58%);
+  background: radial-gradient(900px 520px at 18% 20%, rgb(var(--accent-rgb) / .16), transparent 58%);
 }
 
 .hero__inner{
@@ -152,7 +146,7 @@
 
 .heroMedia:hover{
   transform: translateY(-2px);
-  border-color: rgba(202,163,58,.32);
+  border-color: rgb(var(--accent-rgb) / .32);
   box-shadow: 0 24px 54px rgba(0,0,0,.22), 0 1px 0 rgba(255,255,255,.10) inset;
 }
 
@@ -194,7 +188,7 @@
 
 .socialBtn:hover{
   background: rgba(255,255,255,.10);
-  border-color: rgba(202,163,58,.45);
+  border-color: rgb(var(--accent-rgb) / .45);
   transform: translateY(-1px);
 }
 
@@ -224,8 +218,8 @@
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-faint);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-faint);
 }
 
 .heroTopLine__text{
@@ -253,8 +247,8 @@
   gap: 10px;
   padding: 10px 12px;
   border-radius: 16px;
-  border: 1px solid rgba(202,163,58,.38);
-  background: rgba(202,163,58,.14);
+  border: 1px solid rgb(var(--accent-rgb) / .38);
+  background: rgb(var(--accent-rgb) / .14);
   font-weight: var(--weight-black);
   font-size: var(--text-sm);
   letter-spacing: -0.2px;
@@ -290,7 +284,7 @@
 
 .feat:hover{
   transform: translateY(-2px);
-  border-color: rgba(202,163,58,.38);
+  border-color: rgb(var(--accent-rgb) / .38);
   background: rgba(255,255,255,.08);
 }
 
@@ -358,7 +352,7 @@
 .fact:hover{
   transform: translateY(-1px);
   background: rgba(255,255,255,.10);
-  border-color: rgba(202,163,58,.35);
+  border-color: rgb(var(--accent-rgb) / .35);
 }
 
 .fact__label{
@@ -469,8 +463,8 @@
   justify-content: center;
   padding: 7px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(202,163,58,.40);
-  background: var(--gold-faint);
+  border: 1px solid rgb(var(--accent-rgb) / .40);
+  background: var(--accent-faint);
   color: var(--text);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
@@ -566,7 +560,7 @@
   display: block;
   width: 44px; height: 4px;
   border-radius: 999px;
-  background: var(--gold);
+  background: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -632,16 +626,16 @@
   gap: 10px;
   padding: 10px;
   border-radius: 14px;
-  border: 1px solid rgba(202,163,58,.30);
-  background: var(--gold-faint);
+  border: 1px solid rgb(var(--accent-rgb) / .30);
+  background: var(--accent-faint);
   color: var(--text);
 }
 
 .seoHint__dot{
   width: 10px; height: 10px;
   border-radius: 999px;
-  background: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-faint);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-faint);
   margin-top: 4px;
 }
 
@@ -737,7 +731,7 @@
 .certCard:hover{
   transform: translateY(-2px);
   box-shadow: var(--card-shadow-hover);
-  border-color: rgba(202,163,58,.38);
+  border-color: rgb(var(--accent-rgb) / .38);
 }
 
 .certCard__name{
@@ -815,18 +809,26 @@
 
 .btn--ghost:hover{
   background: rgba(255,255,255,.10);
-  border-color: rgba(202,163,58,.42);
+  border-color: rgb(var(--accent-rgb) / .42);
 }
 
-.btn--gold{
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--royal-deep);
+.btn--accent{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-on);
   font-weight: var(--weight-black);
   box-shadow: 0 18px 30px rgba(0,0,0,.14);
 }
 
-.btn--gold:hover{
+/* The hero is a dark surface in both themes, so the light-mode accent fill
+   would sit at ~3.1:1 against it. Use the pale hero accent there instead. */
+.hero .btn--accent{
+  background: var(--hero-accent);
+  border-color: var(--hero-accent);
+  color: var(--royal-deep);
+}
+
+.btn--accent:hover{
   filter: brightness(1.06);
   transform: translateY(-2px);
   box-shadow: 0 24px 44px rgba(0,0,0,.18);
@@ -840,12 +842,12 @@
 
 .btn--solid:hover{
   background: var(--royal);
-  border-color: rgba(202,163,58,.35);
+  border-color: rgb(var(--accent-rgb) / .35);
 }
 
 /* ── Resume panel ─────────────────────────────────────── */
 .panel--cta{
-  border-color: rgba(202,163,58,.28);
+  border-color: rgb(var(--accent-rgb) / .28);
   box-shadow: var(--card-shadow);
 }
 

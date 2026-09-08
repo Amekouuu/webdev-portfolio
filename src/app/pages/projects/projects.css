@@ -44,8 +44,8 @@
 .kDot{
   width: 8px; height: 8px;
   border-radius: 999px;
-  background: var(--gold);
-  box-shadow: 0 0 0 3px var(--gold-faint);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-faint);
   flex-shrink: 0;
 }
 
@@ -62,7 +62,7 @@
   display: block;
   width: 200px;
   height: 2px;
-  background: linear-gradient(90deg, var(--royal) 0%, var(--gold) 100%);
+  background: linear-gradient(90deg, var(--royal) 0%, var(--accent) 100%);
   margin: 14px 0 16px;
   border-radius: 999px;
   transform-origin: left;
@@ -122,8 +122,8 @@
 .socialPill:hover{
   transform: translateY(-2px);
   box-shadow: var(--card-shadow);
-  border-color: var(--gold);
-  background: var(--gold-faint);
+  border-color: var(--accent);
+  background: var(--accent-faint);
   color: var(--text);
 }
 
@@ -145,7 +145,7 @@
   padding: 10px 14px;
   border-radius: 12px;
   border: 1.5px solid var(--border);
-  background: var(--gold-faint);
+  background: var(--accent-faint);
   font-size: var(--text-sm);
 }
 
@@ -183,8 +183,8 @@
 }
 
 .directEmail:hover{
-  color: var(--gold);
-  border-color: var(--gold);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ── Right card ───────────────────────────────────────── */
@@ -222,7 +222,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 10%, rgba(202,163,58,.12), transparent 55%),
+    radial-gradient(circle at 20% 10%, rgb(var(--accent-rgb) / .12), transparent 55%),
     radial-gradient(circle at 80% 60%, rgba(24,47,104,.14), transparent 55%);
 }
 
@@ -291,8 +291,8 @@
 .field__input:hover{ border-color: rgba(255,255,255,.30); }
 
 .field__input:focus{
-  border-color: rgba(202,163,58,.80);
-  box-shadow: 0 0 0 4px rgba(202,163,58,.16);
+  border-color: rgb(var(--accent-rgb) / .80);
+  box-shadow: 0 0 0 4px rgb(var(--accent-rgb) / .16);
   background: #ffffff;
 }
 
@@ -326,7 +326,7 @@
   padding: 11px 20px;
   border-radius: 11px;
   border: none;
-  background: var(--gold);
+  background: var(--accent);
   color: var(--royal-deep);
   font-size: var(--text-sm);
   font-weight: var(--weight-black);
@@ -349,7 +349,7 @@
 }
 
 .submitBtn:focus-visible{
-  outline: 2px solid rgba(202,163,58,.85);
+  outline: 2px solid rgb(var(--accent-rgb) / .85);
   outline-offset: 3px;
 }
 
@@ -449,8 +449,8 @@
 }
 
 [data-theme='dark'] .socialPill:hover{
-  background: var(--gold-faint);
-  border-color: rgba(202,163,58,.35);
+  background: var(--accent-faint);
+  border-color: rgb(var(--accent-rgb) / .35);
   color: var(--text);
 }
 
@@ -460,11 +460,11 @@
 }
 
 [data-theme='dark'] .directEmail{
-  color: var(--gold);
-  border-color: rgba(202,163,58,.35);
+  color: var(--accent);
+  border-color: rgb(var(--accent-rgb) / .35);
 }
 
-[data-theme='dark'] .directEmail:hover{ color: var(--gold-soft); }
+[data-theme='dark'] .directEmail:hover{ color: var(--accent-soft); }
 
 [data-theme='dark'] .locationDot{ background: var(--royal-soft); }
 
@@ -554,7 +554,7 @@
 }
 
 .filterBtn:focus-visible{
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -657,8 +657,8 @@
 }
 
 .pCard__badge--primary{
-  border-color: rgba(202,163,58,.45);
-  background: rgba(202,163,58,.18);
+  border-color: rgb(var(--accent-rgb) / .45);
+  background: rgb(var(--accent-rgb) / .18);
 }
 
 .pCard__overlay{
@@ -803,7 +803,7 @@
 .btnLink:active{ transform: translateY(0); }
 
 .btnLink:focus-visible{
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -829,7 +829,7 @@
 .pCard__shell:hover .pCard__hint   { opacity: 1; transform: translateY(0); }
 
 .pCard__shell:focus-visible{
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--accent);
   outline-offset: 6px;
 }
 
