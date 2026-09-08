@@ -27,15 +27,6 @@
         </span>
       </a>
 
-      <!-- CENTER: Desktop links -->
-      <div class="navLinks" aria-label="Primary links">
-        <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a routerLink="/about"    routerLinkActive="isActive">About</a>
-        <a routerLink="/projects" routerLinkActive="isActive">Projects</a>
-        <a routerLink="/blog"     routerLinkActive="isActive">Blog</a>
-        <a routerLink="/contact"  routerLinkActive="isActive">Contact</a>
-      </div>
-
       <!-- RIGHT: Actions -->
       <div class="navActions">
 
@@ -52,7 +43,6 @@
 
         <!-- Resume CTA (desktop) -->
         <a class="ctaBtn" routerLink="/resume" aria-label="View Resume">
-          <span class="ctaBtn__dot" aria-hidden="true"></span>
           <span class="ctaBtn__label">Resume</span>
         </a>
 
@@ -113,24 +103,41 @@
       </a>
     </div>
 
-    <!-- Links + descriptions -->
-    <div class="menuGrid">
-      <nav class="menuLinks" aria-label="Drawer navigation">
-        <a routerLink="/"         routerLinkActive="isActive" [routerLinkActiveOptions]="{ exact: true }" (click)="close()">Home</a>
-        <a routerLink="/about"    routerLinkActive="isActive" (click)="close()">About</a>
-        <a routerLink="/projects" routerLinkActive="isActive" (click)="close()">Projects</a>
-        <a routerLink="/blog"     routerLinkActive="isActive" (click)="close()">Blog</a>
-        <a routerLink="/contact"  routerLinkActive="isActive" (click)="close()">Contact</a>
-      </nav>
+    <!-- Each link carries its own description, so the two are one accessible
+         unit. They used to be parallel columns that only looked paired, which
+         is why the description column needed aria-hidden. -->
+    <nav class="menuLinks" aria-label="Site sections">
+      <a
+        class="menuLink"
+        routerLink="/"
+        routerLinkActive="isActive"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="close()"
+      >
+        <span class="menuLink__label">Home</span>
+        <span class="menuLink__desc">Start here — who I am and what I do.</span>
+      </a>
 
-      <div class="menuDesc" aria-hidden="true">
-        <p class="menuDesc__hint">Start here — who I am and what I do.</p>
-        <p class="menuDesc__hint">My background, skills, and tools.</p>
-        <p class="menuDesc__hint">Selected web dev and UI/UX work.</p>
-        <p class="menuDesc__hint">Notes on Angular, CSS, and SEO.</p>
-        <p class="menuDesc__hint">Let's work together.</p>
-      </div>
-    </div>
+      <a class="menuLink" routerLink="/about" routerLinkActive="isActive" (click)="close()">
+        <span class="menuLink__label">About</span>
+        <span class="menuLink__desc">My background, skills, and tools.</span>
+      </a>
+
+      <a class="menuLink" routerLink="/projects" routerLinkActive="isActive" (click)="close()">
+        <span class="menuLink__label">Projects</span>
+        <span class="menuLink__desc">Selected web dev and UI/UX work.</span>
+      </a>
+
+      <a class="menuLink" routerLink="/blog" routerLinkActive="isActive" (click)="close()">
+        <span class="menuLink__label">Blog</span>
+        <span class="menuLink__desc">Notes on Angular, CSS, and SEO.</span>
+      </a>
+
+      <a class="menuLink" routerLink="/contact" routerLinkActive="isActive" (click)="close()">
+        <span class="menuLink__label">Contact</span>
+        <span class="menuLink__desc">Let's work together.</span>
+      </a>
+    </nav>
 
   </div>
 </div>

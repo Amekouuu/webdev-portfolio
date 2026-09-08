@@ -4,6 +4,12 @@ export interface Project {
   tag?: string;
   description: string;
   tools: string[];
+  /**
+   * The academic year the project was built, named by the calendar year it
+   * began: 2025 is the 2025–26 school year. Stored as a number so it sorts;
+   * academicYear() renders it as "2025–26".
+   */
+  yearStart: number;
   /** `webp` is served first via <picture>; `src` is the fallback for older browsers. */
   images: { src: string; alt: string; webp?: string }[];
   liveUrl: string;
@@ -20,6 +26,7 @@ export const PROJECTS: Project[] = [
     tag: 'Client Project + SEO Case Study',
     description: 'SEO blog + responsive UI for a used car dealership in Mabalacat.',
     tools: ['Angular', 'HTML', 'CSS', 'SEO'],
+    yearStart: 2025,
     images: [
       { src: '/assets/images/mjqualitycars-background.png', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
@@ -35,6 +42,7 @@ export const PROJECTS: Project[] = [
     tag: 'Academic Vue.js Case Study',
     description: 'A student planner app concept with simple task tracking and clean UI.',
     tools: ['Vue.js', 'JavaScript', 'CSS'],
+    yearStart: 2024,
     images: [
       { src: '/assets/images/domore-background.png', webp: '/assets/images/domore-background.webp', alt: 'Do More Student Planner Screenshot' },
     ],
@@ -50,6 +58,7 @@ export const PROJECTS: Project[] = [
     tag: 'Academic HTML/CSS + JavaScript Case Study',
     description: 'Mock coffee shop blog site with a focus on clean design and responsive layout made to simulate a real-world experience.',
     tools: ['HTML', 'CSS', 'JavaScript'],
+    yearStart: 2023,
     images: [
       { src: '/assets/images/cafe-crawl-background.png', webp: '/assets/images/cafe-crawl-background.webp', alt: 'Cafe Crawl Blog Site Screenshot' },
     ],
@@ -66,6 +75,7 @@ export const PROJECTS: Project[] = [
     description:
       'Designed a complete pharmacy website experience including landing, product listings, contact, email template, maps, and social mockups.',
     tools: ['Figma', 'UI/UX', 'Design System'],
+    yearStart: 2024,
     images: [
       { src: '/assets/images/sanvera-background.png', webp: '/assets/images/sanvera-background.webp', alt: 'Sanvera Pharmacy Figma Preview' },
     ],
@@ -82,6 +92,7 @@ export const PROJECTS: Project[] = [
     description:
       'Figma design for a featured page of a local food place called TopChillog.',
     tools: ['Figma', 'UI/UX', 'Components'],
+    yearStart: 2024,
     images: [
       { src: '/assets/images/topchillog-landing.png', webp: '/assets/images/topchillog-landing.webp', alt: 'TopChillog Figma Preview' },
     ],
@@ -93,3 +104,8 @@ export const PROJECTS: Project[] = [
 ];
 
 export const FEATURED_PROJECTS = PROJECTS.filter(p => p.featured).slice(0, 3);
+
+/** 2025 -> "2025–26". These are school years, so a single year would misstate them. */
+export function academicYear(p: Project): string {
+  return `${p.yearStart}–${String(p.yearStart + 1).slice(-2)}`;
+}

@@ -105,7 +105,10 @@
 
   /* ── Misc ─────────────────────────────────────────────────── */
   --grid:         rgba(255,255,255,.19);
-  --accent:       var(--royal);
+  /* --accent is declared once, in the Brand block above. A stale
+     `--accent: var(--royal)` used to sit here and, being later in the same
+     rule, silently won the cascade — so light mode painted navy while
+     --accent-rgb stayed steel blue and the two disagreed everywhere. */
   --accentText:   #ffffff;
   --cta:          var(--accent);
   --muted:        var(--text-muted);
@@ -143,6 +146,33 @@
   --tracking-wide:    0.08em;
   --tracking-wider:   0.14em;
   --tracking-widest:  0.20em;
+
+  /* ── Spacing scale ────────────────────────────────────────────
+     One scale, used everywhere. Anything that isn't on it (37px, 53px)
+     is what makes spacing read as accidental rather than authored. */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* Vertical rhythm between top-level page sections. */
+  --section-gap: clamp(var(--space-8), 7vw, var(--space-9));
+
+  /* ── Radius scale ─────────────────────────────────────────────
+     Deliberately small. Rounded-everything (12–16px on every card,
+     button and input) is the single loudest generated-UI tell.
+     --r-pill is reserved for things that are genuinely pill-shaped. */
+  --r-xs:   2px;
+  --r-sm:   3px;
+  --r-md:   4px;
+  --r-lg:   6px;
+  --r-pill: 999px;
 
   /* ── Motion ──────────────────────────────────────────────── */
   --ease-out: cubic-bezier(.2,.8,.2,1);
@@ -376,7 +406,12 @@ body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
 /* ================================================================
    UTILITIES
 ================================================================ */
-.u-accent{ color: var(--hero-accent); }
+.u-accent{ color: var(--accent); }
+/* Surfaces that stay dark in both themes need the pale accent instead —
+   var(--accent) is the dark light-mode blue and scores 3.8:1 on navy. */
+.pageCard .u-accent,
+.onDark .u-accent{ color: var(--hero-accent); }
+
 .u-muted{ color: var(--text-muted); }
 .u-kicker{
   font-size: var(--text-xs);
@@ -384,6 +419,138 @@ body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+/* ================================================================
+   SHARED PRIMITIVES
+   Editorial building blocks: a section masthead, a text action link,
+   and an inline tool list. Deliberately not components — they are
+   type and rules, so there is nothing to nest cards inside.
+================================================================ */
+
+/* ── Section head ───────────────────────────────────────────────
+   Title on the left, an optional action on the right, sitting on a
+   heavy rule. Replaces the centred heading + subtitle stack. */
+.sectionHead{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-4) var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--text);
+}
+
+.sectionHead__index{
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sectionHead__title{
+  margin: 0;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+}
+
+.sectionHead__note{
+  grid-column: 1;
+  margin: var(--space-3) 0 0;
+  max-width: 56ch;
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-soft);
+}
+
+/* ── Action link ────────────────────────────────────────────────
+   The site's only "button" shape outside forms: a label on a rule.
+   min-height keeps the hit area at/over the 24px WCAG 2.2 minimum. */
+.actionLink{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 32px;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--border-strong);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+}
+
+/* The same primitive is used on <button> (e.g. "Clear filters"), which needs
+   the UA's chrome stripped before it reads as the same control. */
+button.actionLink{
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.actionLink:hover{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.actionLink:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.actionLink__arrow{
+  display: inline-block;
+  transition: transform .18s var(--ease-out);
+}
+
+.actionLink:hover .actionLink__arrow{ transform: translateX(4px); }
+
+/* One filled action per view, so primary vs secondary is unambiguous. */
+.actionLink--primary{
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  color: var(--accent-on);
+}
+
+.actionLink--primary:hover{
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: var(--accent-on);
+}
+
+[data-theme='dark'] .actionLink,
+[data-theme='dark'] .actionLink:hover{ text-decoration: none; }
+
+/* ── Inline tool list ───────────────────────────────────────────
+   Technologies as a middot-separated line instead of a row of pills.
+   The separators are generated, so the markup stays a plain list. */
+.toolList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.toolList li + li::before{
+  content: "·";
+  margin-right: var(--space-2);
+  color: var(--text-faint);
 }
 
 .sr-only, .srOnly{
@@ -545,6 +712,18 @@ body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
   .pageIntro{ position: static; top: auto; }
   .pageIntro__title{ font-size: 36px; }
   .pageIntro__rule{ width: 160px; }
+}
+
+@media (max-width: 700px){
+  /* One column, reordered to title → note → action. In source the action
+     precedes the note so it can sit top-right on wide screens. */
+  .sectionHead{
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .sectionHead > *{ grid-column: 1; }
+  .sectionHead__note{ order: 1; }
+  .sectionHead > .actionLink{ order: 2; justify-self: start; }
 }
 
 @media (max-width: 520px){

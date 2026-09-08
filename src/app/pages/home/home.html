@@ -1,205 +1,197 @@
-<section class="home">
+<div class="home">
 
-  <!-- HERO -->
-  <section class="hero" aria-label="Hero section" appReveal>
-    <div class="hero__wrap">
+  <!-- =========================================================
+       MASTHEAD
+       The name is the H1 now. It used to be the tagline, with the
+       name demoted to a <p>, which spent the page's strongest
+       ranking signal on a phrase nobody searches for.
+  ========================================================== -->
+  <header class="masthead">
 
-      <!-- LEFT TEXT -->
-      <div class="hero__content heroIntro heroIntro--text">
-        <h1
-          class="hero__title h-serif heroIntro__item heroIntro__item--1 heroWords"
-          [attr.aria-label]="heroTitleA11y"
-        >
-          <span class="heroWord" style="--w: 0">still</span>
-          <span class="heroWord" style="--w: 1">learning,</span>
-          <br />
-          <span class="heroWord" style="--w: 2">still</span>
-          <span class="heroWord" style="--w: 3">building</span>
-        </h1>
-
-        <p
-          class="hero__sub heroIntro__item heroIntro__item--2 heroSubWords"
-          aria-label="Hero subtitle"
-        >
-          <span class="heroWord heroWord--sub" style="--w: 4">Micko</span>
-          <span class="heroWord heroWord--sub" style="--w: 5">Q.</span>
-          <span class="heroWord heroWord--sub" style="--w: 6">Alberto</span>
-          <span class="heroSubSep">—</span>
-          <span class="heroWord heroWord--sub" style="--w: 7">IT</span>
-          <span class="heroWord heroWord--sub" style="--w: 8">STUDENT</span>
-          <span class="heroSubSep">(</span>
-          <span class="heroWord heroWord--sub" style="--w: 9">WEB</span>
-          <span class="heroWord heroWord--sub" style="--w: 10">DEV</span>
-          <span class="heroSubSep">)</span>
-          <span class="heroSubSep">•</span>
-          <span class="heroWord heroWord--sub" style="--w: 11">SEO-FOCUSED</span>
-        </p>
-
-        <p class="hero__body heroIntro__item heroIntro__item--3" [innerHTML]="intro"></p>
-
-        <ul class="status heroIntro__item heroIntro__item--4" aria-label="Quick status">
-          <li
-            class="status__row"
-            *ngFor="let s of statusLines"
-            [class.is-visible]="s.visible"
-            [class.is-loading]="s.loading"
-            [class.is-done]="s.done"
-          >
-            <span class="status__icon" aria-hidden="true">{{ s.icon }}</span>
-
-            <span class="status__text">
-              <span class="status__loadingbar" aria-hidden="true"></span>
-
-              <ng-container *ngIf="s.isTime; else notTime">
-                {{ '' | localTime }} — PHT (GMT+8)
-              </ng-container>
-
-              <ng-template #notTime>
-                <a
-                  *ngIf="s.link; else regularText"
-                  [href]="s.link"
-                  target="_blank"
-                  class="status__link"
-                  rel="noopener noreferrer"
-                >{{ s.text }}</a>
-
-                <ng-template #regularText>{{ s.text }}</ng-template>
-              </ng-template>
-            </span>
-          </li>
-        </ul>
-
-        <div class="hero__actions heroIntro__item heroIntro__item--5">
-          <a class="heroBtn" routerLink="/projects">View My Projects</a>
-          <a
-            class="heroBtn heroBtn--ghost"
-            href="assets/Micko_Alberto_Resume.pdf"
-            target="_blank"
-            rel="noopener"
-          >View My Resume</a>
-          <a class="heroBtn heroBtn--ghost" routerLink="/contact">Reach Out!</a>
-        </div>
-      </div>
-
-      <!-- RIGHT VISUAL -->
-      <div class="hero__grid heroIntro heroIntro--visual" aria-hidden="true">
-        <div class="hero__gridLines heroIntro__gridLines"></div>
-        <picture>
-          <source srcset="/assets/images/profile-photo-transparent.webp" type="image/webp" />
-          <img
-            src="/assets/images/profile-photo-transparent.png"
-            alt=""
-            class="hero__portrait heroIntro__portrait"
-          />
-        </picture>
-      </div>
-
+    <div class="masthead__rule">
+      <span class="masthead__mark">Portfolio</span>
+      <span class="masthead__year">Pampanga, PH — 2026</span>
     </div>
-  </section>
 
-  <hr class="home__divider" aria-hidden="true" />
+    <div class="masthead__body">
+      <h1 class="masthead__title">
+        <span class="masthead__name">{{ name }}</span>
+        <span class="masthead__tagline h-serif">{{ tagline }}</span>
+      </h1>
 
-  <!-- WHAT I DO -->
-  <section class="whatSection" aria-label="Capabilities" appReveal>
-    <div class="capFrame">
-      <div class="capWrap">
+      <p class="masthead__role">{{ role }}</p>
 
-        <!-- LEFT SIDE -->
-        <aside class="capLeft" appReveal>
-          <div class="capLeft__kicker">CAPABILITIES</div>
-          <h2 class="capLeft__title">WHAT I BRING<br />TO THE TABLE<span class="capDot">.</span></h2>
-          <p class="capLeft__desc">
-            I don't just write code — I build clean, structured systems with strong UX and SEO foundations.
-            I like turning "messy ideas" into pages that feel simple to use.
-          </p>
-          <a class="capLeft__btn" routerLink="/about">
-            ABOUT ME <span aria-hidden="true">→</span>
-          </a>
-        </aside>
+      <p class="masthead__lede" [innerHTML]="intro"></p>
 
-        <!-- RIGHT SIDE -->
-        <div class="capRight" role="list">
-          <article
-            class="capRow"
-            role="listitem"
-            *ngFor="let c of capabilities; let i = index"
-            [class.is-open]="activeCap === i"
-            (click)="toggleCap(i)"
-            (keydown.enter)="toggleCap(i)"
-            (keydown.space)="toggleCap(i); $event.preventDefault()"
-            tabindex="0"
-            appReveal
-            [style.--delay]="(i * 120) + 'ms'"
-          >
-            <div class="capRow__top">
-              <div class="capRow__num">0{{ i + 1 }}</div>
-
-              <div class="capRow__main">
-                <h3 class="capRow__title">{{ c.title }}</h3>
-                <div class="capPills" aria-label="Tools / skills">
-                  <span class="capPill" *ngFor="let t of c.pills">{{ t }}</span>
-                </div>
-              </div>
-
-              <button
-                class="capRow__toggle"
-                type="button"
-                (click)="$event.stopPropagation(); toggleCap(i)"
-                [attr.aria-expanded]="activeCap === i"
-                [attr.aria-controls]="'capPanel' + i"
-              >
-                <span class="capRow__toggleIcon" aria-hidden="true">
-                  {{ activeCap === i ? '×' : '+' }}
-                </span>
-                <span class="srOnly">{{ activeCap === i ? 'Collapse' : 'Expand' }} {{ c.title }}</span>
-              </button>
-            </div>
-
-            <div
-              class="capRow__panel"
-              [id]="'capPanel' + i"
-              [attr.aria-hidden]="activeCap !== i"
-            >
-              <div class="capRow__panelInner">
-                <div class="capRow__badge" aria-hidden="true">{{ c.badge }}</div>
-                <p class="capRow__desc">{{ c.desc }}</p>
-              </div>
-            </div>
-          </article>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURED PROJECTS BAND -->
-  <section class="featuredBand" aria-label="Featured projects" appReveal>
-    <div class="featuredBand__inner">
-
-      <div class="featuredBand__header">
-        <app-section-header
-          title="Featured Projects"
-          subtitle="A selection of my recent work."
-        ></app-section-header>
-      </div>
-
-      <div class="featured__grid">
-        <app-project-card
-          class="featuredCard"
-          *ngFor="let p of featured; let i = index"
-          [project]="p"
-          appReveal
-          [style.--delay]="(i * 140) + 'ms'"
-        ></app-project-card>
-      </div>
-
-      <div class="featuredBand__footer">
-        <a class="featuredMoreBtn" routerLink="/projects">
-          View More Projects <span aria-hidden="true">→</span>
+      <nav class="masthead__actions" aria-label="Primary actions">
+        <a class="actionLink actionLink--primary" routerLink="/projects">
+          Selected work <span class="actionLink__arrow" aria-hidden="true">→</span>
         </a>
-      </div>
-
+        <a
+          class="actionLink"
+          href="assets/Micko_Alberto_Resume.pdf"
+          target="_blank"
+          rel="noopener"
+        >Résumé</a>
+        <a class="actionLink" routerLink="/contact">Get in touch</a>
+      </nav>
     </div>
+
+    <figure class="masthead__portrait">
+      <picture>
+        <source srcset="/assets/images/profile-photo-transparent.webp" type="image/webp" />
+        <img
+          src="/assets/images/profile-photo-transparent.png"
+          alt="Micko Alberto"
+          fetchpriority="high"
+        />
+      </picture>
+    </figure>
+
+  </header>
+
+  <!-- =========================================================
+       NOW — the old status list, as a plain definition list.
+       Same five facts; no icons, no simulated loading bars.
+  ========================================================== -->
+  <section class="now" aria-label="Current status">
+    <dl class="now__list">
+      <div class="now__item" *ngFor="let n of now">
+        <dt class="now__label">{{ n.label }}</dt>
+        <dd class="now__value">
+          <ng-container *ngIf="n.isTime; else nowText">
+            {{ '' | localTime }} — PHT (GMT+8)
+          </ng-container>
+
+          <ng-template #nowText>
+            <a
+              *ngIf="n.link; else nowPlain"
+              class="now__link"
+              [href]="n.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ n.value }}</a>
+
+            <ng-template #nowPlain>{{ n.value }}</ng-template>
+          </ng-template>
+        </dd>
+      </div>
+    </dl>
   </section>
 
-</section>
+  <!-- =========================================================
+       WHAT I DO
+       Flat numbered rows. Descriptions used to be collapsed behind
+       a "+" — they are the point of the section, so they are open.
+  ========================================================== -->
+  <section class="capabilities" aria-labelledby="capabilitiesTitle">
+
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">What I do</span>
+        <h2 class="sectionHead__title" id="capabilitiesTitle">What I bring to the table</h2>
+      </div>
+      <a class="actionLink" routerLink="/about">
+        About me <span class="actionLink__arrow" aria-hidden="true">→</span>
+      </a>
+      <p class="sectionHead__note">
+        I don't just write code — I build clean, structured systems with strong UX and SEO
+        foundations. I like turning messy ideas into pages that feel simple to use.
+      </p>
+    </div>
+
+    <ol class="capList">
+      <li class="capItem" *ngFor="let c of capabilities; let i = index">
+        <span class="capItem__num" aria-hidden="true">{{ index(i) }}</span>
+        <h3 class="capItem__title">{{ c.title }}</h3>
+        <p class="capItem__desc">{{ c.desc }}</p>
+        <ul class="toolList capItem__tools" [attr.aria-label]="c.title + ' tools'">
+          <li *ngFor="let t of c.tools">{{ t }}</li>
+        </ul>
+      </li>
+    </ol>
+
+  </section>
+
+  <!-- =========================================================
+       SELECTED WORK
+       A numbered index, not a three-up card grid — the grid lives
+       on /projects, where searching and sorting belong.
+  ========================================================== -->
+  <section class="work" aria-labelledby="workTitle">
+
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Selected work</span>
+        <h2 class="sectionHead__title" id="workTitle">Things I've built</h2>
+      </div>
+      <a class="actionLink" routerLink="/projects">
+        All projects <span class="actionLink__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <ol class="workList">
+      <li class="workItem" *ngFor="let p of featured; let i = index">
+
+        <div class="workItem__head">
+          <span class="workItem__num" aria-hidden="true">{{ index(i) }}</span>
+
+          <div class="workItem__titles">
+            <h3 class="workItem__title">
+              <a
+                class="workItem__link"
+                [href]="p.liveUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+              >{{ p.name }}</a>
+            </h3>
+            <span class="workItem__kind" *ngIf="p.tag">{{ p.tag }}</span>
+          </div>
+
+          <span class="workItem__year">{{ academicYear(p) }}</span>
+        </div>
+
+        <figure class="workItem__shot">
+          <picture>
+            <source *ngIf="p.images[0].webp" [srcset]="p.images[0].webp" type="image/webp" />
+            <img
+              [src]="p.images[0].src"
+              [alt]="p.images[0].alt"
+              [style.object-position]="p.imgPos || 'center'"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+
+        <div class="workItem__meta">
+          <p class="workItem__desc">{{ p.description }}</p>
+
+          <ul class="toolList" [attr.aria-label]="p.name + ' tools'">
+            <li *ngFor="let t of p.tools">{{ t }}</li>
+          </ul>
+
+          <div class="workItem__links">
+            <a
+              class="actionLink"
+              [href]="p.liveUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Visit site <span class="actionLink__arrow" aria-hidden="true">→</span></a>
+
+            <a
+              class="actionLink"
+              *ngIf="p.repoUrl"
+              [href]="p.repoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Source</a>
+          </div>
+        </div>
+
+      </li>
+    </ol>
+
+  </section>
+
+</div>

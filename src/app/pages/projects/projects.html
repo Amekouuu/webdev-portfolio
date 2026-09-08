@@ -1,126 +1,144 @@
-<section class="projects">
-  <app-section-header
-    title="Projects"
-    subtitle="Selected web dev and UI/UX work — built and documented for real-world use."
-  ></app-section-header>
+<div class="projects">
 
-  <!-- FILTER MENU -->
-  <div class="projects__filters" role="tablist" aria-label="Project filters">
-    <button
-      type="button"
-      class="filterBtn"
-      [class.isActive]="activeFilter === 'all'"
-      (click)="setFilter('all')"
-      role="tab"
-      [attr.aria-selected]="activeFilter === 'all'"
-    >
-      All
-    </button>
+  <!-- This page had no <h1> at all — its hierarchy started at <h2>. -->
+  <header class="sectionHead">
+    <div>
+      <span class="sectionHead__index">Work</span>
+      <h1 class="sectionHead__title">Projects</h1>
+    </div>
+    <p class="sectionHead__note">
+      Selected web dev and UI/UX work — built and documented for real-world use.
+    </p>
+  </header>
 
-    <button
-      type="button"
-      class="filterBtn"
-      [class.isActive]="activeFilter === 'web'"
-      (click)="setFilter('web')"
-      role="tab"
-      [attr.aria-selected]="activeFilter === 'web'"
-    >
-      Web Dev
-    </button>
+  <!-- =========================================================
+       CONTROLS — search, filter, sort
+  ========================================================== -->
+  <div class="controls">
 
-    <button
-      type="button"
-      class="filterBtn"
-      [class.isActive]="activeFilter === 'design'"
-      (click)="setFilter('design')"
-      role="tab"
-      [attr.aria-selected]="activeFilter === 'design'"
-    >
-      UI / UX
-    </button>
+    <div class="search">
+      <label class="srOnly" for="projectSearch">Search projects</label>
+      <input
+        class="search__input"
+        id="projectSearch"
+        #searchBox
+        type="search"
+        autocomplete="off"
+        placeholder="Search by name, tool, or keyword"
+        [value]="query"
+        (input)="setQuery(searchBox.value)"
+      />
+      <button
+        class="search__clear"
+        type="button"
+        *ngIf="query"
+        (click)="setQuery(''); searchBox.value = ''; searchBox.focus()"
+        aria-label="Clear search"
+      >Clear</button>
+    </div>
+
+    <!-- role="group" + aria-pressed, not tablist/tab: these toggle a list in
+         place, and there are no tabpanels for tabs to control. -->
+    <div class="filters" role="group" aria-label="Filter by type">
+      <button
+        class="filter"
+        type="button"
+        *ngFor="let f of filters"
+        [class.isActive]="activeFilter === f.value"
+        [attr.aria-pressed]="activeFilter === f.value"
+        (click)="setFilter(f.value)"
+      >{{ f.label }}</button>
+    </div>
+
+    <div class="sort">
+      <label class="sort__label" for="projectSort">Sort</label>
+      <select
+        class="sort__select"
+        id="projectSort"
+        #sortBox
+        [value]="activeSort"
+        (change)="setSort(sortBox.value)"
+      >
+        <option *ngFor="let s of sorts" [value]="s.value">{{ s.label }}</option>
+      </select>
+    </div>
+
   </div>
 
-  <div class="projects__grid" role="list">
-    <article class="pCard" role="listitem" *ngFor="let p of filteredProjects">
-      <div
-        class="pCard__shell"
-        role="link"
-        tabindex="0"
-        (click)="openProject(p)"
-        (keydown)="onCardKeydown($event, p)"
-        [attr.aria-label]="'Open ' + p.name"
-      >
-        <!-- MEDIA -->
-        <div class="pCard__media">
-          <picture *ngIf="p.images.length">
-            <source
-              *ngIf="p.images[0].webp"
-              [srcset]="p.images[0].webp"
-              type="image/webp"
-            />
-            <img
-              class="pCard__img"
-              [src]="p.images[0].src"
-              [alt]="p.images[0].alt || (p.name + ' preview')"
-              loading="lazy"
-              decoding="async"
-              [style.object-position]="p.imgPos || 'center'"
-            />
-          </picture>
+  <p class="resultCount" role="status" aria-live="polite">{{ resultLabel }}</p>
 
-          <span class="pCard__sheen" aria-hidden="true"></span>
+  <!-- =========================================================
+       GRID
+  ========================================================== -->
+  <ul class="projectGrid" *ngIf="visible.length; else noResults">
+    <li class="pCard" *ngFor="let p of visible">
 
-          <div class="pCard__badges" *ngIf="p.tag || (p.tools && p.tools.length)">
-            <span class="pCard__badge pCard__badge--primary" *ngIf="p.tag">
-              {{ p.tag }}
-            </span>
-            <span class="pCard__badge" *ngIf="p.tools.length > 0">{{ p.tools[0] }}</span>
-            <span class="pCard__badge" *ngIf="p.tools.length > 1">{{ p.tools[1] }}</span>
-          </div>
+      <figure class="pCard__shot">
+        <picture *ngIf="p.images.length">
+          <source *ngIf="p.images[0].webp" [srcset]="p.images[0].webp" type="image/webp" />
+          <img
+            [src]="p.images[0].src"
+            [alt]="p.images[0].alt || (p.name + ' preview')"
+            [style.object-position]="p.imgPos || 'center'"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </figure>
 
-          <div class="pCard__overlay" aria-hidden="true">
-            <div class="pCard__overlayTitle">{{ p.name }}</div>
-            <div class="pCard__overlayCta">View project →</div>
-          </div>
+      <div class="pCard__body">
+        <div class="pCard__meta">
+          <span class="pCard__kind">{{ p.tag || typeLabel(p) }}</span>
+          <span class="pCard__year">{{ academicYear(p) }}</span>
         </div>
 
-        <!-- BODY -->
-        <div class="pCard__body">
-          <p class="pCard__desc">{{ p.description }}</p>
+        <!-- A real anchor, stretched over the card by CSS. This used to be a
+             <div role="link"> with hand-rolled Enter/Space handling. -->
+        <h2 class="pCard__title">
+          <a
+            class="pCard__link"
+            [href]="p.liveUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ p.name }}</a>
+        </h2>
 
-          <ul class="pCard__chips" *ngIf="p.tools.length">
-            <li *ngFor="let t of p.tools">{{ t }}</li>
-          </ul>
+        <p class="pCard__desc">{{ p.description }}</p>
 
-          <div class="pCard__footer">
-            <div class="pCard__actions">
-              <a
-                *ngIf="p.repoUrl"
-                class="btnLink btnLink--ghost"
-                [href]="p.repoUrl"
-                target="_blank"
-                rel="noopener"
-                (click)="stop($event)"
-              >
-                GitHub
-              </a>
+        <ul class="toolList pCard__tools" [attr.aria-label]="p.name + ' tools'">
+          <li *ngFor="let t of p.tools">{{ t }}</li>
+        </ul>
 
-              <a
-                *ngIf="p.type === 'design'"
-                class="btnLink btnLink--ghost"
-                [href]="p.liveUrl"
-                target="_blank"
-                rel="noopener"
-                (click)="stop($event)"
-              >
-                Figma
-              </a>
-            </div>
+        <div class="pCard__links">
+          <span class="pCard__primary" aria-hidden="true">
+            {{ primaryLinkLabel(p) }} <span class="actionLink__arrow">→</span>
+          </span>
 
-            <span class="pCard__hint" aria-hidden="true">Click card to open</span>
-          </div>
+          <a
+            class="actionLink pCard__repo"
+            *ngIf="p.repoUrl"
+            [href]="p.repoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Source</a>
         </div>
       </div>
-    </article>
-  </div>
-</section>
+
+    </li>
+  </ul>
+
+  <!-- Empty state: says what was searched and offers the way out. -->
+  <ng-template #noResults>
+    <div class="emptyState">
+      <p class="emptyState__title">No projects match that.</p>
+      <p class="emptyState__hint">
+        <ng-container *ngIf="query">Nothing found for “{{ query }}”. </ng-container>
+        Try a different keyword, or clear what's set.
+      </p>
+      <button class="actionLink" type="button" (click)="clearFilters()">
+        Clear filters
+      </button>
+    </div>
+  </ng-template>
+
+</div>

@@ -1,375 +1,213 @@
-<section class="aboutPage">
+<div class="about">
 
-  <!-- TOP BAR / QUICK NAV -->
-  <nav class="topNav" aria-label="About quick navigation" appReveal>
-    <div class="topNav__chips" role="navigation" aria-label="Jump to section">
-      <button
-        type="button"
-        class="chip"
-        [ngClass]="{ 'isActive': activeSection === 'work' }"
-        (click)="scrollTo('work')"
-      >
-        How I Work
-      </button>
+  <!-- =========================================================
+       INTRO
+  ========================================================== -->
+  <header class="intro">
 
-      <button
-        type="button"
-        class="chip"
-        [ngClass]="{ 'isActive': activeSection === 'skills' || activeSection === 'certs' }"
-        (click)="scrollTo('skills')"
-      >
-        Skills & Certs
-      </button>
+    <figure class="intro__portrait">
+      <picture>
+        <source *ngIf="profile.imageWebp" [srcset]="profile.imageWebp" type="image/webp" />
+        <img [src]="profile.imageUrl" [alt]="profile.imageAlt" fetchpriority="high" />
+      </picture>
+    </figure>
 
-      <button
-        type="button"
-        class="chip chip--primary"
-        [ngClass]="{ 'isActive': activeSection === 'resume' }"
-        (click)="scrollTo('resume')"
-      >
-        Resume
-      </button>
+    <div class="intro__body">
+      <span class="intro__kicker">SEO · Front-end · Performance</span>
+
+      <!-- Carries the full name, not just "Micko" — this is the second
+           strongest name signal on the site after the homepage H1. -->
+      <!-- aria-label because the two spans are grid items on separate lines:
+           without it the accessible name runs together as "Hi, I'mMicko Alberto". -->
+      <h1 class="intro__title" aria-label="Hi, I'm Micko Alberto">
+        <span class="intro__hi">Hi, I'm</span>
+        <span class="intro__name">Micko Alberto</span>
+      </h1>
+
+      <p class="intro__role">{{ profile.role }}</p>
+
+      <p class="intro__para" *ngFor="let p of introParagraphs">{{ p }}</p>
+
+      <dl class="quickFacts">
+        <div class="quickFact" *ngFor="let f of quickFacts">
+          <dt class="quickFact__label">{{ f.label }}</dt>
+          <dd class="quickFact__value">{{ f.value }}</dd>
+        </div>
+      </dl>
+
+      <nav class="intro__socials" aria-label="Profiles and contact">
+        <a
+          class="actionLink"
+          *ngFor="let s of socials"
+          [href]="s.url"
+          [attr.target]="s.url.startsWith('mailto:') ? null : '_blank'"
+          rel="noopener noreferrer"
+        >{{ s.label }}</a>
+      </nav>
     </div>
-  </nav>
 
-  <!-- HERO -->
-  <header id="intro" class="hero" appReveal>
-    <div class="hero__inner">
-
-      <!-- LEFT: Portrait + socials -->
-      <aside class="heroMedia" aria-label="Profile photo">
-        <div class="heroMedia__frame">
-          <picture>
-            <source
-              *ngIf="profile.imageWebp"
-              [srcset]="profile.imageWebp"
-              type="image/webp"
-            />
-            <img
-              class="heroMedia__img"
-              [src]="profile.imageUrl || 'assets/images/about-profile-transparent.png'"
-              [alt]="profile.imageAlt"
-              loading="lazy"
-            />
-          </picture>
-        </div>
-
-        <div class="heroMedia__meta">
-          <div class="heroMedia__role">{{ profile.role }}</div>
-
-          <div class="heroMedia__socials" aria-label="Social links">
-            <a
-              class="socialBtn"
-              *ngFor="let s of socials"
-              [href]="s.url"
-              target="_blank"
-              rel="noopener"
-              [attr.aria-label]="s.label"
-              title="{{ s.label }}"
-            >
-              <img class="socialBtn__icon" [src]="s.iconSrc" [alt]="s.iconAlt" />
-              <span class="socialBtn__label">{{ s.label }}</span>
-            </a>
-          </div>
-        </div>
-      </aside>
-
-      <!-- RIGHT: Strong value prop + proof -->
-      <section class="heroContent" aria-label="Introduction">
-        <div class="heroTopLine">
-          <span class="kDot" aria-hidden="true"></span>
-          <span class="heroTopLine__text">SEO • FRONT-END • PERFORMANCE</span>
-        </div>
-
-        <h1 class="heroTitle">
-          HI, I'M <span class="heroTitle__name">{{ heroName }}</span><span class="heroTitle__dot">.</span>
-        </h1>
-
-        <div class="heroRole" aria-label="Role headline">
-          <span class="heroRole__pill">{{ roleHeadline }}</span>
-        </div>
-
-        <p class="heroSubtitle">{{ subtitle }}</p>
-
-        <div class="heroBody">
-          <p class="para" *ngFor="let p of introParagraphs">{{ p }}</p>
-        </div>
-
-        <!-- OPTIONAL: Featured project card -->
-        <article class="feat" *ngIf="featuredProject" aria-label="Featured project">
-          <div class="feat__top">
-            <div class="feat__kicker">
-              <span class="feat__dot" aria-hidden="true"></span>
-              Featured project
-            </div>
-            <div class="feat__title">{{ featuredProject.title }}</div>
-            <div class="feat__desc">{{ featuredProject.desc }}</div>
-          </div>
-
-          <ul class="feat__chips" aria-label="Project tech">
-            <li class="feat__chip" *ngFor="let t of featuredProject.tech">{{ t }}</li>
-          </ul>
-
-          <div class="feat__actions" aria-label="Project actions">
-            <a class="btn btn--solid" [href]="featuredProject.primaryUrl" target="_blank" rel="noopener">
-              {{ featuredProject.primaryLabel }}
-            </a>
-            <a class="btn btn--subtle" [href]="featuredProject.secondaryUrl" target="_blank" rel="noopener">
-              {{ featuredProject.secondaryLabel }}
-            </a>
-          </div>
-        </article>
-
-        <div class="facts" role="list" aria-label="Quick facts">
-          <div class="fact" role="listitem" *ngFor="let f of quickFacts">
-            <div class="fact__label">{{ f.label }}</div>
-            <div class="fact__value">{{ f.value }}</div>
-          </div>
-        </div>
-
-        <div class="heroActions">
-          <button type="button" class="btn btn--ghost" (click)="scrollTo('work')">
-            Explore how I work →
-          </button>
-          <button type="button" class="btn btn--accent" (click)="scrollTo('resume')">
-            Get resume PDF
-          </button>
-        </div>
-      </section>
-
-    </div>
   </header>
 
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- EDUCATION -->
-  <section id="education" class="panel" appReveal>
-    <div class="panel__head">
-      <div class="sectionKicker">
-        <span class="kDot" aria-hidden="true"></span>
-        <span class="kText">Education</span>
+  <!-- =========================================================
+       EDUCATION
+  ========================================================== -->
+  <section class="section" aria-labelledby="educationTitle">
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Education</span>
+        <h2 class="sectionHead__title" id="educationTitle">Where I'm studying</h2>
       </div>
-      <h2 class="panel__title">Where I'm studying</h2>
-      <p class="panel__sub">A quick snapshot of my current track and highlights.</p>
     </div>
 
-    <div class="eduGrid">
-      <article class="eduCard" *ngFor="let e of education">
-        <div class="eduCard__top">
-          <div class="eduCard__badge">{{ e.years }}</div>
-          <div class="eduCard__school">{{ e.school }}</div>
+    <ol class="eduList">
+      <li class="eduItem" *ngFor="let e of education">
+        <div class="eduItem__when">{{ e.years }}</div>
+
+        <div class="eduItem__what">
+          <h3 class="eduItem__school" *ngIf="e.school">{{ e.school }}</h3>
+          <p class="eduItem__program" *ngIf="e.program">{{ e.program }}</p>
+
+          <ul class="eduItem__notes">
+            <li *ngFor="let h of e.highlights">{{ h }}</li>
+          </ul>
         </div>
-        <div class="eduCard__program">{{ e.program }}</div>
-        <ul class="eduCard__list" aria-label="Education highlights">
-          <li *ngFor="let h of e.highlights">{{ h }}</li>
-        </ul>
-      </article>
+      </li>
+    </ol>
+  </section>
+
+  <!-- =========================================================
+       STACK — a ledger, not a wall of logo tiles. Each row says
+       where the tool was actually used, pulled from the project data.
+  ========================================================== -->
+  <section class="section" aria-labelledby="stackTitle">
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Stack</span>
+        <h2 class="sectionHead__title" id="stackTitle">What I build with</h2>
+      </div>
+      <p class="sectionHead__note">
+        Every tool here is one I've shipped something with — the right-hand column
+        says which project, so this is a record rather than a wish list.
+      </p>
+    </div>
+
+    <div class="techGroup" *ngFor="let group of techGroups">
+      <h3 class="techGroup__title">{{ group.title }}</h3>
+
+      <ul class="techList">
+        <li class="techRow" *ngFor="let item of group.items">
+          <img
+            class="techRow__icon"
+            [src]="item.iconSrc"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            width="24"
+            height="24"
+          />
+
+          <span class="techRow__name">{{ item.name }}</span>
+
+          <span class="techRow__where">
+            <ng-container *ngIf="usedIn(item.name).length; else techNote">
+              {{ usedIn(item.name).join(' · ') }}
+            </ng-container>
+            <ng-template #techNote>{{ item.note }}</ng-template>
+          </span>
+
+          <span class="techRow__count" *ngIf="usedIn(item.name).length">
+            {{ usageLabel(item.name) }}
+          </span>
+
+          <span class="techRow__rule" aria-hidden="true"></span>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="personal" class="panel" appReveal>
-    <div class="panel__head">
-      <div class="sectionKicker">
-        <span class="kDot" aria-hidden="true"></span>
-        <span class="kText">About</span>
-      </div>
-      <h2 class="panel__title">{{ aboutTitle }}</h2>
-      <p class="panel__sub">Quick context on what I care about when building sites.</p>
-    </div>
-
-    <div class="storyCard">
-      <div class="storyCard__body">
-        <p class="para" *ngFor="let p of aboutBody">{{ p }}</p>
-      </div>
-      <div class="storyCard__note" aria-label="Note">
-        <span class="noteDot" aria-hidden="true"></span>
-        <span>{{ aboutNote }}</span>
+  <!-- =========================================================
+       CREDENTIALS — flat and scannable. This was a carousel that
+       showed one issuer at a time and hid the rest behind chips.
+  ========================================================== -->
+  <section class="section" aria-labelledby="certsTitle">
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Credentials</span>
+        <h2 class="sectionHead__title" id="certsTitle">Certifications</h2>
       </div>
     </div>
-  </section>
 
-  <div class="divider" aria-hidden="true"></div>
+    <div class="certGroup" *ngFor="let g of certGroups">
+      <h3 class="certGroup__issuer">{{ g.issuer }}</h3>
 
-  <!-- HOW I WORK -->
-  <section id="work" class="panel" appReveal>
-    <div class="panel__head">
-      <div class="sectionKicker">
-        <span class="kDot" aria-hidden="true"></span>
-        <span class="kText">Approach</span>
-      </div>
-      <h2 class="panel__title">{{ howIWorkTitle }}</h2>
-      <p class="panel__sub">Calm, practical, and focused on real users.</p>
-    </div>
-
-    <div class="workGrid">
-      <article class="workCard" *ngFor="let w of howIWorkPoints">
-        <span class="workCard__rule" aria-hidden="true"></span>
-        <h3 class="workCard__title">{{ w.title }}</h3>
-        <p class="workCard__desc">{{ w.desc }}</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- SKILLS + CERTS -->
-  <div class="skillsCertRow">
-
-    <section id="skills" class="panel panel--tight" appReveal>
-      <div class="panel__head">
-        <div class="sectionKicker">
-          <span class="kDot" aria-hidden="true"></span>
-          <span class="kText">Stack</span>
-        </div>
-        <h2 class="panel__title">Tech skills</h2>
-        <p class="panel__sub">Core technologies I build with and tools I use regularly.</p>
-      </div>
-
-      <div class="techGroup" *ngFor="let group of techGroups">
-        <h3 class="techGroup__title">{{ group.title }}</h3>
-        <div class="skillsLogos">
-          <div class="skillLogo" *ngFor="let item of group.items">
-            <div class="skillLogo__iconWrap">
-              <img
-                class="skillLogo__icon"
-                [src]="item.iconSrc"
-                [alt]="item.iconAlt || (item.name + ' logo')"
-                loading="lazy"
-              />
-            </div>
-            <div class="skillLogo__name">{{ item.name }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="certs" class="panel panel--tight" appReveal>
-      <div class="panel__head">
-        <div class="sectionKicker">
-          <span class="kDot" aria-hidden="true"></span>
-          <span class="kText">Credentials</span>
-        </div>
-        <h2 class="panel__title">Certifications</h2>
-        <p class="panel__sub">Grouped by issuer — tap a chip or use prev/next.</p>
-      </div>
-
-      <div class="issuerTabs" *ngIf="certGroups.length">
-        <button
-          type="button"
-          class="issuerTabs__chip"
-          *ngFor="let g of certGroups; let i = index"
-          [ngClass]="{ 'isActive': i === activeIssuerIndex }"
-          (click)="selectIssuer(i)"
-        >
-          {{ g.issuer }}
-        </button>
-      </div>
-
-      <div class="issuerNav" *ngIf="activeGroup as g">
-        <button type="button" class="issuerNav__btn" (click)="prevIssuer()">← Prev</button>
-        <div class="issuerNav__title">
-          <div class="issuerNav__label">Issuer</div>
-          <div class="issuerNav__name">{{ g.issuer }}</div>
-        </div>
-        <button type="button" class="issuerNav__btn" (click)="nextIssuer()">Next →</button>
-      </div>
-
-      <div class="certList">
-        <ng-container *ngIf="activeGroup as g">
+      <ul class="certList">
+        <li class="certRow" *ngFor="let c of g.certs">
           <a
-            class="certCard"
-            *ngFor="let c of g.certs"
+            class="certRow__link"
             [href]="c.url"
             target="_blank"
-            rel="noopener"
-          >
-            <div class="certCard__name">{{ c.name }}</div>
-            <div class="certCard__meta">
-              <span class="certCard__issuer">{{ c.issuer }}</span>
-              <span class="certCard__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
-            </div>
-            <div class="certCard__cta">Open credential →</div>
-          </a>
-        </ng-container>
-      </div>
-    </section>
+            rel="noopener noreferrer"
+          >{{ c.name }}</a>
+          <span class="certRow__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-  </div>
-
-  <!-- FUN FACTS -->
-  <section id="fun" class="panel" appReveal>
-    <div class="panel__head">
-      <div class="sectionKicker">
-        <span class="kDot" aria-hidden="true"></span>
-        <span class="kText">Fun facts</span>
+  <!-- =========================================================
+       FUN FACTS — a small terminal. Every command's output is in
+       the DOM, so nothing here depends on JS to be readable.
+  ========================================================== -->
+  <section class="section" aria-labelledby="funTitle">
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Fun facts</span>
+        <h2 class="sectionHead__title" id="funTitle">The "Amekou" name</h2>
       </div>
-      <h2 class="panel__title">{{ gamer.title }}</h2>
-      <p class="panel__sub">A small detail, but it's part of my identity online.</p>
+      <p class="sectionHead__note">
+        A small detail, but it's part of my identity online. Pick a command.
+      </p>
     </div>
 
-    <div class="storyCard">
-      <div class="storyCard__body">
-        <p class="para" *ngFor="let p of gamer.body">{{ p }}</p>
+    <div class="term">
+      <div class="term__bar">
+        <span class="term__path">amekou@portfolio: ~</span>
       </div>
-      <div class="storyCard__note" aria-label="Note">
-        <span class="noteDot" aria-hidden="true"></span>
-        <span>"Amekou" is my handle — "Neku" is my best friend's. Same vibe. Same energy.</span>
+
+      <div class="term__cmds" role="group" aria-label="Choose a command">
+        <button
+          class="term__cmd"
+          type="button"
+          *ngFor="let c of terminal; let i = index"
+          [class.isActive]="activeCmd === i"
+          [attr.aria-pressed]="activeCmd === i"
+          (click)="setCmd(i)"
+        >{{ c.cmd }}</button>
+      </div>
+
+      <div class="term__screen" aria-live="polite">
+        <p class="term__prompt">
+          <span class="term__user" aria-hidden="true">amekou@portfolio:~$</span>
+          {{ activeCommand.cmd }}
+        </p>
+
+        <p class="term__line" *ngFor="let l of activeCommand.lines">{{ l }}</p>
+
+        <p class="term__line" *ngIf="activeCommand.link">
+          <a
+            class="term__link"
+            [href]="activeCommand.link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ activeCommand.link.label }} →</a>
+        </p>
+
+        <p class="term__caret" aria-hidden="true">
+          <span class="term__user">amekou@portfolio:~$</span>
+          <span class="term__cursor"></span>
+        </p>
       </div>
     </div>
   </section>
 
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- RESUME -->
-  <section id="resume" class="panel panel--cta" appReveal>
-    <div class="panel__head">
-      <div class="sectionKicker">
-        <span class="kDot" aria-hidden="true"></span>
-        <span class="kText">Resume</span>
-      </div>
-      <h2 class="panel__title">Want the full details?</h2>
-    </div>
-
-    <div class="resumeCard">
-      <div class="resumeCard__btnRow" aria-label="Resume actions">
-        <a class="btn btn--accent" [href]="resumeUrl" target="_blank" rel="noopener">Get resume PDF</a>
-        <button type="button" class="btn btn--subtle" (click)="scrollTo('intro')">Back to top ↑</button>
-      </div>
-
-      <div class="resumeCard__mini" aria-label="Quick stats">
-        <div class="miniStat">
-          <div class="miniStat__label">Focus</div>
-          <div class="miniStat__value">Front-End + SEO</div>
-        </div>
-        <div class="miniStat">
-          <div class="miniStat__label">Stack</div>
-          <div class="miniStat__value">Angular • UI • Performance</div>
-        </div>
-        <div class="miniStat">
-          <div class="miniStat__label">Based</div>
-          <div class="miniStat__value">Pampanga, PH</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- END CTA -->
-  <footer class="endCta" appReveal>
-    <h2 class="endCta__title">That's all from me!</h2>
-    <div class="endCta__actions" aria-label="End actions">
-      <button type="button" class="btn btn--accent" (click)="scrollTo('intro')">Back to top ↑</button>
-    </div>
-  </footer>
-
-  <!-- BACK TO TOP FAB -->
-  <button
-    type="button"
-    class="toTopFab"
-    [class.isVisible]="showToTop"
-    (click)="scrollTo('intro')"
-    aria-label="Back to top"
-    title="Back to top"
-  >
-    ↑
-  </button>
-
-</section>
+</div>

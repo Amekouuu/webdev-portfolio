@@ -60,7 +60,32 @@ export class Navbar implements OnDestroy {
 
   @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && this.isOpen) this.close();
+    if (!this.isOpen) return;
+
+    if (e.key === 'Escape') {
+      this.close();
+      return;
+    }
+
+    // Focus trap: the menu covers the whole viewport, so tabbing past it lands
+    // on links the user cannot see.
+    if (e.key !== 'Tab') return;
+
+    const panel = document.getElementById('menuPanel');
+    const items = panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    if (!items?.length) return;
+
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+
+    if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   onBackdropClick(e: MouseEvent) {

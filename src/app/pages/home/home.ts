@@ -1,143 +1,104 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
-import { SectionHeader } from '../../shared/components/section-header/section-header';
-import { ProjectCard } from '../../shared/components/project-card/project-card';
-import { FEATURED_PROJECTS } from '../../data/projects';
-import { RevealDirective } from '../../shared/directives/reveal.directive';
+import { FEATURED_PROJECTS, academicYear } from '../../data/projects';
 import { LocalTimePipe } from '../../shared/pipes/local-time.pipe';
-
-type StatusLine = {
-  icon: string;
-  text: string;
-  link?: string;
-  isTime?: boolean;
-  appearMs: number;
-  loadMs: number;
-  visible?: boolean;
-  loading?: boolean;
-  done?: boolean;
-};
 
 type Capability = {
   title: string;
-  pills: string[];
-  badge: string;
   desc: string;
+  tools: string[];
+};
+
+/** One fact about right now. Rendered as a <dt>/<dd> pair, not an icon row. */
+type NowLine = {
+  label: string;
+  value: string;
+  link?: string;
+  /** Rendered from LocalTimePipe rather than `value`. */
+  isTime?: boolean;
 };
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, SectionHeader, ProjectCard, LocalTimePipe, RevealDirective],
+  // No scroll-reveal on this page on purpose: the sections are full screenfuls,
+  // so fading them in leaves the viewport blank on the way down — and a reveal
+  // that fails to fire (as it did on About) hides the page outright.
+  imports: [NgFor, NgIf, RouterLink, LocalTimePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
-  name     = 'Micko Alberto';
-  tagline  = 'Bridging the gap between SEO and front-end development.';
+  name    = 'Micko Alberto';
+  role    = 'IT Student — Web Development · SEO-focused';
+  tagline = 'still learning, still building';
 
   intro = `<span class="u-accent">I build clean, simple websites</span> and optimize content for search.
            People know me for turning messy ideas into layouts that feel easy to use.`;
 
   featured = FEATURED_PROJECTS;
 
- capabilities: Capability[] = [
-  {
-    title: 'FRONTEND ENGINEERING',
-    pills: ['Angular', 'CSS Architecture', 'Figma'],
-    badge: '< >',
-    desc: 'I build structured, component-driven interfaces using Angular, focusing on scalable layout systems and performance-conscious UI development.',
-  },
-  {
-    title: 'TOOLS & DEPLOYMENT',
-    pills: ['GitHub', 'Vercel', 'Netlify'],
-    badge: '{ }',
-    desc: 'I manage Git-based workflows and production deployments, ensuring organized version control and clean, repeatable builds.',
-  },
-  {
-    title: 'ANALYTICS & SEO',
-    pills: ['Google Analytics 4', 'Google Search Console', 'Google Lighthouse'],
-    badge: '/ /',
-    desc: 'I use analytics and performance tools to measure, refine, and optimize user experience and search visibility.',
-  },
-];
+  /** Exposed for the template — imported functions aren't callable from one. */
+  readonly academicYear = academicYear;
 
-  activeCap = 0;
-
-  toggleCap(i: number) {
-    this.activeCap = this.activeCap === i ? -1 : i;
-  }
-
-  heroTitleA11y = 'still learning, still building';
-
-  statusLines: StatusLine[] = [
-    { icon: '⌁', text: 'BASED IN MABALACAT CITY',              appearMs: 250, loadMs: 700  },
-    { icon: '◷', text: '', isTime: true,                                appearMs: 450, loadMs: 500  },
-    { icon: '✶', text: 'CURRENT FOCUS: SEO-FOCUSED FRONT-END DEV',     appearMs: 300, loadMs: 950  },
+  /** The same five facts the animated status list carried, minus the fake loading. */
+  now: NowLine[] = [
+    { label: 'Based in',      value: 'Mabalacat City, Pampanga' },
+    { label: 'Local time',    value: '', isTime: true },
+    { label: 'Current focus', value: 'SEO-focused front-end development' },
+    { label: 'Building',      value: 'Portfolio v2' },
     {
-      icon: '♫',
-      text: 'LISTENING TO: HIPHOP & R&B',
+      label: 'Listening to',
+      value: 'Hip-hop & R&B',
       link: 'https://open.spotify.com/user/31e7uxgyecob7fs6gp7w33sumjnu?si=ca2a4177713849d7',
-      appearMs: 650,
-      loadMs: 800,
     },
-    { icon: '↯', text: 'BUILDING: PORTFOLIO V2',                        appearMs: 520, loadMs: 1100 },
   ];
 
-  private timers: number[] = [];
+  /* These descriptions used to sit behind a "+" toggle. They are the substance
+     of the section, so they are always visible now and the accordion is gone. */
+  capabilities: Capability[] = [
+    {
+      title: 'Frontend engineering',
+      desc: 'I build structured, component-driven interfaces using Angular, focusing on scalable layout systems and performance-conscious UI development.',
+      tools: ['Angular', 'TypeScript', 'CSS Architecture', 'Figma'],
+    },
+    {
+      title: 'Tools & deployment',
+      desc: 'I manage Git-based workflows and production deployments, ensuring organized version control and clean, repeatable builds.',
+      tools: ['Git', 'GitHub', 'Vercel', 'Netlify'],
+    },
+    {
+      title: 'Analytics & SEO',
+      desc: 'I use analytics and performance tools to measure, refine, and optimize user experience and search visibility.',
+      tools: ['Google Analytics 4', 'Search Console', 'Lighthouse'],
+    },
+  ];
+
+  /** LocalTimePipe is impure and renders seconds, so the view needs a tick. */
   private clockTimer: ReturnType<typeof setInterval> | null = null;
 
-  constructor(private seo: SeoService, private cdr: ChangeDetectorRef) {
+  constructor(private seo: SeoService) {
     this.seo.set({
-      title: 'Home | Micko Alberto',
-      description: 'Portfolio of Micko Alberto — web development, SEO-focused work, and projects.',
+      title: 'Micko Alberto — Web Developer & SEO | Portfolio',
+      description:
+        'Portfolio of Micko Alberto, an IT student in Pampanga, Philippines building Angular web projects with an SEO focus.',
     });
   }
 
   ngOnInit(): void {
-    this.bootStatusLines();
-    this.clockTimer = setInterval(() => this.cdr.markForCheck(), 1000);
+    // Runs inside the Angular zone, so the tick alone refreshes the clock.
+    if (typeof window === 'undefined') return;
+    this.clockTimer = setInterval(() => {}, 1000);
   }
 
   ngOnDestroy(): void {
-    this.timers.forEach(t => clearTimeout(t));
     if (this.clockTimer) clearInterval(this.clockTimer);
   }
 
-  private bootStatusLines() {
-    // Timer-driven entrance animation — client only. During prerender there is
-    // no window, and the animated states would be captured mid-flight anyway.
-    if (typeof window === 'undefined') return;
-
-    this.statusLines.forEach(line => {
-      line.visible = false;
-      line.loading = false;
-      line.done    = false;
-    });
-
-    this.cdr.markForCheck();
-
-    this.statusLines.forEach(line => {
-      this.timers.push(
-        window.setTimeout(() => {
-          line.visible = true;
-          line.loading = true;
-          this.cdr.markForCheck();
-
-          const jitter    = Math.floor(Math.random() * 250);
-          const finalLoad = Math.max(250, line.loadMs + jitter);
-
-          this.timers.push(
-            window.setTimeout(() => {
-              line.loading = false;
-              line.done    = true;
-              this.cdr.markForCheck();
-            }, finalLoad)
-          );
-        }, line.appearMs)
-      );
-    });
+  /** "01", "02", … for the numbered indexes. */
+  index(i: number): string {
+    return String(i + 1).padStart(2, '0');
   }
 }
