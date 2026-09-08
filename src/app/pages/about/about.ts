@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, isDevMode } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { SeoService } from '../../core/services/seo.service';
 import { PROJECTS } from '../../data/projects';
@@ -20,8 +20,15 @@ type Cert = {
   name: string;
   issuer: string;
   url: string;
-  validFrom?: string;
-  validTo?: string;
+  /**
+   * ISO yyyy-mm-dd, both of them. These used to be free text ("Sept 03, 2024",
+   * "Jan 9, 2026"), which reads fine but cannot be compared: parsing non-ISO
+   * date strings is implementation-defined, so the same value can yield a valid
+   * Date in V8 and Invalid Date elsewhere. formatDate() renders them for display.
+   */
+  issued: string;
+  /** Omit for credentials that never expire. */
+  expires?: string;
 };
 
 type CertGroup = {
@@ -141,61 +148,64 @@ export class About implements AfterViewInit, OnDestroy {
     },
   ];
 
-  certs: Cert[] = [
+  /** Every credential, expired or not. `certGroups` holds the ones still valid. */
+  readonly allCerts: Cert[] = [
     {
       name: 'Google Analytics Certified',
       issuer: 'Google',
       url: 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/176814946',
-      validFrom: 'March 12, 2026',
-      validTo: 'March 12, 2027',
+      issued:  '2026-03-12',
+      expires: '2027-03-12',
     },
     {
       name: 'HubSpot SEO Certified',
       issuer: 'HubSpot Academy',
       url: 'https://app-na2.hubspot.com/academy/achievements/zq0w4kl3/en/1/micko-alberto/seo',
-      validFrom: 'Jan 9, 2026',
-      validTo: 'Feb 8, 2027',
+      issued:  '2026-01-09',
+      expires: '2027-02-08',
     },
     {
       name: 'HubSpot SEO II Certified',
       issuer: 'HubSpot Academy',
       url: 'https://app-na2.hubspot.com/academy/achievements/p6w0zjt0/en/1/micko-alberto/seo-ii',
-      validFrom: 'Feb 1, 2026',
-      validTo: 'Mar 2, 2028',
+      issued:  '2026-02-01',
+      expires: '2028-03-02',
     },
     {
       name: 'HubSpot Content Marketing Certified',
       issuer: 'HubSpot Academy',
       url: 'https://app-na2.hubspot.com/academy/achievements/l0mr2v5k/en/1/micko-alberto/content-marketing',
-      validFrom: 'Aug 26, 2025',
-      validTo: 'Sep 25, 2027',
+      issued:  '2025-08-26',
+      expires: '2027-09-25',
     },
     {
       name: 'Website UI/UX Designing using ChatGPT',
       issuer: 'Simplilearn SkillUp',
       url: 'https://simpli-web.app.link/e/yyfQm52OF0b',
-      validFrom: 'Aug 23, 2025',
+      issued: '2025-08-23',
     },
     {
       name: 'Introduction to Graphic Design; Basics of UI/UX',
       issuer: 'Simplilearn SkillUp',
       url: 'https://simpli-web.app.link/e/XbXbQO7450b',
-      validFrom: 'Aug 09, 2025',
+      issued: '2025-08-09',
     },
     {
       name: 'Legacy Responsive Web Design V8',
       issuer: 'freeCodeCamp.org',
       url: 'https://www.freecodecamp.org/certification/amekuraiya/responsive-web-design',
-      validFrom: 'Sept 03, 2024',
+      issued: '2024-09-03',
     },
     {
       name: 'Legacy JavaScript Algorithms and Data Structures',
       issuer: 'freeCodeCamp.org',
       url: 'https://www.freecodecamp.org/certification/amekuraiya/javascript-algorithms-and-data-structures',
-      validFrom: 'Oct 01, 2025',
+      issued: '2025-10-01',
     },
   ];
 
+  /** Still-valid credentials only — what the page counts and renders. */
+  certs: Cert[] = [];
   certGroups: CertGroup[] = [];
 
   /* The "Amekou" story, as a terminal you can actually poke at. The copy is the
@@ -237,7 +247,9 @@ export class About implements AfterViewInit, OnDestroy {
         'About Micko Alberto — an IT student in Pampanga, Philippines. Education, tech stack, certifications, and the story behind the "Amekou" handle.',
     });
 
+    this.certs = this.dropExpired(this.allCerts);
     this.certGroups = this.groupCertsByIssuer(this.certs);
+    this.reportExpiry();
   }
 
   ngAfterViewInit(): void {
@@ -293,9 +305,79 @@ export class About implements AfterViewInit, OnDestroy {
   }
 
   certMeta(c: Cert): string {
-    if (c.validFrom && c.validTo) return `${c.validFrom} – ${c.validTo}`;
-    if (c.validFrom) return c.validFrom;
-    return '';
+    const issued = this.formatDate(c.issued);
+    return c.expires ? `${issued} – ${this.formatDate(c.expires)}` : issued;
+  }
+
+  /**
+   * Hides credentials whose expiry has passed.
+   *
+   * Compares ISO strings rather than Date objects: yyyy-mm-dd sorts
+   * lexicographically, so this needs no parsing and cannot drift by a timezone
+   * hour. `today` is UTC, so a cert stays listed for a few extra hours in PH
+   * (UTC+8) on its final day — erring toward keeping a credential, not dropping
+   * one early.
+   *
+   * Note this runs at *render* time. The prerendered HTML is a build-time
+   * snapshot, so a cert that lapses after deployment keeps showing in the
+   * indexed page until the next deploy; visitors get the correct list on
+   * hydration. Redeploy (or schedule one) to refresh the crawled copy.
+   */
+  private dropExpired(list: Cert[]): Cert[] {
+    const today = new Date().toISOString().slice(0, 10);
+    return list.filter(c => !c.expires || c.expires >= today);
+  }
+
+  /** Dev-only heads-up, so a credential never vanishes without explanation. */
+  private reportExpiry(): void {
+    if (!isDevMode()) return;
+
+    const expired = this.allCerts.filter(c => !this.certs.includes(c));
+    if (expired.length) {
+      console.info(
+        `[about] ${expired.length} expired certification(s) hidden:`,
+        expired.map(c => `${c.name} (expired ${c.expires})`)
+      );
+    }
+
+    const soon = this.certs
+      .filter(c => c.expires && this.daysUntil(c.expires) <= 90)
+      .sort((a, b) => this.daysUntil(a.expires!) - this.daysUntil(b.expires!));
+
+    if (soon.length) {
+      console.warn(
+        `[about] ${soon.length} certification(s) expiring within 90 days:`,
+        soon.map(c => `${c.name} — ${this.daysUntil(c.expires!)} days (${c.expires})`)
+      );
+    }
+  }
+
+  private daysUntil(iso: string): number {
+    const ms = Date.parse(`${iso}T00:00:00Z`) - Date.now();
+    return Math.ceil(ms / 86_400_000);
+  }
+
+  /** timeZone UTC so the rendered day matches the stored day in every locale. */
+  private formatDate(iso: string): string {
+    return new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'UTC',
+    });
+  }
+
+  /**
+   * Which issuer groups start expanded when the page loads.
+   *
+   * Must return a stable value per group: Angular only writes the `open`
+   * property when the bound expression changes, which is what stops it from
+   * re-closing a group the visitor just opened. A rule that flip-flops across
+   * change-detection runs would fight the visitor's clicks.
+   */
+  isOpenByDefault(group: CertGroup, index: number): boolean {
+    // TODO(human)
+    return index === 0;
   }
 
   private groupCertsByIssuer(list: Cert[]): CertGroup[] {

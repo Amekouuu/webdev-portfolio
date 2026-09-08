@@ -135,22 +135,39 @@
         <span class="sectionHead__index">Credentials</span>
         <h2 class="sectionHead__title" id="certsTitle">Certifications</h2>
       </div>
+      <p class="sectionHead__note">
+        {{ certs.length }} certifications from {{ certGroups.length }} issuers.
+      </p>
     </div>
 
-    <div class="certGroup" *ngFor="let g of certGroups">
-      <h3 class="certGroup__issuer">{{ g.issuer }}</h3>
+    <!-- Native <details>, one per issuer: collapsed by default so the section
+         stays one row per issuer no matter how long the list grows, but every
+         certificate is still in the HTML. The old carousel rendered only the
+         active issuer, so six of eight credentials were absent from the
+         prerendered page entirely. -->
+    <div class="certGroups">
+      <details
+        class="certGroup"
+        *ngFor="let g of certGroups; let i = index"
+        [open]="isOpenByDefault(g, i)"
+      >
+        <summary class="certGroup__summary">
+          <h3 class="certGroup__issuer">{{ g.issuer }}</h3>
+          <span class="certGroup__count">{{ g.certs.length }}</span>
+        </summary>
 
-      <ul class="certList">
-        <li class="certRow" *ngFor="let c of g.certs">
-          <a
-            class="certRow__link"
-            [href]="c.url"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ c.name }}</a>
-          <span class="certRow__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
-        </li>
-      </ul>
+        <ul class="certList">
+          <li class="certRow" *ngFor="let c of g.certs">
+            <a
+              class="certRow__link"
+              [href]="c.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ c.name }}</a>
+            <span class="certRow__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
+          </li>
+        </ul>
+      </details>
     </div>
   </section>
 

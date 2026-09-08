@@ -268,23 +268,73 @@
    Flat and scannable. This was a carousel that showed one
    issuer at a time and hid the other six certificates.
 ========================================================= */
-.certGroup{ margin-top: var(--space-5); }
-.certGroup + .certGroup{ margin-top: var(--space-6); }
+.certGroups{ margin-top: var(--space-5); }
+
+/* One row per issuer when closed, so the section's resting height grows by a
+   single line per new provider rather than by every certificate. */
+.certGroup{ border-bottom: 1px solid var(--border); }
+
+.certGroup__summary{
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-3) 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Suppress the UA triangle in both engines. */
+.certGroup__summary::-webkit-details-marker{ display: none; }
 
 .certGroup__issuer{
-  margin: 0 0 var(--space-2);
-  font-size: var(--text-xs);
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--text-sm);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
+  color: var(--text);
+  transition: color .18s var(--ease-out);
+}
+
+.certGroup__count{
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* +/− in the page's own mono voice — no icon library for one glyph. */
+.certGroup__summary::after{
+  content: "+";
+  width: 1em;
+  text-align: center;
+  font-size: var(--text-md);
+  font-weight: var(--weight-bold);
+  line-height: 1;
   color: var(--text-muted);
+  transition: color .18s var(--ease-out);
+}
+
+.certGroup[open] .certGroup__summary::after{ content: "−"; }
+
+.certGroup__summary:hover .certGroup__issuer,
+.certGroup__summary:hover::after{ color: var(--accent); }
+
+.certGroup__summary:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .certList{
-  margin: 0;
+  margin: 0 0 var(--space-4);
   padding: 0;
   list-style: none;
 }
+
+/* The <details> carries the closing rule, so the last row must not add one. */
+.certList .certRow:last-child{ border-bottom: 0; }
 
 .certRow{
   display: flex;
