@@ -55,6 +55,17 @@
     })();
   </script>
 
+  <!-- Google Analytics 4. Placed after the pre-paint theme script so it can
+       never delay that one, and async so it does not block parsing. The
+       Measurement ID is public by design — it ships in every page's source. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVP5XGRF9Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DVP5XGRF9Z');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">

@@ -1,77 +1,58 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
 
-// Single-file on purpose: the design rebuild will likely replace this wholesale,
-// so it isn't worth a three-file component yet.
+type Destination = {
+  path: string;
+  label: string;
+  desc: string;
+};
+
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [RouterLink],
-  template: `
-    <section class="nf">
-      <p class="nf__code">404</p>
-      <h1 class="nf__title">This page doesn't exist.</h1>
-      <p class="nf__body">
-        The link may be outdated, or the address might have a typo.
-      </p>
-      <nav class="nf__links" aria-label="Suggested pages">
-        <a routerLink="/">Home</a>
-        <a routerLink="/projects">Projects</a>
-        <a routerLink="/blog">Blog</a>
-        <a routerLink="/contact">Contact</a>
-      </nav>
-    </section>
-  `,
-  styles: [`
-    .nf {
-      max-width: 42rem;
-      margin: 0 auto;
-      padding: clamp(4rem, 12vh, 9rem) 1.5rem;
-      text-align: center;
-    }
-    .nf__code {
-      margin: 0 0 .75rem;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: var(--text-sm, 12px);
-      letter-spacing: .18em;
-      color: var(--accent, #2F6FA8);
-    }
-    .nf__title {
-      margin: 0 0 .75rem;
-      font-family: Fraunces, Georgia, serif;
-      font-size: clamp(1.75rem, 5vw, 2.75rem);
-      line-height: 1.15;
-      color: var(--text, #0d1b2a);
-    }
-    .nf__body {
-      margin: 0 auto 2rem;
-      max-width: 32rem;
-      color: var(--text-muted, #4f566b);
-    }
-    .nf__links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem 1.5rem;
-      justify-content: center;
-    }
-    .nf__links a {
-      color: var(--text, #0d1b2a);
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      padding: .5rem .25rem;
-    }
-    .nf__links a:hover,
-    .nf__links a:focus-visible {
-      color: var(--accent, #2F6FA8);
-    }
-  `],
+  imports: [NgFor, NgIf, RouterLink],
+  templateUrl: './not-found.html',
+  styleUrl: './not-found.css',
 })
 export class NotFound {
-  constructor(private seo: SeoService) {
+  /* Same labels and descriptions as the nav overlay: someone who lands here
+     took a wrong turn, so the way out should read like the site's own
+     signposting rather than a separate list invented for the error page. */
+  readonly destinations: Destination[] = [
+    { path: '/',         label: 'Home',     desc: 'Start here — who I am and what I do.' },
+    { path: '/about',    label: 'About',    desc: 'My background, skills, and tools.' },
+    { path: '/projects', label: 'Projects', desc: 'Selected web dev and UI/UX work.' },
+    { path: '/blog',     label: 'Blog',     desc: 'Notes on Angular, CSS, and SEO.' },
+    { path: '/contact',  label: 'Contact',  desc: "Let's work together." },
+  ];
+
+  constructor(private router: Router, private seo: SeoService) {
     this.seo.set({
-      title: 'Page not found | Micko Alberto',
-      description: 'That page could not be found.',
+      title: 'Page not found — Micko Alberto',
+      description: 'That page could not be found on the portfolio of Micko Alberto.',
     });
+  }
+
+  /**
+   * The path the visitor actually asked for, so a typo is visible rather than
+   * guessed at.
+   *
+   * Query and hash are dropped and the result is capped: this string comes
+   * from the address bar, which means anyone can put text in it via a crafted
+   * link. The template renders it through interpolation (never innerHTML), so
+   * Angular escapes it, and the cap limits how much arbitrary copy such a link
+   * can park on the page.
+   */
+  get attemptedPath(): string {
+    const path = this.router.url.split(/[?#]/)[0];
+    if (!path || path === '/') return '';
+    return path.length > 64 ? `${path.slice(0, 64)}…` : path;
+  }
+
+  /** "01", "02", … matching the indexes on home and the blog. */
+  index(i: number): string {
+    return String(i + 1).padStart(2, '0');
   }
 }
