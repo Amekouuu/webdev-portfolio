@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && npm run postbuild:404",
+    "build": "ng build && npm run postbuild:404 && npm run postbuild:sitemap",
+    "postbuild:sitemap": "node scripts/generate-sitemap.mjs",
     "postbuild:404": "node -e \"const f=require('fs'),d='dist/webdev-portfolio/browser';f.copyFileSync(d+'/index.csr.html',d+'/404.html');console.log('wrote 404.html')\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

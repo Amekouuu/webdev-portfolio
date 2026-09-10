@@ -83,7 +83,11 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: 'seo-for-used-car-dealership',
-    title: 'What I Learned Doing SEO for a Local Business',
+    // Titled to match the slug rather than the other way round: the slug is
+    // already canonical and prerendered, and "used car dealership" is the
+    // concrete long-tail phrase people actually search. "Local business" was
+    // the vaguer half of the pair.
+    title: 'What I Learned Doing SEO for a Used Car Dealership',
     date: '2026-02-14',
     summary:
       'Lessons from building and optimizing an Angular site for M&J Quality Used Cars — local SEO, page speed, and what actually moved the needle.',

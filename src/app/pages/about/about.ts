@@ -143,6 +143,10 @@ export class About implements AfterViewInit, OnDestroy {
         { name: 'CSS',        iconSrc: 'assets/icons/skills/css.png' },
         { name: 'JavaScript', iconSrc: 'assets/icons/skills/javascript.png' },
         { name: 'Angular',    iconSrc: 'assets/icons/skills/angular.png' },
+        // Must stay spelled "Vue.js" — usedIn() matches this against
+        // projects.ts `tools` by exact lowercased equality, and Do More
+        // lists it as 'Vue.js'. "Vue" would compile and credit 0 projects.
+        { name: 'Vue.js',     iconSrc: 'assets/icons/skills/vue.png' },
       ],
     },
     {

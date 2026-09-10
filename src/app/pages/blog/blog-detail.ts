@@ -25,6 +25,13 @@ export class BlogDetail implements OnInit {
         title: `${this.post.title} | Micko Alberto`,
         description: this.post.summary,
         type: 'article',
+        // `headline` deliberately drops the " | Micko Alberto" suffix the
+        // <title> carries — rich results print headline verbatim.
+        article: {
+          headline: this.post.title,
+          datePublished: this.post.date,
+          keywords: this.post.tags,
+        },
       });
     }
   }
