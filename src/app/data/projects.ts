@@ -36,9 +36,9 @@ export const PROJECTS: Project[] = [
     images: [
       { src: '/assets/images/lofu-background.png', webp: '/assets/images/lofu-background.webp', alt: 'LoFu lost and found web app home page' },
     ],
-    // No liveUrl: the Express/MongoDB API is deployed on Render, but the
-    // Angular front end is not public, so the card links to source instead
-    // of promising a site that is not there.
+    // The API is on Render free tier, which sleeps when idle, so the first
+    // load after a quiet spell waits on a cold start before items appear.
+    liveUrl: 'https://lofu-webapplication.vercel.app',
     repoUrl: 'https://github.com/Amekouuu/lofu_webapp',
     featured: true,
     type: 'web',
