@@ -12,7 +12,12 @@ export interface Project {
   yearStart: number;
   /** `webp` is served first via <picture>; `src` is the fallback for older browsers. */
   images: { src: string; alt: string; webp?: string }[];
-  liveUrl: string;
+  /**
+   * The deployed site. Optional: a project can ship its source without a
+   * public front end. Every project still needs ONE of liveUrl/repoUrl --
+   * projectHref() falls back to the repo so a card is never a dead anchor.
+   */
+  liveUrl?: string;
   repoUrl?: string;
   featured?: boolean;
   type: 'web' | 'design';
@@ -20,6 +25,25 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+  {
+    id: 'lofu-lost-and-found',
+    name: 'LoFu — Lost & Found Web App (MEAN Stack)',
+    tag: 'Full-Stack Case Study',
+    description:
+      'Community lost-and-found platform for Angeles City. Users post a lost or found item, claim it, and message the other party in real time.',
+    tools: ['Angular', 'TypeScript', 'Express', 'MongoDB', 'Socket.IO'],
+    yearStart: 2025,
+    images: [
+      { src: '/assets/images/lofu-background.png', webp: '/assets/images/lofu-background.webp', alt: 'LoFu lost and found web app home page' },
+    ],
+    // No liveUrl: the Express/MongoDB API is deployed on Render, but the
+    // Angular front end is not public, so the card links to source instead
+    // of promising a site that is not there.
+    repoUrl: 'https://github.com/Amekouuu/lofu_webapp',
+    featured: true,
+    type: 'web',
+    imgPos: 'center',
+  },
   {
     id: 'mj-quality-used-cars',
     name: 'M&J Quality Used Cars Website (Angular)',
@@ -106,6 +130,23 @@ export const PROJECTS: Project[] = [
 export const FEATURED_PROJECTS = PROJECTS.filter(p => p.featured).slice(0, 3);
 
 /** 2025 -> "2025–26". These are school years, so a single year would misstate them. */
+/**
+ * Where the card itself points. The live site wins; without one the repo
+ * stands in, so a card is never a dead anchor.
+ */
+export function projectHref(p: Project): string {
+  return p.liveUrl ?? p.repoUrl ?? '';
+}
+
+/**
+ * The primary call-to-action's wording. Design work lives on Figma, and a
+ * project with no deployed front end must not promise a site to visit.
+ */
+export function projectLinkLabel(p: Project): string {
+  if (p.type === 'design') return 'Open in Figma';
+  return p.liveUrl ? 'Visit site' : 'View source';
+}
+
 export function academicYear(p: Project): string {
   return `${p.yearStart}–${String(p.yearStart + 1).slice(-2)}`;
 }

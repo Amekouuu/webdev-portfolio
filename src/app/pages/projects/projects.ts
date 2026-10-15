@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { SeoService } from '../../core/services/seo.service';
-import { PROJECTS, Project, academicYear } from '../../data/projects';
+import {
+  PROJECTS,
+  Project,
+  academicYear,
+  projectHref,
+  projectLinkLabel,
+} from '../../data/projects';
 
 type Filter = 'all' | 'web' | 'design';
 type Sort   = 'newest' | 'oldest' | 'featured' | 'az';
@@ -87,10 +93,9 @@ export class Projects {
     return p.type === 'design' ? 'UI/UX design' : 'Web development';
   }
 
-  /** Design work lives on Figma, so "Visit site" would misdescribe it. */
-  primaryLinkLabel(p: Project): string {
-    return p.type === 'design' ? 'Open in Figma' : 'Visit site';
-  }
+  /** Both delegate to data/projects.ts so the home page cannot disagree. */
+  primaryLinkLabel = projectLinkLabel;
+  href = projectHref;
 
   private readonly projects: Project[] = PROJECTS;
 

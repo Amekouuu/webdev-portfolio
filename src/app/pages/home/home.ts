@@ -2,7 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
-import { FEATURED_PROJECTS, academicYear } from '../../data/projects';
+import {
+  FEATURED_PROJECTS,
+  academicYear,
+  projectHref,
+  projectLinkLabel,
+} from '../../data/projects';
 import { LocalTimePipe } from '../../shared/pipes/local-time.pipe';
 
 type Capability = {
@@ -42,6 +47,9 @@ export class Home implements OnInit, OnDestroy {
 
   /** Exposed for the template — imported functions aren't callable from one. */
   readonly academicYear = academicYear;
+  /** Shared with the projects page so the two cannot describe a link differently. */
+  readonly href = projectHref;
+  readonly linkLabel = projectLinkLabel;
 
   /** The same five facts the animated status list carried, minus the fake loading. */
   now: NowLine[] = [

@@ -147,6 +147,17 @@ export class About implements AfterViewInit, OnDestroy {
         // projects.ts `tools` by exact lowercased equality, and Do More
         // lists it as 'Vue.js'. "Vue" would compile and credit 0 projects.
         { name: 'Vue.js',     iconSrc: 'assets/icons/skills/vue.png' },
+        { name: 'TypeScript', iconSrc: 'assets/icons/skills/typescript.png' },
+      ],
+    },
+    {
+      // Added when LoFu shipped — the first project here with a server and a
+      // database behind it, rather than a front end calling someone else's.
+      title: 'Backend & data',
+      items: [
+        { name: 'Express',   iconSrc: 'assets/icons/skills/express.png' },
+        { name: 'MongoDB',   iconSrc: 'assets/icons/skills/mongodb.png' },
+        { name: 'Socket.IO', iconSrc: 'assets/icons/skills/socketio.png' },
       ],
     },
     {
@@ -188,6 +199,14 @@ export class About implements AfterViewInit, OnDestroy {
       url: 'https://app-na2.hubspot.com/academy/achievements/l0mr2v5k/en/1/micko-alberto/content-marketing',
       issued:  '2025-08-26',
       expires: '2027-09-25',
+    },
+    {
+      // SkillUp certificates carry no expiry, so expires is omitted and
+      // dropExpired() keeps this one permanently.
+      name: 'Digital Marketing Strategy',
+      issuer: 'Simplilearn SkillUp',
+      url: 'https://simpli-web.app.link/e/Kzc6gpjdg7b',
+      issued: '2026-10-15',
     },
     {
       name: 'Website UI/UX Designing using ChatGPT',

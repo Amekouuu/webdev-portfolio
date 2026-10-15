@@ -97,7 +97,7 @@
         <h2 class="pCard__title">
           <a
             class="pCard__link"
-            [href]="p.liveUrl"
+            [href]="href(p)"
             target="_blank"
             rel="noopener noreferrer"
           >{{ p.name }}</a>
@@ -116,7 +116,7 @@
 
           <a
             class="actionLink pCard__repo"
-            *ngIf="p.repoUrl"
+            *ngIf="p.repoUrl && p.liveUrl"
             [href]="p.repoUrl"
             target="_blank"
             rel="noopener noreferrer"

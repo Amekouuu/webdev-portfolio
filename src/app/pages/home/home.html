@@ -140,7 +140,7 @@
             <h3 class="workItem__title">
               <a
                 class="workItem__link"
-                [href]="p.liveUrl"
+                [href]="href(p)"
                 target="_blank"
                 rel="noopener noreferrer"
               >{{ p.name }}</a>
@@ -174,14 +174,14 @@
           <div class="workItem__links">
             <a
               class="actionLink"
-              [href]="p.liveUrl"
+              [href]="href(p)"
               target="_blank"
               rel="noopener noreferrer"
-            >Visit site <span class="actionLink__arrow" aria-hidden="true">→</span></a>
+            >{{ linkLabel(p) }} <span class="actionLink__arrow" aria-hidden="true">→</span></a>
 
             <a
               class="actionLink"
-              *ngIf="p.repoUrl"
+              *ngIf="p.repoUrl && p.liveUrl"
               [href]="p.repoUrl"
               target="_blank"
               rel="noopener noreferrer"
