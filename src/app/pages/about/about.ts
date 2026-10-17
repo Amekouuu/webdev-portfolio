@@ -210,11 +210,17 @@ export class About implements AfterViewInit, OnDestroy {
       expires: '2027-09-25',
     },
     {
+      name: 'Full-Stack Development 101',
+      issuer: 'Simplilearn SkillUp',
+      url: 'https://simpli-web.app.link/e/PqtsZiaPi7b',
+      issued: '2026-10-16',
+    },
+    {
       // SkillUp certificates carry no expiry, so expires is omitted and
       // dropExpired() keeps this one permanently.
       name: 'Digital Marketing Strategy',
       issuer: 'Simplilearn SkillUp',
-      url: 'https://simpli-web.app.link/e/Kzc6gpjdg7b',
+      url: 'https://simpli-web.app.link/e/6SVn9OcPi7b',
       issued: '2026-10-15',
     },
     {
