@@ -1,0 +1,15 @@
+# Store every text file with LF line endings, whatever the OS.
+# Without this, Windows edits flipped files to CRLF and turned small
+# changes into whole-file diffs. .editorconfig pins the same for editors.
+* text=auto eol=lf
+
+# Never touch line endings in binaries.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
