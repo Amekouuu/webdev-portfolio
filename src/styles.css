@@ -20,7 +20,7 @@
   --text:         #0d1b2a;
   --text-soft:    #2e3e52;
   --text-muted:   #4f566b;
-  --text-faint:   #8892a4;
+  --text-faint:   #666e7b;   /* 5.15:1 on white, 4.51:1 on --bg-sunken. #8892a4 was 3.13:1 and failed AA on ~40 labels */
 
   /* ── Brand: Royal Blue ────────────────────────────────────── */
   --royal:        #182f68;
