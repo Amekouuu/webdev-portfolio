@@ -408,28 +408,40 @@
 @media (max-width: 520px){
   .siteHeader__inner{ padding: 0; }
 
+  /* Full-bleed on phones, so the side edges would sit against the screen
+     bezel. Keep only the top and bottom rules. */
   .nav{
     border-radius: 0;
+    border-left: 0;
+    border-right: 0;
     padding-left: 12px;
     padding-right: 12px;
   }
 
   .menuPanel{
     position: fixed;
-    top: 0; bottom: 0; right: 0;
-    width: calc(100% - 128px);
-    max-width: calc(100vw - 32px);
+    /* Full width, as on desktop. It used to be calc(100% - 128px): a drawer
+       that left a fixed 128px strip, which is 40% of a 320px screen and
+       squeezed the 28-42px menu links into ~190px. */
+    top: 0; bottom: 0; left: 0; right: 0;
+    width: 100%;
+    max-width: none;
     height: 100dvh;
     box-sizing: border-box;
     padding: 16px;
     padding-top: calc(16px + env(safe-area-inset-top));
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
     transform: translateX(16px);
-    border-left: 1px solid rgba(13,27,58,.12);
-    box-shadow: -14px 0 40px rgba(0,0,0,.18);
+    /* The desktop panel's two radial glows are sized to the nearest edge, so
+       on a narrow phone panel they shrink into a visible grey smudge near the
+       top right. Keep only the plain gradient here. */
+    background: linear-gradient(180deg, #eef5ff 0%, #d7e8ff 100%);
   }
 
   .menuPanel.isOpen{ transform: translateX(0); }
+
+  /* Room for the current-page underline: at 2px it sat on the description. */
+  .menuLink{ gap: 12px; }
 
   .menuTop{
     position: sticky;

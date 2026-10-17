@@ -423,4 +423,7 @@
   }
 
   .workItem__shot img{ aspect-ratio: 4 / 3; }
+
+  .workItem__head{ grid-template-columns: var(--space-7) minmax(0, 1fr); }
+  .workItem__year{ grid-column: 2; }
 }

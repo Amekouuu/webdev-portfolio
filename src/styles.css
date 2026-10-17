@@ -86,7 +86,7 @@
                  Consolas, "Liberation Mono", "Courier New", monospace;
   --font-serif:  "Fraunces", Georgia, "Times New Roman", serif;
 
-  --text-xs:     11px;
+  --text-xs:     11px;   /* 12px on phones: see the 560px block below */
   --text-sm:     12px;
   --text-base:   14px;
   --text-md:     16px;
@@ -588,6 +588,12 @@ button.actionLink{
 /* ================================================================
    RESPONSIVE
 ================================================================ */
+/* Labels (--text-xs) are uppercase and tracked; at 11px they are hard to
+   read on a phone. Bump them a step there only. */
+@media (max-width: 560px){
+  :root{ --text-xs: 12px; }
+}
+
 @media (max-width: 700px){
   /* One column, reordered to title → note → action. In source the action
      precedes the note so it can sit top-right on wide screens. */
