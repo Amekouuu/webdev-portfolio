@@ -34,7 +34,7 @@ export const PROJECTS: Project[] = [
     tools: ['Angular', 'TypeScript', 'Express', 'MongoDB', 'Socket.IO'],
     yearStart: 2025,
     images: [
-      { src: '/assets/images/lofu-background.png', webp: '/assets/images/lofu-background.webp', alt: 'LoFu lost and found web app home page' },
+      { src: '/assets/images/lofu-background.jpg', webp: '/assets/images/lofu-background.webp', alt: 'LoFu lost and found web app home page' },
     ],
     // The API is on Render free tier, which sleeps when idle, so the first
     // load after a quiet spell waits on a cold start before items appear.
@@ -52,7 +52,7 @@ export const PROJECTS: Project[] = [
     tools: ['Angular', 'HTML', 'CSS', 'SEO'],
     yearStart: 2025,
     images: [
-      { src: '/assets/images/mjqualitycars-background.png', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
+      { src: '/assets/images/mjqualitycars-background.jpg', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
     liveUrl: 'https://www.mjqualitycars.com/',
     repoUrl: 'https://github.com/Jex-beep/done-WSEA',
@@ -68,7 +68,7 @@ export const PROJECTS: Project[] = [
     tools: ['Vue.js', 'JavaScript', 'CSS'],
     yearStart: 2024,
     images: [
-      { src: '/assets/images/domore-background.png', webp: '/assets/images/domore-background.webp', alt: 'Do More Student Planner Screenshot' },
+      { src: '/assets/images/domore-background.jpg', webp: '/assets/images/domore-background.webp', alt: 'Do More Student Planner Screenshot' },
     ],
     liveUrl: 'https://domore-student-planner.netlify.app/login',
     repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
     tools: ['HTML', 'CSS', 'JavaScript'],
     yearStart: 2023,
     images: [
-      { src: '/assets/images/cafe-crawl-background.png', webp: '/assets/images/cafe-crawl-background.webp', alt: 'CafeCrawl coffee shop blog site screenshot' },
+      { src: '/assets/images/cafe-crawl-background.jpg', webp: '/assets/images/cafe-crawl-background.webp', alt: 'CafeCrawl coffee shop blog site screenshot' },
     ],
     liveUrl: 'https://cafe-crawl.netlify.app/',
     repoUrl: 'https://github.com/Amekouuu/IntroWeb',
@@ -118,7 +118,7 @@ export const PROJECTS: Project[] = [
     tools: ['Figma', 'UI/UX', 'Components'],
     yearStart: 2024,
     images: [
-      { src: '/assets/images/topchillog-landing.png', webp: '/assets/images/topchillog-landing.webp', alt: 'TopChillog Figma Preview' },
+      { src: '/assets/images/topchillog-landing.jpg', webp: '/assets/images/topchillog-landing.webp', alt: 'TopChillog Figma Preview' },
     ],
     liveUrl: 'https://www.figma.com/design/ZNyCzfEZhhKeH77pwz7WYj/TopChillog-Featured-Page-Mockup?node-id=0-1&t=a5fCXp775fW4lim6-1',
     featured: false,
