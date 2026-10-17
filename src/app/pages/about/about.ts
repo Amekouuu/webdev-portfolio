@@ -150,6 +150,7 @@ export class About implements AfterViewInit, OnDestroy {
         // lists it as 'Vue.js'. "Vue" would compile and credit 0 projects.
         { name: 'Vue.js',     iconSrc: 'assets/icons/skills/vue.png' },
         { name: 'TypeScript', iconSrc: 'assets/icons/skills/typescript.png' },
+        { name: 'React',      iconSrc: 'assets/icons/skills/react.svg' },
       ],
     },
     {
@@ -160,6 +161,9 @@ export class About implements AfterViewInit, OnDestroy {
         { name: 'Express',   iconSrc: 'assets/icons/skills/express.png' },
         { name: 'MongoDB',   iconSrc: 'assets/icons/skills/mongodb.png' },
         { name: 'Socket.IO', iconSrc: 'assets/icons/skills/socketio.png' },
+        // Names must match projects.ts `tools` exactly (RMIS, Life Saver).
+        { name: 'SQL Server', iconSrc: 'assets/icons/skills/sqlserver.svg' },
+        { name: 'Supabase',   iconSrc: 'assets/icons/skills/supabase.svg' },
       ],
     },
     {

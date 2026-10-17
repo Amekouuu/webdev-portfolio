@@ -14,11 +14,19 @@ export interface Project {
   images: { src: string; alt: string; webp?: string }[];
   /**
    * The deployed site. Optional: a project can ship its source without a
-   * public front end. Every project still needs ONE of liveUrl/repoUrl --
-   * projectHref() falls back to the repo so a card is never a dead anchor.
+   * public front end. projectHref() falls back to the repo, and a project with
+   * neither (an internal system) renders as a card with no link at all, never
+   * as a dead anchor -- give it `internal` instead.
    */
   liveUrl?: string;
   repoUrl?: string;
+  /** Your part in a team project, shown on the card ("Lead developer"). */
+  role?: string;
+  /**
+   * For work that cannot be linked (an employer's internal system): shown in
+   * place of the link buttons, so the card explains why there is no link.
+   */
+  internal?: string;
   featured?: boolean;
   type: 'web' | 'design';
   imgPos?: string;
@@ -45,6 +53,25 @@ export const PROJECTS: Project[] = [
     imgPos: 'center',
   },
   {
+    id: 'ciac-rmis',
+    name: 'CIAC Risk Management Information System (RMIS)',
+    tag: 'OJT Project',
+    role: 'Lead developer · team project',
+    description:
+      'Replaces Clark International Airport Corporation’s Excel-based Risk Register with a controlled web system. Departments submit risks; the Risk Management Committee reviews, scores, approves or returns them, and merges duplicates.',
+    tools: ['React', 'JavaScript', 'Express', 'SQL Server'],
+    yearStart: 2026,
+    images: [
+      { src: '/assets/images/rmis-login.jpg', webp: '/assets/images/rmis-login.webp', alt: 'CIAC Risk Management System sign-in screen' },
+    ],
+    // Internal to CIAC: listed with permission, but the system and its
+    // source stay private. The sign-in screen is the only public-safe view.
+    internal: 'Internal CIAC system, not publicly deployed. Shown with permission.',
+    featured: true,
+    type: 'web',
+    imgPos: 'right center',
+  },
+  {
     id: 'mj-quality-used-cars',
     name: 'M&J Quality Used Cars Website (Angular)',
     tag: 'Client Project + SEO Case Study',
@@ -61,6 +88,24 @@ export const PROJECTS: Project[] = [
     imgPos: 'center',
   },
   {
+    id: 'life-saver-care-circle',
+    name: 'Life Saver Care Circle — Clinic Booking & Pharmacy System',
+    tag: 'Client Project',
+    role: 'Support developer · team project',
+    description:
+      'Booking and pharmacy ordering for Life Saver Care Circle’s PhilHealth-accredited clinics: branch finder, real-time slot booking, medicine ordering with reference-number tracking, and a per-branch admin dashboard.',
+    tools: ['React', 'JavaScript', 'Express', 'Supabase'],
+    yearStart: 2025,
+    images: [
+      { src: '/assets/images/lifesaver-background.jpg', webp: '/assets/images/lifesaver-background.webp', alt: 'Life Saver Care Circle website home page' },
+    ],
+    // Client code: the repository stays private, so there is no Source link.
+    liveUrl: 'https://lscarecircle.com.ph/',
+    featured: false,
+    type: 'web',
+    imgPos: 'left center',
+  },
+  {
     id: 'do-more-student-planner',
     name: 'Do More — Student Planner (Vue.js)',
     tag: 'Academic Vue.js Case Study',
@@ -72,7 +117,7 @@ export const PROJECTS: Project[] = [
     ],
     liveUrl: 'https://domore-student-planner.netlify.app/login',
     repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
-    featured: true,
+    featured: false,
     type: 'web',
     imgPos: '50% 35%',
   },
@@ -88,7 +133,7 @@ export const PROJECTS: Project[] = [
     ],
     liveUrl: 'https://cafe-crawl.netlify.app/',
     repoUrl: 'https://github.com/Amekouuu/IntroWeb',
-    featured: true,
+    featured: false,
     type: 'web',
     imgPos: 'center top',
   },

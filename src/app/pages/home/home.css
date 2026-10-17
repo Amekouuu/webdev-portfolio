@@ -322,6 +322,20 @@
   color: var(--text-muted);
 }
 
+.workCard__role{ color: var(--text); }
+
+/* Internal work: the note sits where the buttons would, pressed into the card. */
+.workCard__internal{
+  margin: auto 0 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  box-shadow: var(--inset);
+  font-size: var(--text-sm);
+  color: var(--text-soft);
+}
+
 .workCard__desc{
   margin: 0;
   color: var(--text-soft);
@@ -466,3 +480,6 @@
 @media (max-width: 360px){
   .now__list{ grid-template-columns: minmax(0, 1fr); }
 }
+
+/* An internal project has no link to show: drop the empty footer row. */
+.workCard__links:empty{ display: none; }

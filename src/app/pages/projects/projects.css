@@ -283,6 +283,31 @@
   color: var(--text-soft);
 }
 
+/* A project with no public link (an internal system): not a target, so it
+   does not lift or press, and it carries a note instead of a link label. */
+.pCard--static:hover,
+.pCard--static:active{ box-shadow: var(--raised); transform: none; }
+.pCard--static:hover .pCard__shot img{ transform: none; }
+
+.pCard__role{
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.pCard__internal{
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--text-soft);
+}
+
 /* Pushes tools + links down so every footer lines up across the row. */
 .pCard__tools{
   display: flex;
@@ -373,3 +398,6 @@
   .filter{ flex: 1 0 auto; }
   .pCard__body{ padding: var(--space-4); }
 }
+
+/* An internal project has no link to show: drop the empty footer row. */
+.pCard__links:empty{ display: none; }

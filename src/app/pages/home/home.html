@@ -106,7 +106,7 @@
 
     <ol class="workGrid">
       @for (p of featured; track p.id; let i = $index) {
-        <li class="workCard neu-raised pressable" [class.workCard--lead]="i === 0">
+        <li class="workCard neu-raised" [class.pressable]="href(p)" [class.workCard--lead]="i === 0">
           <figure class="workCard__shot">
             <picture>
               @if (p.images[0].webp) {
@@ -127,12 +127,16 @@
 
           <div class="workCard__body">
             <h3 class="workCard__title">
-              <a
-                class="workCard__link"
-                [href]="href(p)"
-                target="_blank"
-                rel="noopener noreferrer"
-              >{{ p.name }}</a>
+              @if (href(p)) {
+                <a
+                  class="workCard__link"
+                  [href]="href(p)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{ p.name }}</a>
+              } @else {
+                {{ p.name }}
+              }
             </h3>
 
             <div class="workCard__meta">
@@ -140,6 +144,9 @@
                 <span>{{ p.tag }}</span>
               }
               <span>{{ academicYear(p) }}</span>
+              @if (p.role) {
+                <span class="workCard__role">{{ p.role }}</span>
+              }
             </div>
 
             <p class="workCard__desc">{{ p.description }}</p>
@@ -150,13 +157,19 @@
               }
             </ul>
 
+            @if (p.internal) {
+              <p class="workCard__internal">{{ p.internal }}</p>
+            }
+
             <div class="workCard__links">
-              <a
-                class="btn btn--raised"
-                [href]="href(p)"
-                target="_blank"
-                rel="noopener noreferrer"
-                >{{ linkLabel(p) }} <span class="actionLink__arrow" aria-hidden="true">→</span></a>
+              @if (href(p)) {
+                <a
+                  class="btn btn--raised"
+                  [href]="href(p)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >{{ linkLabel(p) }} <span class="actionLink__arrow" aria-hidden="true">→</span></a>
+              }
               @if (p.repoUrl && p.liveUrl) {
                 <a
                   class="btn btn--text"
