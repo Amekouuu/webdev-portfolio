@@ -1,126 +1,167 @@
 /* =========================================================
-   HOME
-   Typography, rules and spacing carry the page. No page-level
-   cards, no gradient washes, no grid-paper backdrops — the
-   projects are meant to be the only pictures on the screen.
+   HOME (v2)
+   Hero slab → status tiles → selected work → capabilities.
+   The hero and project cards carry the depth; the capability
+   rows stay flat on purpose, so the page has one quiet section
+   between the loud ones.
 ========================================================= */
 
-.home{ padding-top: var(--space-4); }
+.home{ padding-top: var(--space-5); }
 
 /* =========================================================
-   MASTHEAD
+   HERO — navy clay slab (.clay-slab supplies colour, edge,
+   radius and shadow)
 ========================================================= */
-.masthead{
+.hero{
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
   column-gap: var(--space-7);
-  align-items: end;
-  padding-bottom: var(--space-7);
-  border-bottom: 2px solid var(--text);
+  align-items: center;
+  padding: var(--space-7) var(--space-8) var(--space-8);
 }
 
-/* Standing head: publication line above the title. */
-.masthead__rule{
+/* One soft clay disc in the corner: depth for the slab, carries no content. */
+.hero::before{
+  content: "";
+  position: absolute;
+  left: -90px;
+  bottom: -120px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: var(--royal);
+  box-shadow: inset 10px 10px 24px rgba(255,255,255,.12), inset -14px -14px 30px rgba(0,0,0,.45);
+  pointer-events: none;
+}
+
+.hero > *{ position: relative; }
+
+.hero__rule{
   grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
   gap: var(--space-4);
   padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid rgba(255,255,255,.18);
   font-size: var(--text-xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--hero-accent);
 }
 
-.masthead__body{
-  grid-column: 1;
-  padding-top: var(--space-6);
-}
+.hero__body{ grid-column: 1; min-width: 0; }
 
-.masthead__title{
+.hero__title{
   display: grid;
   gap: var(--space-3);
   margin: 0;
+  color: var(--hero-text);
 }
 
-.masthead__name{
-  font-size: clamp(42px, 8.4vw, 104px);
-  line-height: .86;
-  letter-spacing: -0.045em;
-  font-weight: var(--weight-black);
-  text-transform: uppercase;
-  color: var(--text);
+.hero__name{
+  font-family: var(--font-serif);
+  font-size: clamp(46px, 6.4vw, 84px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -0.025em;
 }
 
-/* Serif italic against the uppercase mono name — the one deliberate
-   typographic contrast on the page, so it does the work a decorative
-   gradient would otherwise be doing. */
-.masthead__tagline{
-  font-size: clamp(19px, 2.7vw, 32px);
-  line-height: 1.06;
-  letter-spacing: -0.01em;
-  font-weight: var(--weight-normal);
+/* Serif italic under the heavy serif name: the one typographic contrast. */
+.hero__tagline{
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3vw, 38px);
   font-style: italic;
-  color: var(--text-soft);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--hero-accent);
 }
 
-.masthead__role{
+.hero__role{
   margin: var(--space-5) 0 0;
   font-size: var(--text-sm);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--hero-text);
 }
 
-.masthead__lede{
-  margin: var(--space-5) 0 0;
-  max-width: 48ch;
-  font-size: var(--text-lg);
+.hero__lede{
+  margin: var(--space-3) 0 0;
+  max-width: 50ch;
+  font-size: var(--text-md);
   line-height: var(--leading-relaxed);
-  color: var(--text-soft);
+  color: var(--hero-muted);
 }
 
-.masthead__actions{
+/* The lede arrives via [innerHTML], so its span gets no _ngcontent attribute
+   and needs ::ng-deep. The global .u-accent blue is 3.8:1 on navy: here it
+   is white on a navy-mid underline band instead. */
+.hero__lede ::ng-deep .u-accent{
+  color: var(--hero-text);
+  background: linear-gradient(transparent 62%, var(--royal-mid) 62%);
+}
+
+.hero__actions{
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3) var(--space-5);
+  gap: var(--space-3) var(--space-4);
   margin-top: var(--space-6);
 }
 
-/* The cutout sits directly on the page and is bottom-aligned to the
-   masthead rule, which is what anchors it — no frame required. */
-.masthead__portrait{
+.hero__actions .btn--text{ color: var(--hero-text); }
+.hero__actions a:focus-visible{ outline-color: var(--hero-accent); }
+
+/* White ring on a hard black shadow; the cut-out sits on the ring's
+   bottom edge and the circle crops it. */
+.hero__portrait{
   grid-column: 2;
-  justify-self: end;
-  align-self: end;
+  justify-self: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
   margin: 0;
 }
 
-.masthead__portrait picture{ display: contents; }
+.hero__ring{
+  aspect-ratio: 1;
+  padding: var(--space-4);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 5px 5px 0 #000000, inset 4px 4px 8px #ffffff, inset -6px -6px 12px rgba(13,27,42,.2);
+}
 
-.masthead__portrait img{
-  display: block;
+.hero__ring picture{
+  display: grid;
+  place-items: end center;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--royal-soft), #b9c8ee);
+  box-shadow: inset 6px 8px 18px rgba(13,27,42,.4);
+}
+
+.hero__ring img{
+  width: 92%;
   height: auto;
 }
 
 /* =========================================================
-   NOW
+   NOW — inset tiles (.neu-inset)
 ========================================================= */
+.now{ margin-top: var(--space-6); }
+
 .now__list{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
-  gap: var(--space-5);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
   margin: 0;
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--border);
 }
 
 .now__item{
@@ -128,48 +169,187 @@
   flex-direction: column;
   gap: var(--space-1);
   min-width: 0;
+  padding: var(--space-4);
 }
 
 .now__label{
   font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);   /* 6.4:1 on --bg-sunken */
 }
 
 .now__value{
   margin: 0;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-normal);
   color: var(--text);
 }
 
-/* min-height carries the hit area to the 24px WCAG 2.2 (SC 2.5.8) floor —
-   the label's own line box is only 19px, and this link stands alone in a
-   <dd> rather than sitting inline in a sentence, so no exception applies. */
+/* The prerendered time is the build's, swapped for the visitor's on load.
+   Fixed-width digits on one line keep that swap from reflowing the tile
+   (it was the home page's layout-shift source). */
+.now__time{
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Underlined, and min-height carries the hit area past the 24px floor. */
 .now__link{
   display: inline-flex;
   align-items: center;
   min-height: 24px;
   color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px solid var(--border-strong);
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
-.now__link:hover{
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+.now__link:hover{ color: var(--accent); }
+
+/* =========================================================
+   SELECTED WORK — lead card + two stacked cards
+========================================================= */
+.work,
+.capabilities{ margin-top: var(--section-gap); }
+
+.workGrid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workCard{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.workCard--lead{ grid-row: span 2; }
+
+/* aspect-ratio reserves the box before the file lands, so cards do not jump:
+   these screenshots have very different intrinsic sizes. */
+.workCard__shot{
+  position: relative;
+  margin: var(--space-3) var(--space-3) 0;
+  overflow: hidden;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: calc(var(--radius-lg) - var(--space-3));
+  background: var(--bg-sunken);
+}
+
+.workCard__shot picture{ display: contents; }
+
+.workCard__shot img{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform .4s var(--ease-out);
+}
+
+.workCard--lead .workCard__shot img{ aspect-ratio: 4 / 3; }
+.workCard:hover .workCard__shot img{ transform: scale(1.03); }
+
+/* Clay number badge on the screenshot. */
+.workCard__num{
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  display: grid;
+  place-items: center;
+  min-width: 46px;
+  height: 46px;
+  padding: 0 var(--space-2);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-sm);
+  background: var(--royal-deep);
+  color: #ffffff;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-black);
+  box-shadow: 2px 2px 0 var(--edge), inset 2px 2px 4px rgba(255,255,255,.25), inset -3px -3px 6px rgba(0,0,0,.5);
+}
+
+.workCard__body{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.workCard__title{
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(21px, 1.9vw, 25px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.workCard--lead .workCard__title{ font-size: clamp(26px, 2.6vw, 34px); }
+
+.workCard__link{
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+  transition: text-decoration-color .18s var(--ease-out);
+}
+
+.workCard:hover .workCard__link,
+.workCard__link:focus-visible{
+  color: var(--text);
+  text-decoration-color: var(--accent);
+}
+
+.workCard__meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.workCard__desc{
+  margin: 0;
+  color: var(--text-soft);
+  line-height: var(--leading-relaxed);
+}
+
+.workCard__tools{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workCard__links{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-2);
 }
 
 /* =========================================================
-   WHAT I DO
+   WHAT I DO — flat ledger rows (kept from v1 by choice)
 ========================================================= */
-.capabilities,
-.work{ margin-top: var(--section-gap); }
-
-.capList,
-.workList{
+.capList{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -225,144 +405,33 @@
 }
 
 /* =========================================================
-   SELECTED WORK
-========================================================= */
-.workItem{
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  column-gap: var(--space-7);
-  padding: var(--space-7) 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.workItem__head{
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: var(--space-7) minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: var(--space-2) var(--space-6);
-  margin-bottom: var(--space-5);
-}
-
-.workItem__titles{
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-}
-
-/* Hard right, tabular figures — the years line up down the index. */
-.workItem__year{
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.workItem__num{
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  color: var(--text-faint);
-}
-
-.workItem__title{
-  margin: 0;
-  font-size: clamp(21px, 2.5vw, 31px);
-  line-height: 1.1;
-  letter-spacing: var(--tracking-tight);
-}
-
-.workItem__link{
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
-}
-
-/* Hovering anywhere on the row previews the link the title carries. */
-.workItem:hover .workItem__link,
-.workItem__link:focus-visible{
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-/* Sits under the title now, not in the right-hand slot — the year took that. */
-.workItem__kind{
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* aspect-ratio reserves the box before the file lands, so the row does
-   not jump — these screenshots have wildly different intrinsic sizes. */
-.workItem__shot{
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg-sunken);
-}
-
-.workItem__shot picture{ display: contents; }
-
-.workItem__shot img{
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform .45s var(--ease-out);
-}
-
-.workItem:hover .workItem__shot img{ transform: scale(1.02); }
-
-/* Text hangs from the top, links sit on the bottom edge of the screenshot.
-   Two fixed points instead of one, so the space between them reads as
-   deliberate rather than as a column that ran out of content. */
-.workItem__meta{
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  align-self: stretch;
-}
-
-.workItem__desc{
-  margin: 0;
-  max-width: 44ch;
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
-  color: var(--text-soft);
-}
-
-.workItem__links{
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-5);
-  margin-top: auto;
-  padding-top: var(--space-4);
-}
-
-/* =========================================================
    RESPONSIVE
-   Each breakpoint re-composes the row rather than only stacking it.
 ========================================================= */
+@media (max-width: 1000px){
+  .now__list{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 @media (max-width: 900px){
-  .masthead{
+  .hero{
     grid-template-columns: minmax(0, 1fr);
-    padding-bottom: var(--space-6);
+    padding: var(--space-6) var(--space-5) var(--space-7);
   }
+  .hero__body{ grid-row: 3; }
 
-  .masthead__body{ grid-column: 1; }
-
-  .masthead__portrait{
+  /* Portrait moves above the name, small and left-aligned, so the name
+     still lands in the first screenful on a phone. */
+  .hero__portrait{
     grid-column: 1;
-    justify-self: end;
-    max-width: 200px;
-    margin-top: var(--space-5);
+    grid-row: 2;
+    justify-self: start;
+    max-width: 168px;
+    margin-bottom: var(--space-5);
   }
+  .hero__ring{ padding: var(--space-2); box-shadow: 3px 3px 0 #000000, inset -4px -4px 8px rgba(13,27,42,.2); }
+
+  .workGrid{ grid-template-columns: minmax(0, 1fr); }
+  .workCard--lead{ grid-row: auto; }
+  .workCard--lead .workCard__shot img{ aspect-ratio: 16 / 10; }
 
   /* Description drops under the title instead of holding its own column. */
   .capItem{
@@ -373,57 +442,27 @@
   .capItem__title{ grid-column: 2; grid-row: 1; }
   .capItem__desc { grid-column: 2; grid-row: 2; max-width: none; }
   .capItem__tools{ grid-column: 2; grid-row: 3; }
+}
 
-  .workItem{
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--space-5);
-    padding: var(--space-6) 0;
-  }
-  /* Number narrows but the year keeps its own column — dropping it to a new
-     row would break the alignment that makes the index scannable. */
-  .workItem__head{
-    grid-template-columns: var(--space-6) minmax(0, 1fr) auto;
-    column-gap: var(--space-4);
-  }
-  .workItem__desc{ max-width: none; font-size: var(--text-md); }
-  .workItem__links{ margin-top: 0; padding-top: 0; }
+@media (max-width: 600px){
+  .now__list{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .now__item:last-child{ grid-column: 1 / -1; }
 }
 
 @media (max-width: 560px){
-  .home{ padding-top: var(--space-2); }
+  .home{ padding-top: var(--space-3); }
 
-  .masthead__rule{
-    flex-direction: column;
-    gap: var(--space-1);
-  }
+  .hero{ padding: var(--space-5) var(--space-4) var(--space-6); }
+  .hero__rule{ flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-5); }
+  .hero__portrait{ max-width: 140px; }
 
-  .masthead__body{ padding-top: var(--space-5); }
-  .masthead__lede{ font-size: var(--text-md); }
+  /* The filled action takes its own full-width row; the two text actions
+     share the next. Stacking all three full-width read as menu rows. */
+  .hero__actions .btn--onNavy{ flex: 1 0 100%; }
 
-  /* Primary takes its own full-width row; the two text links share the next
-     one. Stacking all three full-width made them read as menu rows, which
-     flattened the hierarchy the primary is there to establish. */
-  .masthead__actions{
-    gap: var(--space-4) var(--space-5);
-    margin-top: var(--space-5);
-  }
-  .masthead__actions .actionLink--primary{
-    flex: 1 0 100%;
-    justify-content: center;
-  }
+  .workCard__body{ padding: var(--space-4); }
+}
 
-  .masthead__portrait{
-    justify-self: center;
-    max-width: 160px;
-  }
-
-  .now__list{
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-4);
-  }
-
-  .workItem__shot img{ aspect-ratio: 4 / 3; }
-
-  .workItem__head{ grid-template-columns: var(--space-7) minmax(0, 1fr); }
-  .workItem__year{ grid-column: 2; }
+@media (max-width: 360px){
+  .now__list{ grid-template-columns: minmax(0, 1fr); }
 }

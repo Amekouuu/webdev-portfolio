@@ -29,6 +29,10 @@ export interface SeoConfig {
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
+  private title = inject(Title);
+  private meta = inject(Meta);
+  private router = inject(Router);
+
   private readonly BASE_URL = 'https://amekou-dev.vercel.app';
 
   /** id on the BlogPosting <script>, so it can be found and replaced/removed. */
@@ -42,8 +46,6 @@ export class SeoService {
   private readonly DEFAULT_IMAGE = '/assets/images/og-card.png';
 
   private readonly doc = inject(DOCUMENT);
-
-  constructor(private title: Title, private meta: Meta, private router: Router) {}
 
   set(config: SeoConfig): void {
     const fullTitle = config.title;

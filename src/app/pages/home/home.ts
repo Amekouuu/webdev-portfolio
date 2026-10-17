@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
+
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
 import {
@@ -31,11 +31,13 @@ type NowLine = {
   // No scroll-reveal on this page on purpose: the sections are full screenfuls,
   // so fading them in leaves the viewport blank on the way down — and a reveal
   // that fails to fire (as it did on About) hides the page outright.
-  imports: [NgFor, NgIf, RouterLink, LocalTimePipe],
+  imports: [RouterLink, LocalTimePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
+  private seo = inject(SeoService);
+
   name    = 'Micko Alberto';
   role    = 'IT Student — Web Development · SEO-focused';
   tagline = 'still learning, still building';
@@ -84,10 +86,12 @@ export class Home implements OnInit, OnDestroy {
     },
   ];
 
-  /** LocalTimePipe is impure and renders seconds, so the view needs a tick. */
+  /** Current time in ms, piped through LocalTimePipe. A signal, so the view
+      updates on each tick without the pipe having to be impure. */
+  readonly clock = signal(Date.now());
   private clockTimer: ReturnType<typeof setInterval> | null = null;
 
-  constructor(private seo: SeoService) {
+  constructor() {
     this.seo.set({
       title: 'Micko Alberto — Web Developer & SEO | Portfolio',
       description:
@@ -96,9 +100,9 @@ export class Home implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Runs inside the Angular zone, so the tick alone refreshes the clock.
+    // Prerendering runs this in Node; a timer there would keep the build alive.
     if (typeof window === 'undefined') return;
-    this.clockTimer = setInterval(() => {}, 1000);
+    this.clockTimer = setInterval(() => this.clock.set(Date.now()), 1000);
   }
 
   ngOnDestroy(): void {

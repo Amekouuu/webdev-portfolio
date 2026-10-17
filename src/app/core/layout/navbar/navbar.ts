@@ -1,99 +1,75 @@
-import { Component, ElementRef, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIf } from '@angular/common';
+
 import { ThemeService } from '../../services/theme.service';
 
+/**
+ * Header bar plus a drop-down menu panel.
+ *
+ * The panel is a disclosure (a button that shows/hides a region), not a modal
+ * dialog: it covers only part of the page, so the page stays scrollable and
+ * Tab is free to leave it. The old full-screen version needed a scroll lock
+ * and a focus trap because it hid everything behind it; this one closes
+ * itself instead when focus or a click lands outside the header.
+ */
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgIf],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar implements OnDestroy {
+export class Navbar {
+  themeService = inject(ThemeService);
+  private host = inject<ElementRef<HTMLElement>>(ElementRef);
+
   isOpen = false;
 
   @ViewChild('menuBtn', { static: true }) menuBtn!: ElementRef<HTMLButtonElement>;
 
-  private prevBodyOverflow = '';
-  private prevBodyPaddingRight = '';
-
-  constructor(public themeService: ThemeService) {}
-
-  private lockScroll() {
-    this.prevBodyOverflow = document.body.style.overflow;
-    this.prevBodyPaddingRight = document.body.style.paddingRight;
-
-    document.body.style.overflow = 'hidden';
-
-    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollBarWidth > 0) {
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
-    }
-  }
-
-  private unlockScroll() {
-    document.body.style.overflow = this.prevBodyOverflow;
-    document.body.style.paddingRight = this.prevBodyPaddingRight;
-  }
-
   open() {
     this.isOpen = true;
-    this.lockScroll();
-
+    // After the panel renders: start on the current page's link, so arrowing
+    // or tabbing begins from "you are here".
     setTimeout(() => {
-      const firstLink = document.querySelector<HTMLAnchorElement>('#menuPanel a');
-      firstLink?.focus();
+      const panel = this.host.nativeElement.querySelector('#menuPanel');
+      const target =
+        panel?.querySelector<HTMLAnchorElement>('a.isActive') ??
+        panel?.querySelector<HTMLAnchorElement>('a');
+      target?.focus();
     }, 0);
   }
 
-  close() {
+  /**
+   * @param refocus Return focus to the Menu button. True for Escape and the
+   *   button itself; false when a link was chosen (focus belongs to the new
+   *   page) or the user already clicked/tabbed somewhere else.
+   */
+  close(refocus = true) {
+    if (!this.isOpen) return;
     this.isOpen = false;
-    this.unlockScroll();
-
-    setTimeout(() => this.menuBtn?.nativeElement.focus(), 0);
+    if (refocus) setTimeout(() => this.menuBtn?.nativeElement.focus(), 0);
   }
 
   toggle() {
-    this.isOpen ? this.close() : this.open();
+    if (this.isOpen) this.close();
+    else this.open();
   }
 
-  @HostListener('document:keydown', ['$event'])
-  onKeydown(e: KeyboardEvent) {
-    if (!this.isOpen) return;
-
-    if (e.key === 'Escape') {
-      this.close();
-      return;
-    }
-
-    // Focus trap: the menu covers the whole viewport, so tabbing past it lands
-    // on links the user cannot see.
-    if (e.key !== 'Tab') return;
-
-    const panel = document.getElementById('menuPanel');
-    const items = panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
-    if (!items?.length) return;
-
-    const first = items[0];
-    const last = items[items.length - 1];
-    const active = document.activeElement;
-
-    if (e.shiftKey && active === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && active === last) {
-      e.preventDefault();
-      first.focus();
-    }
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.close();
   }
 
-  onBackdropClick(e: MouseEvent) {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains('menuOverlay')) this.close();
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(e: MouseEvent) {
+    if (!this.host.nativeElement.contains(e.target as Node)) this.close(false);
   }
 
-  ngOnDestroy() {
-    if (this.isOpen) this.unlockScroll();
+  /** Tabbing past the last menu item (or anywhere outside the header) closes it. */
+  @HostListener('focusout', ['$event'])
+  onFocusOut(e: FocusEvent) {
+    const next = e.relatedTarget as Node | null;
+    if (next && !this.host.nativeElement.contains(next)) this.close(false);
   }
 }

@@ -1,48 +1,76 @@
 /* =========================================================
-   ABOUT
-   Five sections on one rule system. The old page ran nine
-   panels, each a rounded card with a dotted kicker pill, and
-   the substance sat in cards inside cards inside cards.
+   ABOUT (v2)
+   Navy intro slab, then four sections on the shared surfaces:
+   education cards, a raised stack ledger per group, raised
+   certification groups, and the terminal as a clay slab.
 
-   Note: the previous file also carried its own [appReveal] /
-   .isInView reveal system on top of the global one. That is
-   what blanked this page after prerendering. There is no
-   content-hiding animation here at all — see .techRow__rule.
+   No content-hiding animation anywhere on this page: a previous
+   [appReveal] system blanked it after prerendering. The only motion
+   is the decorative .techRow__rule sweep and the terminal caret.
 ========================================================= */
 
-.about{ padding-top: var(--space-4); }
+.about{ padding-top: var(--space-5); }
 
 .section{ margin-top: var(--section-gap); }
 
 /* =========================================================
-   INTRO
+   INTRO — navy clay slab (.clay-slab)
 ========================================================= */
 .intro{
-  display: grid;
-  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-  gap: var(--space-7);
-  align-items: start;
-  padding-bottom: var(--space-7);
-  border-bottom: 2px solid var(--text);
-}
-
-/* The one framed element on the site. The portrait is a cut-out so it needs a
-   ground; everything else sits directly on the page. */
-.intro__portrait{
-  margin: 0;
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg-sunken);
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: center;
+  padding: var(--space-7) var(--space-8);
 }
 
-.intro__portrait picture{ display: contents; }
+/* One soft clay disc in the corner, as on the home hero. */
+.intro::before{
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -90px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: var(--royal);
+  box-shadow: inset 10px 10px 24px rgba(255,255,255,.12), inset -14px -14px 30px rgba(0,0,0,.45);
+  pointer-events: none;
+}
 
-.intro__portrait img{
-  display: block;
+.intro > *{ position: relative; }
+
+/* White ring on a hard black shadow; the circle crops the cut-out. */
+.intro__portrait{ margin: 0; }
+
+.intro__ring{
+  aspect-ratio: 1;
+  padding: var(--space-3);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 5px 5px 0 #000000, inset -6px -6px 12px rgba(13,27,42,.2);
+}
+
+.intro__ring picture{
+  display: grid;
+  place-items: end center;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--royal-soft), #b9c8ee);
+  box-shadow: inset 6px 8px 18px rgba(13,27,42,.4);
+}
+
+.intro__ring img{
+  width: 92%;
   height: auto;
 }
+
+.intro__body{ min-width: 0; }
 
 .intro__kicker{
   display: block;
@@ -50,31 +78,30 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--hero-accent);
 }
 
 .intro__title{
   display: grid;
   gap: var(--space-2);
   margin: var(--space-4) 0 0;
+  color: var(--hero-text);
 }
 
 .intro__hi{
   font-family: var(--font-serif);
-  font-size: clamp(17px, 2vw, 22px);
+  font-size: clamp(20px, 2.4vw, 28px);
   font-style: italic;
-  font-weight: var(--weight-normal);
-  letter-spacing: 0;
-  color: var(--text-muted);
+  font-weight: 400;
+  color: var(--hero-accent);
 }
 
 .intro__name{
-  font-size: clamp(34px, 5.4vw, 68px);
-  line-height: .9;
-  letter-spacing: -0.042em;
-  font-weight: var(--weight-black);
-  text-transform: uppercase;
-  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 5.6vw, 72px);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -0.025em;
 }
 
 .intro__role{
@@ -83,24 +110,24 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--hero-text);
 }
 
 .intro__para{
-  margin: var(--space-4) 0 0;
+  margin: var(--space-3) 0 0;
   max-width: 62ch;
   font-size: var(--text-md);
   line-height: var(--leading-relaxed);
-  color: var(--text-soft);
+  color: var(--hero-muted);
 }
 
+/* Quick facts: tiles pressed into the slab (translucent, so they read as
+   the same navy surface sunk in, not as white cards). */
 .quickFacts{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
   margin: var(--space-6) 0 0;
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--border);
 }
 
 .quickFact{
@@ -108,73 +135,92 @@
   flex-direction: column;
   gap: var(--space-1);
   min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.07);
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,.35);
 }
 
 .quickFact__label{
   font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--hero-accent);
 }
 
 .quickFact__value{
   margin: 0;
-  font-size: var(--text-base);
-  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--hero-text);
 }
 
-/* Text links, not icon buttons — the old row gave each logo its own rounded
-   tile, which is the icon-soup pattern in miniature. */
+/* One white button (LinkedIn) and two text links. */
 .intro__socials{
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-5);
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
   margin-top: var(--space-6);
 }
 
+.intro__socials .btn--text{ color: var(--hero-text); }
+.intro a:focus-visible{ outline-color: var(--hero-accent); }
+
 /* =========================================================
-   EDUCATION
+   EDUCATION — two raised cards side by side
 ========================================================= */
 .eduList{
-  margin: var(--space-5) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+  margin: var(--space-6) 0 0;
   padding: 0;
   list-style: none;
 }
 
 .eduItem{
-  display: grid;
-  grid-template-columns: minmax(0, 230px) minmax(0, 1fr);
-  gap: var(--space-4) var(--space-6);
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--raised);
 }
 
 .eduItem__when{
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
+  letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .eduItem__school{
   margin: 0;
-  font-size: var(--text-xl);
-  line-height: 1.2;
-  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: var(--text);
 }
 
 .eduItem__program{
-  margin: var(--space-2) 0 0;
+  margin: 0;
   font-size: var(--text-base);
-  color: var(--text-muted);
+  font-weight: var(--weight-bold);
+  color: var(--text);
 }
 
 .eduItem__notes{
   display: grid;
   gap: var(--space-2);
-  margin: var(--space-4) 0 0;
+  margin: 0;
   padding-left: var(--space-4);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
@@ -184,16 +230,23 @@
 .eduItem__notes li::marker{ color: var(--accent); }
 
 /* =========================================================
-   STACK — ledger
+   STACK — one raised ledger card per group (.neu-raised)
    Rows, not logo tiles, and each one names the project it was
    used on. Attribution is pulled from data/projects.ts, so the
    claim is evidence rather than a self-scored bar.
 ========================================================= */
-.techGroup{ margin-top: var(--space-5); }
-.techGroup + .techGroup{ margin-top: var(--space-7); }
+.techGroup{
+  margin-top: var(--space-6);
+  overflow: hidden;
+}
+.techGroup + .techGroup{ margin-top: var(--space-5); }
 
+/* Group name on a sunken bar across the top of the card. */
 .techGroup__title{
-  margin: 0 0 var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: var(--edge-w) solid var(--edge);
+  background: var(--bg-sunken);
   font-size: var(--text-xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
@@ -203,23 +256,32 @@
 
 .techList{
   margin: 0;
-  padding: 0;
+  padding: 0 var(--space-5);
   list-style: none;
 }
 
 .techRow{
   position: relative;
   display: grid;
-  grid-template-columns: 24px minmax(90px, 140px) minmax(0, 1fr) auto;
+  grid-template-columns: 34px minmax(90px, 150px) minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
 }
 
+.techRow:last-child{ border-bottom: 0; }
+
+/* Each logo on a small white key, like the pills. */
 .techRow__icon{
-  width: 24px;
-  height: 24px;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  padding: 6px;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: var(--pill);
   object-fit: contain;
 }
 
@@ -237,16 +299,25 @@
 }
 
 .techRow__count{
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--space-3);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--r-pill);
+  background: #ffffff;
+  box-shadow: var(--pill);
   font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wider);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text);
   white-space: nowrap;
 }
 
 /* Accent rule that sweeps in as each row enters view. Drawn on top of the
    row's real border, so a browser where the observer never fires just never
-   sees it — no content is ever hidden behind this. */
+   sees it: no content is ever hidden behind this. */
 .techRow__rule{
   position: absolute;
   left: 0;
@@ -264,28 +335,40 @@
 }
 
 /* =========================================================
-   CREDENTIALS
-   Flat and scannable. This was a carousel that showed one
-   issuer at a time and hid the other six certificates.
+   CREDENTIALS — one raised card per issuer (<details>)
 ========================================================= */
-.certGroups{ margin-top: var(--space-5); }
+.certGroups{
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
 
-/* One row per issuer when closed, so the section's resting height grows by a
-   single line per new provider rather than by every certificate. */
-.certGroup{ border-bottom: 1px solid var(--border); }
+.certGroup{
+  overflow: hidden;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  box-shadow: var(--raised);
+}
 
 .certGroup__summary{
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  min-height: 44px;
-  padding: var(--space-3) 0;
+  min-height: 56px;
+  padding: var(--space-3) var(--space-5);
   cursor: pointer;
   list-style: none;
 }
 
 /* Suppress the UA triangle in both engines. */
 .certGroup__summary::-webkit-details-marker{ display: none; }
+
+/* Open: the summary becomes a sunken bar, like the stack group titles. */
+.certGroup[open] .certGroup__summary{
+  border-bottom: var(--edge-w) solid var(--edge);
+  background: var(--bg-sunken);
+}
 
 .certGroup__issuer{
   flex: 1;
@@ -296,45 +379,46 @@
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
   color: var(--text);
-  transition: color .18s var(--ease-out);
 }
 
+/* Count as a small navy clay badge. */
 .certGroup__count{
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 var(--space-2);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: 50%;
+  background: var(--royal-deep);
+  color: #ffffff;
   font-size: var(--text-xs);
-  color: var(--text-faint);
+  font-weight: var(--weight-bold);
   font-variant-numeric: tabular-nums;
 }
 
-/* +/− in the page's own mono voice — no icon library for one glyph. */
+/* +/− in the page's own mono voice: no icon library for one glyph. */
 .certGroup__summary::after{
   content: "+";
   width: 1em;
   text-align: center;
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: var(--weight-bold);
   line-height: 1;
-  color: var(--text-muted);
-  transition: color .18s var(--ease-out);
+  color: var(--text);
 }
 
 .certGroup[open] .certGroup__summary::after{ content: "−"; }
 
-.certGroup__summary:hover .certGroup__issuer,
-.certGroup__summary:hover::after{ color: var(--accent); }
+.certGroup__summary:hover .certGroup__issuer{ color: var(--accent); }
 
-.certGroup__summary:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+.certGroup__summary:focus-visible{ outline-offset: -4px; }
 
 .certList{
-  margin: 0 0 var(--space-4);
-  padding: 0;
+  margin: 0;
+  padding: var(--space-1) var(--space-5) var(--space-2);
   list-style: none;
 }
-
-/* The <details> carries the closing rule, so the last row must not add one. */
-.certList .certRow:last-child{ border-bottom: 0; }
 
 .certRow{
   display: flex;
@@ -343,106 +427,106 @@
   justify-content: space-between;
   gap: var(--space-1) var(--space-5);
   padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
 }
+
+.certList .certRow:last-child{ border-bottom: 0; }
 
 .certRow__link{
   display: inline-flex;
   align-items: center;
-  min-height: 24px;
-  border-bottom: 1px solid transparent;
+  min-height: 32px;
   color: var(--text);
-  text-decoration: none;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+  font-weight: var(--weight-bold);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
 .certRow__link:hover{
   color: var(--accent);
-  border-bottom-color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 
 .certRow__dates{
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
-  color: var(--text-faint);
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 /* =========================================================
-   FUN FACTS — terminal
+   FUN FACTS — terminal on a navy clay slab
    Dark in both themes on purpose: a terminal that follows the
    page theme stops reading as a terminal.
 ========================================================= */
 .term{
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--royal-deep);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-lg);
+  background: #0a1330;
   color: rgba(245, 247, 255, .88);
+  box-shadow: var(--clay-slab);
 }
 
 .term__bar{
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid rgba(255, 255, 255, .10);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: rgba(245, 247, 255, .52);
+  color: rgba(245, 247, 255, .62);
 }
 
 .term__cmds{
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid rgba(255, 255, 255, .10);
+  padding: var(--space-4) var(--space-5) 0;
 }
 
 .term__cmd{
-  min-height: 30px;
-  padding: var(--space-1) var(--space-3);
-  border: var(--edge-w) solid #ffffff;
-  border-radius: var(--r-sm);
-  background: none;
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  border: var(--edge-w) solid #3b5296;
+  border-radius: var(--radius-sm);
+  background: transparent;
   color: #ffffff;
-  box-shadow: 2px 3px 8px rgba(0, 0, 0, .45);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
   cursor: pointer;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out),
-              background .18s var(--ease-out);
+  transition: background .18s var(--ease-out), border-color .18s var(--ease-out);
 }
 
 .term__cmd::before{
   content: "$ ";
-  opacity: .5;
+  opacity: .6;
 }
 
 .term__cmd:hover{
-  background: rgba(255, 255, 255, .1);
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, .08);
 }
 
-/* Selected flips to navy-on-white: the inverse of the page's selected filter. */
+/* Selected flips to navy-on-white, pressed in. */
 .term__cmd.isActive{
   background: #ffffff;
   border-color: #ffffff;
   color: var(--royal-deep);
-  font-weight: var(--weight-bold);
   box-shadow: inset 2px 2px 5px rgba(15, 31, 74, .35);
 }
 
 .term__cmd.isActive::before{ opacity: .65; }
 
-.term__cmd:focus-visible{
-  outline: 2px solid var(--hero-accent);
-  outline-offset: 2px;
-}
+.term__cmd:focus-visible{ outline-color: var(--hero-accent); }
 
 /* min-height stops the page jumping as commands of different lengths swap. */
 .term__screen{
   min-height: 210px;
-  padding: var(--space-5) var(--space-4);
+  padding: var(--space-5);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
 }
@@ -469,14 +553,13 @@
   align-items: center;
   min-height: 24px;
   color: var(--hero-accent);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(158, 197, 232, .45);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
-.term__link:hover{
-  color: #ffffff;
-  border-bottom-color: #ffffff;
-}
+.term__link:hover{ color: #ffffff; }
+.term__link:focus-visible{ outline-color: var(--hero-accent); }
 
 .term__caret{ margin: var(--space-4) 0 0; }
 
@@ -495,26 +578,25 @@
 /* =========================================================
    RESPONSIVE
 ========================================================= */
+@media (max-width: 1000px){
+  .quickFacts{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 900px){
   .intro{
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-6);
-    padding-bottom: var(--space-6);
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-5);
   }
 
-  .intro__portrait{ max-width: 220px; }
-
-  .eduItem{
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-3);
-    padding: var(--space-5) 0;
-  }
+  .intro__portrait{ width: 168px; }
+  .intro__ring{ padding: var(--space-2); box-shadow: 3px 3px 0 #000000, inset -4px -4px 8px rgba(13,27,42,.2); }
 }
 
 @media (max-width: 700px){
   /* Attribution drops to its own line rather than fighting the name for width. */
   .techRow{
-    grid-template-columns: 24px minmax(0, 1fr) auto;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
     gap: var(--space-2) var(--space-3);
   }
   .techRow__icon { grid-column: 1; grid-row: 1; }
@@ -524,15 +606,22 @@
 }
 
 @media (max-width: 560px){
-  .about{ padding-top: var(--space-2); }
+  .about{ padding-top: var(--space-3); }
 
-  .intro__portrait{ max-width: 170px; }
+  .intro{ padding: var(--space-5) var(--space-4); }
+  .intro__portrait{ width: 140px; }
   .intro__para{ font-size: var(--text-base); }
 
-  .quickFacts{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eduList{ grid-template-columns: minmax(0, 1fr); }
+  .eduItem{ padding: var(--space-5); }
 
+  .techList{ padding: 0 var(--space-4); }
+  .techGroup__title{ padding: var(--space-3) var(--space-4); }
+  .certGroup__summary{ padding: var(--space-3) var(--space-4); }
+  .certList{ padding: var(--space-1) var(--space-4) var(--space-2); }
   .certRow{ justify-content: flex-start; }
 
+  .term__cmds{ padding: var(--space-3) var(--space-3) 0; }
   .term__screen{
     min-height: 0;
     padding: var(--space-4) var(--space-3);

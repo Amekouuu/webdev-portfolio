@@ -1,4 +1,4 @@
-<header class="siteHeader" [class.isOpen]="isOpen">
+<header class="siteHeader">
   <div class="siteHeader__inner">
     <nav class="nav" aria-label="Primary navigation">
 
@@ -12,133 +12,127 @@
               stroke-width="10"
               stroke-miterlimit="10"
               d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
-            />
+              />
             <path
               fill="rgba(255,255,255,.06)"
               stroke="var(--accent)"
               stroke-width="3"
               stroke-miterlimit="10"
               d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
-            />
+              />
           </svg>
         </span>
-        <span class="brand__stack">
-          <span class="brand__text">Amekou</span>
-        </span>
+        <span class="brand__text">Amekou</span>
       </a>
 
       <!-- RIGHT: Actions -->
       <div class="navActions">
 
         <!-- Dark / Light toggle. Hidden while ThemeService.DARK_MODE_ENABLED is false. -->
-        <button
-          *ngIf="themeService.enabled"
-          class="themeToggle"
-          type="button"
-          (click)="themeService.toggle()"
-          [attr.aria-label]="'Switch to ' + (themeService.isDark() ? 'light' : 'dark') + ' mode'"
-        >
-          <span class="themeToggle__icon" *ngIf="themeService.isDark()">☀</span>
-          <span class="themeToggle__icon" *ngIf="!themeService.isDark()">☾</span>
-        </button>
+        @if (themeService.enabled) {
+          <button
+            class="themeToggle"
+            type="button"
+            (click)="themeService.toggle()"
+            [attr.aria-label]="'Switch to ' + (themeService.isDark() ? 'light' : 'dark') + ' mode'"
+            >
+            @if (themeService.isDark()) {
+              <span class="themeToggle__icon">☀</span>
+            }
+            @if (!themeService.isDark()) {
+              <span class="themeToggle__icon">☾</span>
+            }
+          </button>
+        }
 
-        <!-- Resume CTA (desktop) -->
-        <a class="ctaBtn" routerLink="/resume" aria-label="View Resume">
-          <span class="ctaBtn__label">Resume</span>
-        </a>
+        <!-- The one action every visitor type wants, visible on every page.
+             White, so the hero's navy button stays the single filled action. -->
+        <a class="btn btn--raised navCta" routerLink="/contact">Get in touch</a>
 
-        <!-- Menu button (mobile only via CSS) -->
         <button
-          class="menuBtn"
+          class="btn btn--clay menuBtn"
           #menuBtn
           type="button"
-          [class.isOpen]="isOpen"
           (click)="toggle()"
           [attr.aria-expanded]="isOpen"
           aria-controls="menuPanel"
-          aria-label="Toggle menu"
         >
-          <span class="menuBtn__label" aria-hidden="true">Menu</span>
           <span class="menuBtn__icon" aria-hidden="true"><span></span></span>
+          <span class="menuBtn__label">Menu</span>
         </button>
 
       </div>
     </nav>
+
+    <!-- Drop-down, not a full-screen overlay: the page stays visible and
+         scrollable behind it, so there is no scroll lock or focus trap (a
+         disclosure, not a modal dialog). Escape, an outside click, focus
+         leaving the header, or choosing a link closes it. -->
+    <div id="menuPanel" class="menuPanel" [hidden]="!isOpen">
+      <span class="menuPanel__label">Navigation</span>
+
+      <!-- Each link carries its own description, so the two are one accessible
+           unit rather than parallel columns that only looked paired. -->
+      <nav aria-label="Site sections">
+        <ol class="menuLinks">
+          <li>
+            <a class="menuLink" routerLink="/" routerLinkActive="isActive" ariaCurrentWhenActive="page"
+               [routerLinkActiveOptions]="{ exact: true }" (click)="close(false)">
+              <span class="menuLink__num" aria-hidden="true">01</span>
+              <span class="menuLink__label">Home</span>
+              <span class="menuLink__desc">Start here — who I am and what I do.</span>
+            </a>
+          </li>
+          <li>
+            <a class="menuLink" routerLink="/about" routerLinkActive="isActive" ariaCurrentWhenActive="page" (click)="close(false)">
+              <span class="menuLink__num" aria-hidden="true">02</span>
+              <span class="menuLink__label">About</span>
+              <span class="menuLink__desc">My background, skills, and tools.</span>
+            </a>
+          </li>
+          <li>
+            <a class="menuLink" routerLink="/projects" routerLinkActive="isActive" ariaCurrentWhenActive="page" (click)="close(false)">
+              <span class="menuLink__num" aria-hidden="true">03</span>
+              <span class="menuLink__label">Projects</span>
+              <span class="menuLink__desc">Selected web dev and UI/UX work.</span>
+            </a>
+          </li>
+          <li>
+            <a class="menuLink" routerLink="/blog" routerLinkActive="isActive" ariaCurrentWhenActive="page" (click)="close(false)">
+              <span class="menuLink__num" aria-hidden="true">04</span>
+              <span class="menuLink__label">Blog</span>
+              <span class="menuLink__desc">Notes on Angular, CSS, and SEO.</span>
+            </a>
+          </li>
+          <li>
+            <a class="menuLink" routerLink="/contact" routerLinkActive="isActive" ariaCurrentWhenActive="page" (click)="close(false)">
+              <span class="menuLink__num" aria-hidden="true">05</span>
+              <span class="menuLink__label">Contact</span>
+              <span class="menuLink__desc">Let's work together.</span>
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="menuPanel__foot">
+        <div class="menuIcons">
+          <a class="menuIcon" href="https://github.com/Amekouuu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <img src="assets/images/icons/github.svg" alt="" aria-hidden="true" width="18" height="18" />
+          </a>
+          <a class="menuIcon" href="https://www.linkedin.com/in/micko-alberto-b49906316/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="assets/images/icons/linkedin.svg" alt="" aria-hidden="true" width="18" height="18" />
+          </a>
+          <a class="menuIcon" href="mailto:mqalberto12@gmail.com" aria-label="Email">
+            <img src="assets/images/icons/google.svg" alt="" aria-hidden="true" width="18" height="18" />
+          </a>
+        </div>
+        <!-- Was the navy "Resume" button in the bar. The bar now carries
+             "Get in touch"; the résumé is still one tap away here, in the
+             home hero and in the footer. -->
+        <a class="btn btn--text" routerLink="/resume" (click)="close(false)">
+          Résumé <span class="actionLink__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
-
-<!-- DRAWER OVERLAY -->
-<div
-  class="menuOverlay"
-  [class.isOpen]="isOpen"
-  (click)="onBackdropClick($event)"
-  role="presentation"
->
-  <div
-    id="menuPanel"
-    class="menuPanel"
-    [class.isOpen]="isOpen"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Navigation menu"
-  >
-
-    <!-- Panel top bar -->
-    <div class="menuTop">
-      <span class="menuTop__title">Navigation</span>
-      <button class="closeBtn" type="button" (click)="close()" aria-label="Close menu">
-        Close ✕
-      </button>
-    </div>
-
-    <!-- Social icon row -->
-    <div class="menuIcons" aria-label="Social links">
-      <a class="menuIcon" href="https://github.com/Amekouuu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-        <img src="assets/images/icons/github.svg" alt="" aria-hidden="true" width="18" height="18" />
-      </a>
-      <a class="menuIcon" href="https://www.linkedin.com/in/micko-alberto-b49906316/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <img src="assets/images/icons/linkedin.svg" alt="" aria-hidden="true" width="18" height="18" />
-      </a>
-      <a class="menuIcon" href="mailto:mqalberto12@gmail.com" aria-label="Email">
-        <img src="assets/images/icons/google.svg" alt="" aria-hidden="true" width="18" height="18" />
-      </a>
-    </div>
-
-    <!-- Each link carries its own description, so the two are one accessible
-         unit. They used to be parallel columns that only looked paired, which
-         is why the description column needed aria-hidden. -->
-    <nav class="menuLinks" aria-label="Site sections">
-      <a
-        class="menuLink"
-        routerLink="/"
-        routerLinkActive="isActive"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="close()"
-      >
-        <span class="menuLink__label">Home</span>
-        <span class="menuLink__desc">Start here — who I am and what I do.</span>
-      </a>
-
-      <a class="menuLink" routerLink="/about" routerLinkActive="isActive" (click)="close()">
-        <span class="menuLink__label">About</span>
-        <span class="menuLink__desc">My background, skills, and tools.</span>
-      </a>
-
-      <a class="menuLink" routerLink="/projects" routerLinkActive="isActive" (click)="close()">
-        <span class="menuLink__label">Projects</span>
-        <span class="menuLink__desc">Selected web dev and UI/UX work.</span>
-      </a>
-
-      <a class="menuLink" routerLink="/blog" routerLinkActive="isActive" (click)="close()">
-        <span class="menuLink__label">Blog</span>
-        <span class="menuLink__desc">Notes on Angular, CSS, and SEO.</span>
-      </a>
-
-      <a class="menuLink" routerLink="/contact" routerLinkActive="isActive" (click)="close()">
-        <span class="menuLink__label">Contact</span>
-        <span class="menuLink__desc">Let's work together.</span>
-      </a>
-    </nav>
-
-  </div>
-</div>

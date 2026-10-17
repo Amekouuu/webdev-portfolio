@@ -1,24 +1,31 @@
 <div class="about">
 
   <!-- =========================================================
-       INTRO
+  INTRO
   ========================================================== -->
-  <header class="intro">
+  <header class="intro clay-slab">
 
+    <!-- The ring has a fixed aspect-ratio and the img carries its real size
+         (427x585), so nothing below it moves when the photo arrives. That
+         move was this page's layout-shift source on phones. -->
     <figure class="intro__portrait">
-      <picture>
-        <source *ngIf="profile.imageWebp" [srcset]="profile.imageWebp" type="image/webp" />
-        <img [src]="profile.imageUrl" [alt]="profile.imageAlt" fetchpriority="high" />
-      </picture>
+      <div class="intro__ring">
+        <picture>
+          @if (profile.imageWebp) {
+            <source [srcset]="profile.imageWebp" type="image/webp" />
+          }
+          <img [src]="profile.imageUrl" [alt]="profile.imageAlt" width="427" height="585" fetchpriority="high" />
+        </picture>
+      </div>
     </figure>
 
     <div class="intro__body">
       <span class="intro__kicker">SEO · Front-end · Performance</span>
 
       <!-- Carries the full name, not just "Micko" — this is the second
-           strongest name signal on the site after the homepage H1. -->
+      strongest name signal on the site after the homepage H1. -->
       <!-- aria-label because the two spans are grid items on separate lines:
-           without it the accessible name runs together as "Hi, I'mMicko Alberto". -->
+      without it the accessible name runs together as "Hi, I'mMicko Alberto". -->
       <h1 class="intro__title" aria-label="Hi, I'm Micko Alberto">
         <span class="intro__hi">Hi, I'm</span>
         <span class="intro__name">Micko Alberto</span>
@@ -26,30 +33,37 @@
 
       <p class="intro__role">{{ profile.role }}</p>
 
-      <p class="intro__para" *ngFor="let p of introParagraphs">{{ p }}</p>
+      @for (p of introParagraphs; track p) {
+        <p class="intro__para">{{ p }}</p>
+      }
 
       <dl class="quickFacts">
-        <div class="quickFact" *ngFor="let f of quickFacts">
-          <dt class="quickFact__label">{{ f.label }}</dt>
-          <dd class="quickFact__value">{{ f.value }}</dd>
-        </div>
+        @for (f of quickFacts; track f) {
+          <div class="quickFact">
+            <dt class="quickFact__label">{{ f.label }}</dt>
+            <dd class="quickFact__value">{{ f.value }}</dd>
+          </div>
+        }
       </dl>
 
       <nav class="intro__socials" aria-label="Profiles and contact">
-        <a
-          class="actionLink"
-          *ngFor="let s of socials"
-          [href]="s.url"
-          [attr.target]="s.url.startsWith('mailto:') ? null : '_blank'"
-          rel="noopener noreferrer"
-        >{{ s.label }}</a>
+        @for (s of socials; track s.label; let first = $first) {
+          <a
+            class="btn"
+            [class.btn--onNavy]="first"
+            [class.btn--text]="!first"
+            [href]="s.url"
+            [attr.target]="s.url.startsWith('mailto:') ? null : '_blank'"
+            rel="noopener noreferrer"
+          >{{ s.label }}</a>
+        }
       </nav>
     </div>
 
   </header>
 
   <!-- =========================================================
-       EDUCATION
+  EDUCATION
   ========================================================== -->
   <section class="section" aria-labelledby="educationTitle">
     <div class="sectionHead">
@@ -60,24 +74,30 @@
     </div>
 
     <ol class="eduList">
-      <li class="eduItem" *ngFor="let e of education">
-        <div class="eduItem__when">{{ e.years }}</div>
-
-        <div class="eduItem__what">
-          <h3 class="eduItem__school" *ngIf="e.school">{{ e.school }}</h3>
-          <p class="eduItem__program" *ngIf="e.program">{{ e.program }}</p>
-
-          <ul class="eduItem__notes">
-            <li *ngFor="let h of e.highlights">{{ h }}</li>
-          </ul>
-        </div>
-      </li>
+      @for (e of education; track e) {
+        <li class="eduItem">
+          <div class="eduItem__when">{{ e.years }}</div>
+          <div class="eduItem__what">
+            @if (e.school) {
+              <h3 class="eduItem__school">{{ e.school }}</h3>
+            }
+            @if (e.program) {
+              <p class="eduItem__program">{{ e.program }}</p>
+            }
+            <ul class="eduItem__notes">
+              @for (h of e.highlights; track h) {
+                <li>{{ h }}</li>
+              }
+            </ul>
+          </div>
+        </li>
+      }
     </ol>
   </section>
 
   <!-- =========================================================
-       STACK — a ledger, not a wall of logo tiles. Each row says
-       where the tool was actually used, pulled from the project data.
+  STACK — a ledger, not a wall of logo tiles. Each row says
+  where the tool was actually used, pulled from the project data.
   ========================================================== -->
   <section class="section" aria-labelledby="stackTitle">
     <div class="sectionHead">
@@ -91,43 +111,45 @@
       </p>
     </div>
 
-    <div class="techGroup" *ngFor="let group of techGroups">
-      <h3 class="techGroup__title">{{ group.title }}</h3>
-
-      <ul class="techList">
-        <li class="techRow" *ngFor="let item of group.items">
-          <img
-            class="techRow__icon"
-            [src]="item.iconSrc"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            width="24"
-            height="24"
-          />
-
-          <span class="techRow__name">{{ item.name }}</span>
-
-          <span class="techRow__where">
-            <ng-container *ngIf="usedIn(item.name).length; else techNote">
-              {{ usedIn(item.name).join(' · ') }}
-            </ng-container>
-            <ng-template #techNote>{{ item.note }}</ng-template>
-          </span>
-
-          <span class="techRow__count" *ngIf="usedIn(item.name).length">
-            {{ usageLabel(item.name) }}
-          </span>
-
-          <span class="techRow__rule" aria-hidden="true"></span>
-        </li>
-      </ul>
-    </div>
+    @for (group of techGroups; track group) {
+      <div class="techGroup neu-raised">
+        <h3 class="techGroup__title">{{ group.title }}</h3>
+        <ul class="techList">
+          @for (item of group.items; track item) {
+            <li class="techRow">
+              <img
+                class="techRow__icon"
+                [src]="item.iconSrc"
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                width="24"
+                height="24"
+                />
+              <span class="techRow__name">{{ item.name }}</span>
+              <span class="techRow__where">
+                @if (usedIn(item.name).length) {
+                  {{ usedIn(item.name).join(' · ') }}
+                } @else {
+                  {{ item.note }}
+                }
+              </span>
+              @if (usedIn(item.name).length) {
+                <span class="techRow__count">
+                  {{ usageLabel(item.name) }}
+                </span>
+              }
+              <span class="techRow__rule" aria-hidden="true"></span>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </section>
 
   <!-- =========================================================
-       CREDENTIALS — flat and scannable. This was a carousel that
-       showed one issuer at a time and hid the rest behind chips.
+  CREDENTIALS — flat and scannable. This was a carousel that
+  showed one issuer at a time and hid the rest behind chips.
   ========================================================== -->
   <section class="section" aria-labelledby="certsTitle">
     <div class="sectionHead">
@@ -141,39 +163,43 @@
     </div>
 
     <!-- Native <details>, one per issuer: collapsed by default so the section
-         stays one row per issuer no matter how long the list grows, but every
-         certificate is still in the HTML. The old carousel rendered only the
-         active issuer, so six of eight credentials were absent from the
-         prerendered page entirely. -->
+    stays one row per issuer no matter how long the list grows, but every
+    certificate is still in the HTML. The old carousel rendered only the
+    active issuer, so six of eight credentials were absent from the
+    prerendered page entirely. -->
     <div class="certGroups">
-      <details
-        class="certGroup"
-        *ngFor="let g of certGroups; let i = index"
-        [open]="isOpenByDefault(g, i)"
-      >
-        <summary class="certGroup__summary">
-          <h3 class="certGroup__issuer">{{ g.issuer }}</h3>
-          <span class="certGroup__count">{{ g.certs.length }}</span>
-        </summary>
-
-        <ul class="certList">
-          <li class="certRow" *ngFor="let c of g.certs">
-            <a
-              class="certRow__link"
-              [href]="c.url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ c.name }}</a>
-            <span class="certRow__dates" *ngIf="certMeta(c)">{{ certMeta(c) }}</span>
-          </li>
-        </ul>
-      </details>
+      @for (g of certGroups; track g; let i = $index) {
+        <details
+          class="certGroup"
+          [open]="isOpenByDefault(g, i)"
+          >
+          <summary class="certGroup__summary">
+            <h3 class="certGroup__issuer">{{ g.issuer }}</h3>
+            <span class="certGroup__count">{{ g.certs.length }}</span>
+          </summary>
+          <ul class="certList">
+            @for (c of g.certs; track c) {
+              <li class="certRow">
+                <a
+                  class="certRow__link"
+                  [href]="c.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{ c.name }}</a>
+                @if (certMeta(c)) {
+                  <span class="certRow__dates">{{ certMeta(c) }}</span>
+                }
+              </li>
+            }
+          </ul>
+        </details>
+      }
     </div>
   </section>
 
   <!-- =========================================================
-       FUN FACTS — a small terminal. Every command's output is in
-       the DOM, so nothing here depends on JS to be readable.
+  FUN FACTS — a small terminal. Every command's output is in
+  the DOM, so nothing here depends on JS to be readable.
   ========================================================== -->
   <section class="section" aria-labelledby="funTitle">
     <div class="sectionHead">
@@ -192,14 +218,15 @@
       </div>
 
       <div class="term__cmds" role="group" aria-label="Choose a command">
-        <button
-          class="term__cmd"
-          type="button"
-          *ngFor="let c of terminal; let i = index"
-          [class.isActive]="activeCmd === i"
-          [attr.aria-pressed]="activeCmd === i"
-          (click)="setCmd(i)"
-        >{{ c.cmd }}</button>
+        @for (c of terminal; track c; let i = $index) {
+          <button
+            class="term__cmd"
+            type="button"
+            [class.isActive]="activeCmd === i"
+            [attr.aria-pressed]="activeCmd === i"
+            (click)="setCmd(i)"
+          >{{ c.cmd }}</button>
+        }
       </div>
 
       <div class="term__screen" aria-live="polite">
@@ -208,16 +235,20 @@
           {{ activeCommand.cmd }}
         </p>
 
-        <p class="term__line" *ngFor="let l of activeCommand.lines">{{ l }}</p>
+        @for (l of activeCommand.lines; track l) {
+          <p class="term__line">{{ l }}</p>
+        }
 
-        <p class="term__line" *ngIf="activeCommand.link">
-          <a
-            class="term__link"
-            [href]="activeCommand.link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ activeCommand.link.label }} →</a>
-        </p>
+        @if (activeCommand.link) {
+          <p class="term__line">
+            <a
+              class="term__link"
+              [href]="activeCommand.link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ activeCommand.link.label }} →</a>
+          </p>
+        }
 
         <p class="term__caret" aria-hidden="true">
           <span class="term__user">amekou@portfolio:~$</span>

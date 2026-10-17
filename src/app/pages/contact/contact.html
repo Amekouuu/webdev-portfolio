@@ -1,6 +1,6 @@
 <div class="contact">
 
-  <header class="sectionHead">
+  <header class="sectionHead pageHead clay-slab">
     <div>
       <span class="sectionHead__index">Contact</span>
       <h1 class="sectionHead__title">Let's talk about it.</h1>
@@ -14,8 +14,8 @@
   <div class="contact__grid">
 
     <!-- =========================================================
-         FORM — first in source so it leads on mobile, where it is
-         the reason anyone opened this page.
+    FORM — first in source so it leads on mobile, where it is
+    the reason anyone opened this page.
     ========================================================== -->
     <section class="formPanel" aria-labelledby="formTitle">
       <h2 class="formPanel__title" id="formTitle">Send a message</h2>
@@ -38,11 +38,13 @@
               aria-required="true"
               [attr.aria-invalid]="name?.touched && name?.invalid ? 'true' : null"
               [attr.aria-describedby]="name?.touched && name?.invalid ? 'contactNameError' : null"
-            />
-            <span class="field__error" id="contactNameError" role="alert"
-                  *ngIf="name?.touched && name?.invalid">
-              Name is required (min 2 characters).
-            </span>
+              />
+            @if (name?.touched && name?.invalid) {
+              <span class="field__error" id="contactNameError" role="alert"
+                >
+                Name is required (min 2 characters).
+              </span>
+            }
           </div>
 
           <div class="field">
@@ -59,11 +61,13 @@
               aria-required="true"
               [attr.aria-invalid]="email?.touched && email?.invalid ? 'true' : null"
               [attr.aria-describedby]="email?.touched && email?.invalid ? 'contactEmailError' : null"
-            />
-            <span class="field__error" id="contactEmailError" role="alert"
-                  *ngIf="email?.touched && email?.invalid">
-              Please enter a valid email.
-            </span>
+              />
+            @if (email?.touched && email?.invalid) {
+              <span class="field__error" id="contactEmailError" role="alert"
+                >
+                Please enter a valid email.
+              </span>
+            }
           </div>
         </div>
 
@@ -80,11 +84,13 @@
             aria-required="true"
             [attr.aria-invalid]="subject?.touched && subject?.invalid ? 'true' : null"
             [attr.aria-describedby]="subject?.touched && subject?.invalid ? 'contactSubjectError' : null"
-          />
-          <span class="field__error" id="contactSubjectError" role="alert"
-                *ngIf="subject?.touched && subject?.invalid">
-            Subject is required (min 3 characters).
-          </span>
+            />
+          @if (subject?.touched && subject?.invalid) {
+            <span class="field__error" id="contactSubjectError" role="alert"
+              >
+              Subject is required (min 3 characters).
+            </span>
+          }
         </div>
 
         <div class="field">
@@ -101,33 +107,41 @@
             [attr.aria-invalid]="message?.touched && message?.invalid ? 'true' : null"
             [attr.aria-describedby]="message?.touched && message?.invalid ? 'contactMessageError' : null"
           ></textarea>
-          <span class="field__error" id="contactMessageError" role="alert"
-                *ngIf="message?.touched && message?.invalid">
-            Message is required (min 10 characters).
-          </span>
+          @if (message?.touched && message?.invalid) {
+            <span class="field__error" id="contactMessageError" role="alert"
+              >
+              Message is required (min 10 characters).
+            </span>
+          }
         </div>
 
         <div class="form__footer">
-          <button class="submitBtn" type="submit" [disabled]="sending">
+          <button class="btn btn--clay submitBtn" type="submit" [disabled]="sending">
             {{ sending ? 'Sending…' : 'Send message' }}
-            <span class="actionLink__arrow" aria-hidden="true" *ngIf="!sending">→</span>
+            @if (!sending) {
+              <span class="actionLink__arrow" aria-hidden="true">→</span>
+            }
           </button>
           <p class="form__note">Replies within 1–2 business days.</p>
         </div>
 
-        <p class="formStatus formStatus--success" *ngIf="sent" role="status">
-          Message sent. I'll get back to you as soon as possible.
-        </p>
+        @if (sent) {
+          <p class="formStatus formStatus--success" role="status">
+            Message sent. I'll get back to you as soon as possible.
+          </p>
+        }
 
-        <p class="formStatus formStatus--error" *ngIf="errorMsg" role="alert">
-          {{ errorMsg }}
-        </p>
+        @if (errorMsg) {
+          <p class="formStatus formStatus--error" role="alert">
+            {{ errorMsg }}
+          </p>
+        }
 
       </form>
     </section>
 
     <!-- =========================================================
-         DETAILS — a labelled rail, matching the "now" list on home.
+    DETAILS — a labelled rail, matching the "now" list on home.
     ========================================================== -->
     <aside class="contact__info" aria-label="Contact details">
 
@@ -141,23 +155,26 @@
       <div class="infoBlock">
         <h2 class="infoBlock__label">Elsewhere</h2>
         <nav class="infoBlock__links" aria-label="Social profiles">
-          <a
-            *ngFor="let s of socials"
-            class="infoBlock__link"
-            [href]="s.href"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ s.label }}</a>
+          @for (s of socials; track s) {
+            <a
+              class="infoBlock__link"
+              [href]="s.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ s.label }}</a>
+          }
         </nav>
       </div>
 
       <div class="infoBlock">
         <h2 class="infoBlock__label">Active hours — Philippines (GMT+8)</h2>
         <dl class="availList">
-          <div class="availRow" *ngFor="let a of availability">
-            <dt class="availRow__day">{{ a.day }}</dt>
-            <dd class="availRow__time">{{ a.time }}</dd>
-          </div>
+          @for (a of availability; track a) {
+            <div class="availRow">
+              <dt class="availRow__day">{{ a.day }}</dt>
+              <dd class="availRow__time">{{ a.time }}</dd>
+            </div>
+          }
         </dl>
       </div>
 

@@ -1,69 +1,106 @@
 /* =========================================================
-   BLOG INDEX
-   Rules and numbers, not a stack of rounded cards with pill
-   tags. Same index pattern as Selected work on the home page,
-   so the two read as one system.
+   BLOG INDEX (v2)
+   Each post is a raised card with a navy clay number. The title
+   link is stretched over the card (::after), so the whole card is
+   one target that lifts on hover and presses on click, without
+   faking link semantics on the <li>.
 ========================================================= */
 
-.blog{ padding-top: var(--space-4); }
+.blog{ padding-top: var(--space-5); }
 
 .postList{
-  margin: var(--space-6) 0 0;
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .postItem{
+  position: relative;
   display: grid;
-  grid-template-columns: var(--space-7) minmax(0, 1fr) auto;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
   column-gap: var(--space-6);
   align-items: start;
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-6);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--raised);
+  transition: box-shadow .18s var(--ease-out), transform .18s var(--ease-out);
 }
 
+.postItem:hover{ box-shadow: var(--raised-hover); transform: translate(-1px, -1px); }
+.postItem:active{ box-shadow: var(--pressed); transform: translate(2px, 2px); }
+
 .postItem__num{
-  padding-top: .35em;
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  color: var(--text-faint);
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--royal-deep);
+  color: #ffffff;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  box-shadow: var(--clay);
 }
 
 .postItem__body{ min-width: 0; }
 
 .postItem__title{
   margin: 0;
-  font-size: clamp(19px, 2.2vw, 26px);
-  line-height: 1.16;
-  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
 }
 
 .postItem__link{
   color: var(--text);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+  transition: text-decoration-color .18s var(--ease-out);
 }
 
-/* Hovering the row previews the link the title carries. */
-.postItem:hover .postItem__link,
-.postItem__link:focus-visible{
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+.postItem__link::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.postItem:hover .postItem__link{ color: var(--text); text-decoration-color: var(--accent); }
+
+/* Ring the whole card, which is the real target. */
+.postItem__link:focus-visible{ outline: none; text-decoration-color: var(--accent); }
+.postItem__link:focus-visible::after{
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .postItem__summary{
   margin: var(--space-3) 0 0;
-  max-width: 62ch;
+  max-width: 64ch;
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
   color: var(--text-soft);
 }
 
-.postItem__tags{ margin-top: var(--space-3); }
+.postItem__tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
 
-/* Date column, right-aligned — the one field that lines up down the index. */
+/* Date column, right-aligned: the one field that lines up down the index. */
 .postItem__meta{
   display: flex;
   flex-direction: column;
@@ -79,14 +116,14 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text);
   font-variant-numeric: tabular-nums;
 }
 
 .postItem__read{
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
-  color: var(--text-faint);
+  color: var(--text-muted);
 }
 
 /* =========================================================
@@ -95,10 +132,12 @@
 @media (max-width: 700px){
   /* Date moves under the number instead of squeezing the title. */
   .postItem{
-    grid-template-columns: var(--space-6) minmax(0, 1fr);
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: var(--space-4);
     row-gap: var(--space-3);
-    padding: var(--space-5) 0;
+    padding: var(--space-5);
   }
+  .postItem__num{ width: 52px; height: 52px; font-size: var(--text-lg); }
 
   .postItem__num { grid-column: 1; grid-row: 1; }
   .postItem__meta{
@@ -114,6 +153,6 @@
 }
 
 @media (max-width: 560px){
-  .blog{ padding-top: var(--space-2); }
+  .blog{ padding-top: var(--space-3); }
   .postItem__summary{ max-width: none; }
 }

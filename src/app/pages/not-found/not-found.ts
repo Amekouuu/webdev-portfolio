@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+
 import { Router, RouterLink } from '@angular/router';
 import { SeoService } from '../../core/services/seo.service';
 
@@ -12,11 +12,14 @@ type Destination = {
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [RouterLink],
   templateUrl: './not-found.html',
   styleUrl: './not-found.css',
 })
 export class NotFound {
+  private router = inject(Router);
+  private seo = inject(SeoService);
+
   /* Same labels and descriptions as the nav overlay: someone who lands here
      took a wrong turn, so the way out should read like the site's own
      signposting rather than a separate list invented for the error page. */
@@ -28,7 +31,7 @@ export class NotFound {
     { path: '/contact',  label: 'Contact',  desc: "Let's work together." },
   ];
 
-  constructor(private router: Router, private seo: SeoService) {
+  constructor() {
     this.seo.set({
       title: 'Page not found — Micko Alberto',
       description: 'That page could not be found on the portfolio of Micko Alberto.',

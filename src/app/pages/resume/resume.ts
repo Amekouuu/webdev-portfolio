@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -10,12 +10,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './resume.css',
 })
 export class Resume {
+  private seo = inject(SeoService);
+  private sanitizer = inject(DomSanitizer);
+
   /** 🔁 Drop your PDF at this path in /assets/ */
   private readonly pdfPath = '/assets/Micko_Alberto_Resume.pdf';
 
   resumeUrl: SafeResourceUrl;
 
-  constructor(private seo: SeoService, private sanitizer: DomSanitizer) {
+  constructor() {
     this.seo.set({
       title: 'Resume | Micko Alberto',
       description:

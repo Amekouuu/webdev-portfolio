@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+
 import { SeoService } from '../../core/services/seo.service';
 import {
   PROJECTS,
@@ -15,11 +15,13 @@ type Sort   = 'newest' | 'oldest' | 'featured' | 'az';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [],
   templateUrl: './projects.html',
   styleUrl: './projects.css',
 })
 export class Projects {
+  private seo = inject(SeoService);
+
   readonly filters: { value: Filter; label: string }[] = [
     { value: 'all',    label: 'All' },
     { value: 'web',    label: 'Web development' },
@@ -40,7 +42,7 @@ export class Projects {
   activeFilter: Filter = 'all';
   activeSort: Sort = 'newest';
 
-  constructor(private seo: SeoService) {
+  constructor() {
     this.seo.set({
       title: 'Projects — Micko Alberto | Web Development & UI/UX',
       description:

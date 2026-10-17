@@ -8,7 +8,8 @@
     "postbuild:sitemap": "node scripts/generate-sitemap.mjs",
     "postbuild:404": "node -e \"const f=require('fs'),d='dist/webdev-portfolio/browser';f.copyFileSync(d+'/index.csr.html',d+'/404.html');console.log('wrote 404.html')\"",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "prettier": {
     "printWidth": 100,
@@ -41,8 +42,11 @@
     "@angular/build": "^21.1.3",
     "@angular/cli": "^21.1.3",
     "@angular/compiler-cli": "^21.1.0",
+    "angular-eslint": "^21.4.0",
+    "eslint": "^9.39.5",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
+    "typescript-eslint": "^8.71.2",
     "vitest": "^4.0.8"
   }
 }

@@ -1,88 +1,182 @@
 <div class="home">
 
   <!-- =========================================================
-       MASTHEAD
-       The name is the H1 now. It used to be the tagline, with the
-       name demoted to a <p>, which spent the page's strongest
-       ranking signal on a phrase nobody searches for.
+  HERO
+  A navy clay slab. The name is the H1: it used to be the tagline,
+  with the name demoted to a <p>, which spent the page's strongest
+  ranking signal on a phrase nobody searches for.
   ========================================================== -->
-  <header class="masthead">
+  <header class="hero clay-slab">
 
-    <div class="masthead__rule">
-      <span class="masthead__mark">Portfolio</span>
-      <span class="masthead__year">Pampanga, PH — 2026</span>
+    <div class="hero__rule">
+      <span>Portfolio</span>
+      <span>Pampanga, PH — 2026</span>
     </div>
 
-    <div class="masthead__body">
-      <h1 class="masthead__title">
-        <span class="masthead__name">{{ name }}</span>
-        <span class="masthead__tagline h-serif">{{ tagline }}</span>
+    <div class="hero__body">
+      <h1 class="hero__title">
+        <span class="hero__name">{{ name }}</span>
+        <span class="hero__tagline">{{ tagline }}</span>
       </h1>
 
-      <p class="masthead__role">{{ role }}</p>
+      <p class="hero__role">{{ role }}</p>
 
-      <p class="masthead__lede" [innerHTML]="intro"></p>
+      <p class="hero__lede" [innerHTML]="intro"></p>
 
-      <nav class="masthead__actions" aria-label="Primary actions">
-        <a class="actionLink actionLink--primary" routerLink="/projects">
+      <!-- One filled action (white, since navy would vanish on the slab),
+           two text actions. -->
+      <nav class="hero__actions" aria-label="Primary actions">
+        <a class="btn btn--onNavy" routerLink="/projects">
           Selected work <span class="actionLink__arrow" aria-hidden="true">→</span>
         </a>
         <a
-          class="actionLink"
+          class="btn btn--text"
           href="assets/Micko_Alberto_Resume.pdf"
           target="_blank"
           rel="noopener"
         >Résumé</a>
-        <a class="actionLink" routerLink="/contact">Get in touch</a>
+        <a class="btn btn--text" routerLink="/contact">Get in touch</a>
       </nav>
     </div>
 
-    <figure class="masthead__portrait">
-      <picture>
-        <source srcset="/assets/images/profile-photo-transparent.webp" type="image/webp" />
-        <img
-          src="/assets/images/profile-photo-transparent.png"
-          alt="Micko Alberto"
-          fetchpriority="high"
-        />
-      </picture>
+    <!-- Width/height are the file's own (427×585), so the ring's box is
+         reserved before the image arrives. -->
+    <figure class="hero__portrait">
+      <div class="hero__ring">
+        <picture>
+          <source srcset="/assets/images/profile-photo-transparent.webp" type="image/webp" />
+          <img
+            src="/assets/images/profile-photo-transparent.png"
+            alt="Micko Alberto"
+            width="427"
+            height="585"
+            fetchpriority="high"
+            />
+        </picture>
+      </div>
     </figure>
 
   </header>
 
   <!-- =========================================================
-       NOW — the old status list, as a plain definition list.
-       Same five facts; no icons, no simulated loading bars.
+  NOW — five facts as tiles pressed into the page.
   ========================================================== -->
   <section class="now" aria-label="Current status">
     <dl class="now__list">
-      <div class="now__item" *ngFor="let n of now">
-        <dt class="now__label">{{ n.label }}</dt>
-        <dd class="now__value">
-          <ng-container *ngIf="n.isTime; else nowText">
-            {{ '' | localTime }} — PHT (GMT+8)
-          </ng-container>
-
-          <ng-template #nowText>
-            <a
-              *ngIf="n.link; else nowPlain"
-              class="now__link"
-              [href]="n.link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ n.value }}</a>
-
-            <ng-template #nowPlain>{{ n.value }}</ng-template>
-          </ng-template>
-        </dd>
-      </div>
+      @for (n of now; track n.label) {
+        <div class="now__item neu-inset">
+          <dt class="now__label">{{ n.label }}</dt>
+          <dd class="now__value">
+            @if (n.isTime) {
+              <span class="now__time">{{ clock() | localTime }}</span> — PHT (GMT+8)
+            } @else {
+              @if (n.link) {
+                <a
+                  class="now__link"
+                  [href]="n.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{ n.value }}</a>
+              } @else {
+                {{ n.value }}
+              }
+            }
+          </dd>
+        </div>
+      }
     </dl>
   </section>
 
   <!-- =========================================================
-       WHAT I DO
-       Flat numbered rows. Descriptions used to be collapsed behind
-       a "+" — they are the point of the section, so they are open.
+  SELECTED WORK — straight after the hero, so a reviewer reaches
+  the evidence first. The first project leads at double height;
+  the full searchable grid lives on /projects.
+  ========================================================== -->
+  <section class="work" aria-labelledby="workTitle">
+
+    <div class="sectionHead">
+      <div>
+        <span class="sectionHead__index">Selected work</span>
+        <h2 class="sectionHead__title" id="workTitle">Things I've built</h2>
+      </div>
+      <a class="btn btn--raised" routerLink="/projects">
+        All projects <span class="actionLink__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <ol class="workGrid">
+      @for (p of featured; track p.id; let i = $index) {
+        <li class="workCard neu-raised pressable" [class.workCard--lead]="i === 0">
+          <figure class="workCard__shot">
+            <picture>
+              @if (p.images[0].webp) {
+                <source [srcset]="p.images[0].webp" type="image/webp" />
+              }
+              <img
+                [src]="p.images[0].src"
+                [alt]="p.images[0].alt"
+                [style.object-position]="p.imgPos || 'center'"
+                width="1600"
+                height="900"
+                loading="lazy"
+                decoding="async"
+                />
+            </picture>
+            <span class="workCard__num" aria-hidden="true">{{ index(i) }}</span>
+          </figure>
+
+          <div class="workCard__body">
+            <h3 class="workCard__title">
+              <a
+                class="workCard__link"
+                [href]="href(p)"
+                target="_blank"
+                rel="noopener noreferrer"
+              >{{ p.name }}</a>
+            </h3>
+
+            <div class="workCard__meta">
+              @if (p.tag) {
+                <span>{{ p.tag }}</span>
+              }
+              <span>{{ academicYear(p) }}</span>
+            </div>
+
+            <p class="workCard__desc">{{ p.description }}</p>
+
+            <ul class="workCard__tools" [attr.aria-label]="p.name + ' tools'">
+              @for (t of p.tools; track t) {
+                <li class="pill">{{ t }}</li>
+              }
+            </ul>
+
+            <div class="workCard__links">
+              <a
+                class="btn btn--raised"
+                [href]="href(p)"
+                target="_blank"
+                rel="noopener noreferrer"
+                >{{ linkLabel(p) }} <span class="actionLink__arrow" aria-hidden="true">→</span></a>
+              @if (p.repoUrl && p.liveUrl) {
+                <a
+                  class="btn btn--text"
+                  [href]="p.repoUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Source</a>
+              }
+            </div>
+          </div>
+        </li>
+      }
+    </ol>
+
+  </section>
+
+  <!-- =========================================================
+  WHAT I DO — deliberately flat numbered rows (no cards): one
+  quiet, text-first section between the loud hero/cards and the
+  navy footer. Descriptions are always open; they are the point.
   ========================================================== -->
   <section class="capabilities" aria-labelledby="capabilitiesTitle">
 
@@ -91,7 +185,7 @@
         <span class="sectionHead__index">What I do</span>
         <h2 class="sectionHead__title" id="capabilitiesTitle">What I bring to the table</h2>
       </div>
-      <a class="actionLink" routerLink="/about">
+      <a class="btn btn--raised" routerLink="/about">
         About me <span class="actionLink__arrow" aria-hidden="true">→</span>
       </a>
       <p class="sectionHead__note">
@@ -101,95 +195,18 @@
     </div>
 
     <ol class="capList">
-      <li class="capItem" *ngFor="let c of capabilities; let i = index">
-        <span class="capItem__num" aria-hidden="true">{{ index(i) }}</span>
-        <h3 class="capItem__title">{{ c.title }}</h3>
-        <p class="capItem__desc">{{ c.desc }}</p>
-        <ul class="toolList capItem__tools" [attr.aria-label]="c.title + ' tools'">
-          <li *ngFor="let t of c.tools">{{ t }}</li>
-        </ul>
-      </li>
-    </ol>
-
-  </section>
-
-  <!-- =========================================================
-       SELECTED WORK
-       A numbered index, not a three-up card grid — the grid lives
-       on /projects, where searching and sorting belong.
-  ========================================================== -->
-  <section class="work" aria-labelledby="workTitle">
-
-    <div class="sectionHead">
-      <div>
-        <span class="sectionHead__index">Selected work</span>
-        <h2 class="sectionHead__title" id="workTitle">Things I've built</h2>
-      </div>
-      <a class="actionLink" routerLink="/projects">
-        All projects <span class="actionLink__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <ol class="workList">
-      <li class="workItem" *ngFor="let p of featured; let i = index">
-
-        <div class="workItem__head">
-          <span class="workItem__num" aria-hidden="true">{{ index(i) }}</span>
-
-          <div class="workItem__titles">
-            <h3 class="workItem__title">
-              <a
-                class="workItem__link"
-                [href]="href(p)"
-                target="_blank"
-                rel="noopener noreferrer"
-              >{{ p.name }}</a>
-            </h3>
-            <span class="workItem__kind" *ngIf="p.tag">{{ p.tag }}</span>
-          </div>
-
-          <span class="workItem__year">{{ academicYear(p) }}</span>
-        </div>
-
-        <figure class="workItem__shot">
-          <picture>
-            <source *ngIf="p.images[0].webp" [srcset]="p.images[0].webp" type="image/webp" />
-            <img
-              [src]="p.images[0].src"
-              [alt]="p.images[0].alt"
-              [style.object-position]="p.imgPos || 'center'"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-        </figure>
-
-        <div class="workItem__meta">
-          <p class="workItem__desc">{{ p.description }}</p>
-
-          <ul class="toolList" [attr.aria-label]="p.name + ' tools'">
-            <li *ngFor="let t of p.tools">{{ t }}</li>
+      @for (c of capabilities; track c.title; let i = $index) {
+        <li class="capItem">
+          <span class="capItem__num" aria-hidden="true">{{ index(i) }}</span>
+          <h3 class="capItem__title">{{ c.title }}</h3>
+          <p class="capItem__desc">{{ c.desc }}</p>
+          <ul class="toolList capItem__tools" [attr.aria-label]="c.title + ' tools'">
+            @for (t of c.tools; track t) {
+              <li>{{ t }}</li>
+            }
           </ul>
-
-          <div class="workItem__links">
-            <a
-              class="actionLink"
-              [href]="href(p)"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ linkLabel(p) }} <span class="actionLink__arrow" aria-hidden="true">→</span></a>
-
-            <a
-              class="actionLink"
-              *ngIf="p.repoUrl && p.liveUrl"
-              [href]="p.repoUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Source</a>
-          </div>
-        </div>
-
-      </li>
+        </li>
+      }
     </ol>
 
   </section>

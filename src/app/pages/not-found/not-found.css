@@ -29,7 +29,7 @@
   min-width: 0;
   padding: var(--space-1) var(--space-2);
   border: 1px solid var(--border);
-  border-radius: var(--r-xs);
+  border-radius: 6px;
   background: var(--bg-sunken);
   color: var(--text-soft);
   font-family: var(--font-mono);

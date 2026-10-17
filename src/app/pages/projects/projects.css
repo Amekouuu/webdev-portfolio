@@ -1,8 +1,8 @@
 /* =========================================================
-   PROJECTS
-   A real card grid, since browsing wants scanning — but flat:
-   thin border, 4px radius, no shadow, no sheen, no badges
-   floating on the artwork. The screenshots do the work.
+   PROJECTS (v2)
+   Navy page header, a control bar of pressed-in fields, and a grid
+   of raised cards. Each card is ONE link (a stretched anchor), so
+   the whole card lifts on hover and presses on click.
 ========================================================= */
 
 .projects{ padding-top: var(--space-4); }
@@ -29,16 +29,18 @@
 
 .search__input{
   width: 100%;
-  min-height: 40px;
+  min-height: var(--tap);
   padding: var(--space-2) var(--space-9) var(--space-2) var(--space-4);
   border: var(--edge-w) solid var(--input-border);
-  border-radius: var(--r-lg);
-  background: var(--input-bg);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
   color: var(--input-text);
   font-family: var(--font-mono);
   font-size: var(--text-base);
-  box-shadow: var(--sink);
+  box-shadow: var(--inset);
 }
+
+.search__input:focus{ background: var(--input-bg); }
 
 .search__input::placeholder{ color: var(--input-placeholder); }
 
@@ -51,7 +53,7 @@
   min-height: 28px;
   padding: 0 var(--space-3);
   border: 0;
-  border-radius: var(--r-xs);
+  border-radius: var(--radius-sm);
   background: none;
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -68,17 +70,22 @@
 .filters{
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  box-shadow: var(--inset);
 }
 
 .filter{
-  min-height: 32px;
-  padding: var(--space-2) var(--space-4);
-  border: var(--edge-w) solid var(--edge);
-  border-radius: var(--r-lg);
-  background: #ffffff;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: var(--edge-w) solid transparent;
+  border-radius: 9px;
+  background: transparent;
   color: var(--text);
-  box-shadow: var(--lift);
+  box-shadow: none;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-wide);
@@ -89,14 +96,11 @@
 }
 
 .filter:hover{
-  box-shadow: var(--lift-hover);
-  transform: translateY(-1px);
+  border-color: var(--edge);
+  background: var(--bg-raised);
 }
 
-.filter:active{
-  transform: translateY(1px);
-  box-shadow: var(--sink);
-}
+.filter:active{ transform: translate(1px, 1px); }
 
 /* Selected state is fill + colour, never colour alone. */
 /* Selected flips to navy. Color, weight and depth all change, so the state
@@ -104,10 +108,10 @@
    selected filter never lifts. */
 .filter.isActive{
   background: var(--royal-deep);
-  border-color: var(--royal-deep);
+  border-color: var(--edge);
   color: #ffffff;
   font-weight: var(--weight-bold);
-  box-shadow: var(--press);
+  box-shadow: var(--clay-press);
   transform: none;
 }
 
@@ -131,13 +135,14 @@
 }
 
 .sort__select{
-  min-height: 32px;
-  padding: var(--space-2) var(--space-3);
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
   border: var(--edge-w) solid var(--edge);
-  border-radius: var(--r-lg);
+  border-radius: var(--radius-sm);
   background: var(--input-bg);
   color: var(--text);
-  box-shadow: var(--lift);
+  box-shadow: var(--raised);
+  font-weight: var(--weight-bold);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   cursor: pointer;
@@ -174,17 +179,21 @@
   flex-direction: column;
   overflow: hidden;
   border: var(--edge-w) solid var(--edge);
-  border-radius: var(--r-lg);
+  border-radius: var(--radius-lg);
   background: var(--card-bg);
+  box-shadow: var(--raised);
   transition: box-shadow .18s var(--ease-out), transform .18s var(--ease-out);
 }
 
-.pCard:hover{ box-shadow: var(--lift-hover); transform: translateY(-2px); }
+.pCard:hover{ box-shadow: var(--raised-hover); transform: translate(-1px, -1px); }
+.pCard:active{ box-shadow: var(--pressed); transform: translate(2px, 2px); }
 
+/* Screenshot inset in its own rounded frame, like the home cards. */
 .pCard__shot{
-  margin: 0;
+  margin: var(--space-3) var(--space-3) 0;
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: calc(var(--radius-lg) - var(--space-3));
   background: var(--bg-sunken);
 }
 
@@ -236,9 +245,11 @@
 
 .pCard__title{
   margin: 0;
-  font-size: var(--text-lg);
-  line-height: 1.25;
-  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .pCard__link{
@@ -262,7 +273,7 @@
 .pCard__link:focus-visible::after{
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: var(--r-md);
+  border-radius: var(--radius-lg);
 }
 
 .pCard__desc{
@@ -272,8 +283,15 @@
   color: var(--text-soft);
 }
 
-/* Pushes tools + links down so every card's footer lines up across the row. */
-.pCard__tools{ margin-top: auto; }
+/* Pushes tools + links down so every footer lines up across the row. */
+.pCard__tools{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
 
 .pCard__links{
   display: flex;

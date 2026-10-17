@@ -1,9 +1,8 @@
 /* =========================================================
-   RESUME
-   The document gets the full shell. It used to sit in an
-   18px-radius panel with a double drop shadow beside a
-   sticky sidebar, and the download button carried a hard
-   8px offset shadow.
+   RESUME (v2)
+   Navy page header, one clay action (Download) and one raised
+   (Open in new tab), then the document in a sunken frame that
+   spans the full shell.
 ========================================================= */
 
 .resume{ padding-top: var(--space-4); }
@@ -12,23 +11,26 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3) var(--space-5);
-  margin-top: var(--space-5);
+  gap: var(--space-3) var(--space-4);
 }
 
+/* The page is pressed in; the document sits on it as a white sheet. */
 .resume__viewer{
-  overflow: hidden;
   margin-top: var(--space-6);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
+  padding: var(--space-3);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-lg);
   background: var(--bg-sunken);
+  box-shadow: var(--inset);
 }
 
 .resume__iframe{
   display: block;
   width: 100%;
   height: 900px;
-  border: none;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: calc(var(--radius-lg) - var(--space-3));
+  background: #ffffff;
 }
 
 /* =========================================================
@@ -46,7 +48,9 @@
     align-items: stretch;
     gap: var(--space-3);
   }
-  .resume__actions .actionLink--primary{ justify-content: center; }
+  .resume__actions .actionLink--primary,
+  .resume__actions .btn{ justify-content: center; }
+  .resume__viewer{ padding: var(--space-2); }
 
   /* A PDF at phone width is barely legible inline — keep the frame short so
      it reads as a preview and the Download action stays reachable. */

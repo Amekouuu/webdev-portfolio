@@ -1,5 +1,5 @@
-import { Component, OnDestroy, AfterViewInit, isDevMode } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, OnDestroy, AfterViewInit, isDevMode, inject } from '@angular/core';
+
 import { SeoService } from '../../core/services/seo.service';
 import { PROJECTS } from '../../data/projects';
 
@@ -67,11 +67,13 @@ type TermCommand = {
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })
 export class About implements AfterViewInit, OnDestroy {
+  private seo = inject(SeoService);
+
   profile = {
     name: 'Micko Alberto',
     role: 'SEO-Focused Front-End Developer',
@@ -291,7 +293,7 @@ export class About implements AfterViewInit, OnDestroy {
 
   private io: IntersectionObserver | null = null;
 
-  constructor(private seo: SeoService) {
+  constructor() {
     this.seo.set({
       title: 'About Micko Alberto — Front-End Developer & SEO',
       description:

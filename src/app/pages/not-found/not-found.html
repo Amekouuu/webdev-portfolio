@@ -1,6 +1,6 @@
 <div class="notFound">
 
-  <header class="sectionHead">
+  <header class="sectionHead pageHead clay-slab">
     <div>
       <span class="sectionHead__index">Error 404</span>
       <h1 class="sectionHead__title">This page doesn't exist.</h1>
@@ -11,26 +11,28 @@
   </header>
 
   <!-- Interpolation, never innerHTML: this comes from the address bar, so
-       Angular's escaping is what keeps it inert. Truncated as well, to cap how
-       much arbitrary text a crafted link can put on the page. -->
-  <p class="notFound__path" *ngIf="attemptedPath">
-    <span class="notFound__pathLabel">Requested</span>
-    <code class="notFound__pathValue">{{ attemptedPath }}</code>
-  </p>
+  Angular's escaping is what keeps it inert. Truncated as well, to cap how
+  much arbitrary text a crafted link can put on the page. -->
+  @if (attemptedPath) {
+    <p class="notFound__path">
+      <span class="notFound__pathLabel">Requested</span>
+      <code class="notFound__pathValue">{{ attemptedPath }}</code>
+    </p>
+  }
 
   <section class="notFound__suggest" aria-labelledby="suggestTitle">
     <h2 class="notFound__suggestTitle" id="suggestTitle">Try one of these</h2>
 
     <ol class="destList">
-      <li class="destItem" *ngFor="let d of destinations; let i = index">
-        <span class="destItem__num" aria-hidden="true">{{ index(i) }}</span>
-
-        <h3 class="destItem__title">
-          <a class="destItem__link" [routerLink]="d.path">{{ d.label }}</a>
-        </h3>
-
-        <p class="destItem__desc">{{ d.desc }}</p>
-      </li>
+      @for (d of destinations; track d; let i = $index) {
+        <li class="destItem">
+          <span class="destItem__num" aria-hidden="true">{{ index(i) }}</span>
+          <h3 class="destItem__title">
+            <a class="destItem__link" [routerLink]="d.path">{{ d.label }}</a>
+          </h3>
+          <p class="destItem__desc">{{ d.desc }}</p>
+        </li>
+      }
     </ol>
   </section>
 

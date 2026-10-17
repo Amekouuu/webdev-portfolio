@@ -19,8 +19,11 @@ résumé viewer, and a contact form.
 - **EmailJS** for the contact form
 - **Vitest** for unit tests
 
-Fonts: JetBrains Mono (body) and Fraunces (display), loaded through a single
-request that Angular inlines at build time.
+Fonts: JetBrains Mono (body) and Fraunces (display), self-hosted from
+`src/assets/fonts` (latin subset, 72 KB) and declared in `src/index.html`,
+with metric-matched local fallbacks so the swap does not shift the layout.
+Fraunces ships only 800 upright and 400 italic: add a file before using
+another serif weight.
 
 ---
 
@@ -32,6 +35,7 @@ Requires Node 20+ (developed on 22) and npm.
 npm install
 npm start          # dev server at http://localhost:4200
 npm run build      # production build into dist/webdev-portfolio
+npm run lint       # angular-eslint (templates and TypeScript)
 npm test           # unit tests (see the note below)
 ```
 
@@ -82,8 +86,17 @@ Most content lives in plain TypeScript data files, not in templates:
 
 - Global design tokens (colors, spacing, type, depth) live in
   `src/styles.css`. Pages reuse them rather than adding new values.
+- Neumorphism for structure, claymorphism for personality. Surfaces are
+  `.neu-raised` (cards, nav), `.neu-inset` (inputs, tiles), `.clay` /
+  `.clay-slab` (navy primary actions, page headers) and `.pill` (tags).
+- Every raised shape sits on a hard offset shadow plus a soft one, lit from
+  the top-left; pressing moves it into its shadow. Values live in the
+  `--raised`, `--inset`, `--clay*` and `--radius-*` tokens.
+- Buttons are `.btn` + one of `--clay` (the one primary action in a view),
+  `--raised`, `--onNavy` (actions on a navy slab) or `--text`. All are 44px.
 - Controls are black on white, and selected or primary actions are white on
-  navy. Depth comes from shared shadow tokens, all lit from the top-left.
+  navy. One focus ring for everything: a 3px outline (global
+  `:focus-visible` rule); never replace it with a shadow.
 - **Dark mode is switched off, not removed.** Set `DARK_MODE_ENABLED` to
   `true` in both `src/app/core/services/theme.service.ts` and the
   pre-paint script in `src/index.html`, and restore the dark `theme-color`

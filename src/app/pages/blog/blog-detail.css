@@ -2,44 +2,27 @@
    BLOG DETAIL
 ========================================================= */
 
-/* ── Back link ────────────────────────────────────────── */
-.blogDetail__back{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;   /* was 21px tall; WCAG 2.5.8 asks for 24px+ */
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-decoration: none;
-  margin-bottom: 28px;
-  border-bottom: 1px dashed transparent;
-  transition: color .15s ease, border-color .15s ease;
-}
-
-.blogDetail__back:hover{
-  color: var(--accent);
-  border-color: var(--accent);
-}
+/* ── Back link ──────────────────────────────────────────
+   Look and press come from the shared .btn--raised. */
+.blogDetail__back{ margin-bottom: 28px; }
 
 /* ── Article shell ────────────────────────────────────── */
-.blogDetail{
-  max-width: 680px;
-  animation: pageFade .25s ease both;
-}
-
-@keyframes pageFade{
-  from{ opacity: 0; transform: translateY(4px); }
-  to{   opacity: 1; transform: translateY(0); }
-}
+/* Prose stays flat and calm: no surfaces, no shadows, just a readable
+   measure. No entrance animation either: it faded the whole article in
+   from opacity 0, which hid the text and delayed its first paint. */
+.blogDetail{ max-width: 680px; }
 
 /* ── Header ───────────────────────────────────────────── */
 .blogDetail__header{ margin-bottom: 36px; }
 
-/* Spacing only — .toolList in styles.css carries the middot rendering. */
-.blogDetail__tags{ margin-bottom: var(--space-4); }
+.blogDetail__tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
 
 .blogDetail__title{
   margin: 0 0 12px;
@@ -121,7 +104,7 @@
 .blogDetail__body ::ng-deep code{
   padding: 2px 6px;
   border: 1px solid var(--border);
-  border-radius: var(--r-xs);
+  border-radius: 6px;
   background: var(--bg-sunken);
   color: var(--text);
   font-family: var(--font-mono);
@@ -132,7 +115,7 @@
   overflow-x: auto;
   margin: 0 0 var(--space-5);
   padding: var(--space-4) var(--space-5);
-  border-radius: var(--r-md);
+  border-radius: var(--radius-sm);
   background: var(--royal-deep);
   color: #f5f7ff;
   font-size: var(--text-sm);
@@ -162,7 +145,7 @@
   margin: 0 0 var(--space-5);
   padding: var(--space-3) var(--space-4);
   border-left: 3px solid var(--accent);
-  border-radius: 0 var(--r-xs) var(--r-xs) 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   background: var(--accent-faint);
   color: var(--text-muted);
   font-style: italic;

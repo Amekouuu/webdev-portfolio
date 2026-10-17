@@ -4,29 +4,41 @@
     <!-- Centered container (matches your --shell width) -->
     <div class="siteFooter__container">
 
+      <!-- The contact prompt every page ends on: one sentence and one action,
+           for the freelance visitor who scrolled to the bottom. -->
+      <div class="footCta">
+        <div>
+          <span class="footCta__label">Contact</span>
+          <h2 class="footCta__title">Have a project in mind?</h2>
+        </div>
+        <a class="btn btn--onNavy" routerLink="/contact">
+          Get in touch <span class="actionLink__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
       <div class="siteFooter__grid">
 
         <!-- Signature / Brand -->
         <section class="footSig" aria-label="Footer signature">
           <div class="footSig__badge" aria-label="Site credit">
             <span class="footSig__mark" aria-hidden="true">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
-    <path
-      fill="currentColor"
-      stroke="rgba(255,255,255,.90)"
-      stroke-width="10"
-      stroke-miterlimit="10"
-      d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
-    />
-    <path
-      fill="rgba(255,255,255,.06)"
-      stroke="var(--accent)"
-      stroke-width="3"
-      stroke-miterlimit="10"
-      d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
-    />
-  </svg>
-</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 334.38 259.9" width="24" height="24">
+                <path
+                  fill="currentColor"
+                  stroke="rgba(255,255,255,.90)"
+                  stroke-width="10"
+                  stroke-miterlimit="10"
+                  d="M122.61,254.9H5V5h114.02l47.66,52.08L214.59,5h114.79v249.9h-117.61v-125.11l-45.1,48.31-44.07-48.31v125.11Z"
+                  />
+                <path
+                  fill="rgba(255,255,255,.06)"
+                  stroke="var(--accent)"
+                  stroke-width="3"
+                  stroke-miterlimit="10"
+                  d="M128.88,227.59H29.38V44.57h96.47l40.32,38.14,40.53-38.14h97.12v183.03h-99.5v-91.63l-38.15,35.38-37.29-35.38v91.63Z"
+                  />
+              </svg>
+            </span>
             <span class="footSig__name">Micko Alberto</span>
           </div>
 
@@ -35,8 +47,8 @@
           </p>
 
           <!-- Was three pills: "PH-based", "Open to opportunities" and
-               "Lighthouse-minded". The first two are real signal for anyone
-               hiring, so they stay as a plain line; the third was filler. -->
+          "Lighthouse-minded". The first two are real signal for anyone
+          hiring, so they stay as a plain line; the third was filler. -->
           <p class="footSig__status">Open to opportunities · Pampanga, PH</p>
         </section>
 
@@ -47,6 +59,7 @@
           <a routerLink="/about">About</a>
           <a routerLink="/projects">Projects</a>
           <a routerLink="/blog">Blog</a>
+          <a routerLink="/resume">Résumé</a>
           <a routerLink="/contact">Contact</a>
         </nav>
 
@@ -54,19 +67,20 @@
         <section class="footCol" aria-label="Footer contact">
           <div class="footCol__title">Contact</div>
           <a href="mailto:mqalberto12@gmail.com">mqalberto12@<wbr>gmail.com</a>
-          <a href="#top">Back to top</a>
+          <a href="#top" (click)="backToTop($event)">Back to top</a>
         </section>
 
         <!-- Socials — plain links now. These were pill buttons with a ↗ glyph
-             that repeated what target="_blank" already conveys. -->
+        that repeated what target="_blank" already conveys. -->
         <nav class="footCol" aria-label="Footer socials">
           <div class="footCol__title">Elsewhere</div>
-          <a
-            *ngFor="let s of socials"
-            [href]="s.href"
-            target="_blank"
-            rel="noopener noreferrer"
-          >{{ s.label }}</a>
+          @for (s of socials; track s) {
+            <a
+              [href]="s.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ s.label }}</a>
+          }
         </nav>
 
       </div>

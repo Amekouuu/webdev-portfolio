@@ -1,8 +1,7 @@
 /* =========================================================
-   CONTACT
-   The form used to sit inside a dark navy card with a grid
-   overlay, two radial gradient washes, a lift-on-hover shadow
-   and a 22px radius. It is a form — it sits on the page.
+   CONTACT (v2)
+   Navy page header, the form on one raised card, and the contact
+   details as tiles pressed into the page beside it.
 ========================================================= */
 
 .contact{ padding-top: var(--space-4); }
@@ -10,25 +9,27 @@
 .contact__grid{
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: var(--space-7);
+  gap: var(--space-6);
   align-items: start;
-  margin-top: var(--space-6);
 }
 
 /* =========================================================
    FORM
 ========================================================= */
 .formPanel{
-  padding: var(--space-6);
+  padding: var(--space-7) var(--space-6) var(--space-6);
   border: var(--edge-w) solid var(--edge);
-  border-radius: var(--r-lg);
+  border-radius: var(--radius-lg);
   background: var(--card-bg);
+  box-shadow: var(--raised);
 }
 
 .formPanel__title{
   margin: 0;
-  font-size: var(--text-xl);
-  letter-spacing: var(--tracking-tight);
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 2.6vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   color: var(--text);
 }
 
@@ -68,12 +69,12 @@
 
 .field__input{
   width: 100%;
-  min-height: 42px;
-  padding: var(--space-3);
+  min-height: var(--tap);
+  padding: var(--space-3) var(--space-4);
   border: var(--edge-w) solid var(--input-border);
-  border-radius: var(--r-lg);
-  background: var(--input-bg);
-  box-shadow: var(--sink);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  box-shadow: var(--inset);
   color: var(--input-text);
   font-family: var(--font-mono);
   font-size: var(--text-base);
@@ -82,10 +83,12 @@
 
 .field__input::placeholder{ color: var(--input-placeholder); }
 
+/* The ring itself is the global :focus-visible outline (styles.css). This
+   used to set outline: none and rely on a pale --royal-soft halo, which is
+   ~1.2:1 against white: a focus state you could not see. */
 .field__input:focus{
   border-color: var(--royal-deep);
-  box-shadow: var(--sink), 0 0 0 3px var(--royal-soft);
-  outline: none;
+  background: var(--input-bg);
 }
 
 /* Invalid state is border + colour + a text message, never colour alone. */
@@ -111,47 +114,8 @@
   gap: var(--space-3) var(--space-5);
 }
 
-.submitBtn{
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 42px;
-  padding: var(--space-2) var(--space-5);
-  border: 0;
-  border-radius: var(--r-clay);
-  background: var(--royal-deep);
-  color: #ffffff;
-  box-shadow: var(--clay);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background .18s var(--ease-out), box-shadow .15s var(--ease-out),
-              transform .1s var(--ease-out);
-}
-
-.submitBtn:hover:not([disabled]){
-  background: var(--royal);
-}
-
-.submitBtn:active:not([disabled]){
-  transform: translateY(2px);
-  box-shadow: var(--clay-press);
-}
-
-.submitBtn:hover:not([disabled]) .actionLink__arrow{ transform: translateX(4px); }
-
-.submitBtn:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.submitBtn[disabled]{
-  opacity: .55;
-  cursor: not-allowed;
-}
+/* Look and press come from the shared .btn--clay (styles.css). */
+.submitBtn{ min-width: 200px; }
 
 .form__note{
   margin: 0;
@@ -164,7 +128,7 @@
   margin: 0;
   padding: var(--space-3) var(--space-4);
   border-left: 3px solid;
-  border-radius: var(--r-xs);
+  border-radius: var(--radius-sm);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
 }
@@ -187,22 +151,21 @@
 .contact__info{
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
   min-width: 0;
 }
 
+/* Each detail is a tile pressed into the page, like the home status tiles. */
 .infoBlock{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-2);
-  padding-bottom: var(--space-5);
-  border-bottom: 1px solid var(--border);
-}
-
-.contact__info .infoBlock:last-child{
-  padding-bottom: 0;
-  border-bottom: 0;
+  padding: var(--space-4) var(--space-5);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-md);
+  background: var(--bg-sunken);
+  box-shadow: var(--inset);
 }
 
 .infoBlock__label{
@@ -211,7 +174,7 @@
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);
 }
 
 .infoBlock__value{
@@ -230,18 +193,17 @@
 .infoBlock__link{
   display: inline-flex;
   align-items: center;
-  min-height: 24px;
-  border-bottom: 1px solid var(--border-strong);
+  min-height: 32px;
   color: var(--text);
   font-size: var(--text-base);
-  text-decoration: none;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+  font-weight: var(--weight-bold);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
 }
 
-.infoBlock__link:hover{
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
+.infoBlock__link:hover{ color: var(--accent); }
 
 /* ── Availability ───────────────────────────────────────── */
 .availList{
@@ -257,7 +219,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
   font-size: var(--text-base);
 }
 
@@ -281,13 +243,13 @@
 @media (max-width: 900px){
   .contact__grid{
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-7);
+    gap: var(--space-6);
   }
 }
 
 @media (max-width: 560px){
   .contact{ padding-top: var(--space-2); }
-  .formPanel{ padding: var(--space-4); }
+  .formPanel{ padding: var(--space-5) var(--space-4); }
   .form__row{ grid-template-columns: 1fr; }
   .submitBtn{ width: 100%; justify-content: center; }
 }

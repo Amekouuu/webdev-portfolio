@@ -3,14 +3,18 @@
    Single source of truth for colors, typography, utilities + layout.
 ================================================================ */
 
-/* Fonts load from ONE <link> in index.html, not an @import here: an @import
-   cannot start until this file has downloaded and parsed, and two sources
-   had drifted to different weights. */
+/* Fonts are self-hosted and declared in an inline <style> in index.html, not
+   here: this file loads asynchronously, and @font-face rules must exist
+   before first paint for the preloaded files to be used straight away. */
 
 /* ================================================================
    LIGHT MODE TOKENS (default)
 ================================================================ */
-:root{
+/* Also matches [data-theme='light'], which <html> always carries. This
+   used to be a second block that restated these values and, coming
+   later, silently won over :root: a token changed here did nothing. */
+:root,
+[data-theme='light']{
 
   --shell: clamp(980px, 88vw, 1380px);
   /* ── Page background ──────────────────────────────────────── */
@@ -82,9 +86,12 @@
      --accent-rgb stayed steel blue and the two disagreed everywhere. */
 
   /* ── Typography ───────────────────────────────────────────── */
-  --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-                 Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-serif:  "Fraunces", Georgia, "Times New Roman", serif;
+  /* The *Fallback families are metric-matched local fonts declared in
+     index.html: they hold the layout still while the web fonts load. */
+  --font-mono:   "JetBrains Mono", "JetBrains Mono Fallback Consolas", "JetBrains Mono Fallback",
+                 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+                 "Courier New", monospace;
+  --font-serif:  "Fraunces", "Fraunces Fallback", Georgia, "Times New Roman", serif;
 
   --text-xs:     11px;   /* 12px on phones: see the 560px block below */
   --text-sm:     12px;
@@ -141,32 +148,50 @@
   /* Vertical rhythm between top-level page sections. */
   --section-gap: clamp(var(--space-8), 7vw, var(--space-9));
 
-  /* ── Radius scale ─────────────────────────────────────────────
-     Deliberately small. Rounded-everything (12–16px on every card,
-     button and input) is the single loudest generated-UI tell.
-     --r-pill is reserved for things that are genuinely pill-shaped. */
-  --r-xs:   2px;
-  --r-sm:   3px;
-  --r-md:   4px;
-  --r-lg:   6px;
-  --r-pill: 999px;
+  /* ── Radius scale (v2) ────────────────────────────────────────
+     Soft, tactile shapes for the neumorphic/clay redesign. Read with the
+     2px black edge and hard offset shadow below; without those, this much
+     rounding reads as generic UI.
+       sm  controls: buttons, inputs, tabs     md  tiles and small cards
+       lg  cards                               xl  navy slabs (hero, headers) */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
 
-  /* One exception to the 2-6px scale: the clay primary action. The rounder
-     shape is part of what marks it as the thing to press. */
-  --r-clay: 10px;
+  /* Fully round: pills, tags and counts only. */
+  --r-pill: 999px;
 
   /* -- Depth. Light comes from the top-left on every element. ----------
      Two pairings only: black-on-white controls, white-on-navy for what is
      selected or primary. Depth comes from shadows under solid shapes,
      never from tone-on-tone bumps, which measured ~1.3:1 at the edge. */
-  --edge:       #0d1b2a;
-  --edge-w:     1px;     /* integer: Chrome floors 1.5px to 1px, Safari/Firefox do not */
-  --lift:       3px 4px 10px rgba(13,27,42,.18);
-  --lift-hover: 4px 6px 14px rgba(13,27,42,.24);
-  --sink:       inset 2px 2px 5px rgba(13,27,42,.12);
-  --press:      inset 2px 2px 6px rgba(0,0,0,.45), inset -1px -1px 3px rgba(255,255,255,.12);
-  --clay:       5px 6px 14px rgba(15,31,74,.4), inset 3px 3px 6px rgba(255,255,255,.2), inset -3px -3px 7px rgba(0,0,0,.45);
-  --clay-press: 2px 2px 5px rgba(15,31,74,.35), inset 3px 3px 7px rgba(0,0,0,.5);
+  /* v2: each raised shape sits on a HARD offset shadow (the solid
+     `Npx Npx 0 var(--edge)`) with a soft ambient one under it. The hard one
+     is what gives the "pop"; the soft one alone reads as mushy. Pressing
+     moves the shape INTO its shadow, so the transform on :active must equal
+     the hard offset (3px for --raised, 4px for --clay).
+       neumorphism = structure: --raised (cards, nav), --inset (inputs, tiles)
+       claymorphism = personality: --clay (primary actions, number badges),
+                      --clay-slab (navy hero/page headers), --pill (tags) */
+  --edge:          #0d1b2a;
+  --edge-w:        2px;    /* integer: Chrome floors 1.5px to 1px, Safari/Firefox do not */
+  --raised:        3px 3px 0 var(--edge), 6px 8px 18px rgba(13,27,42,.12);
+  --raised-hover:  4px 4px 0 var(--edge), 8px 10px 22px rgba(13,27,42,.16);
+  --pressed:       1px 1px 0 var(--edge), inset 2px 2px 6px rgba(13,27,42,.16);
+  --inset:         inset 3px 3px 8px rgba(13,27,42,.14), inset -3px -3px 6px #ffffff;
+  --clay:          4px 4px 0 var(--edge), 8px 10px 20px rgba(15,31,74,.28),
+                   inset 3px 3px 7px rgba(255,255,255,.22), inset -4px -4px 9px rgba(0,0,0,.45);
+  --clay-hover:    5px 5px 0 var(--edge), 10px 12px 24px rgba(15,31,74,.32),
+                   inset 3px 3px 7px rgba(255,255,255,.26), inset -4px -4px 9px rgba(0,0,0,.45);
+  --clay-press:    1px 1px 0 var(--edge), inset 3px 3px 9px rgba(0,0,0,.5);
+  --clay-slab:     6px 6px 0 var(--edge), 14px 16px 32px rgba(15,31,74,.22),
+                   inset 5px 5px 12px rgba(255,255,255,.12), inset -8px -8px 20px rgba(0,0,0,.4);
+  --pill:          2px 2px 0 var(--edge), inset 2px 2px 3px #ffffff, inset -2px -2px 4px rgba(13,27,42,.12);
+
+  /* Minimum tap target, used by every control. WCAG 2.5.8's 24px is the
+     floor; 44px is what thumbs actually need. */
+  --tap: 44px;
 
   /* ── Motion ──────────────────────────────────────────────── */
   --ease-out: cubic-bezier(.2,.8,.2,1);
@@ -248,31 +273,25 @@
   --grid:         rgba(255,255,255,.05);
   --muted:        var(--text-muted);
 
+  /* v2 depth on dark surfaces. A black edge vanishes on #070c18, so the edge
+     is the muted text colour (6.6:1, clears 3:1 for UI), and the hard shadow
+     is pure black so the offset still reads. */
+  --edge:          #8892a4;
+  --raised:        3px 3px 0 #000000, 6px 8px 18px rgba(0,0,0,.45);
+  --raised-hover:  4px 4px 0 #000000, 8px 10px 22px rgba(0,0,0,.55);
+  --pressed:       1px 1px 0 #000000, inset 2px 2px 6px rgba(0,0,0,.5);
+  --inset:         inset 3px 3px 8px rgba(0,0,0,.5), inset -2px -2px 5px rgba(255,255,255,.04);
+  --clay:          4px 4px 0 #000000, inset 3px 3px 7px rgba(255,255,255,.18), inset -4px -4px 9px rgba(0,0,0,.5);
+  --clay-hover:    5px 5px 0 #000000, inset 3px 3px 7px rgba(255,255,255,.22), inset -4px -4px 9px rgba(0,0,0,.5);
+  --clay-press:    1px 1px 0 #000000, inset 3px 3px 9px rgba(0,0,0,.6);
+  --clay-slab:     6px 6px 0 #000000, inset 5px 5px 12px rgba(255,255,255,.08), inset -8px -8px 20px rgba(0,0,0,.45);
+  --pill:          2px 2px 0 #000000, inset 1px 1px 2px rgba(255,255,255,.08);
+
   /* Lifted for contrast against the dark surfaces. */
   --success:      #6EDFA4;
   --success-soft: rgb(110 223 164 / .12);
   --danger:       #FF9A93;
   --danger-soft:  rgb(255 154 147 / .10);
-}
-
-/* Optional explicit light hook (safe to keep) */
-[data-theme='light']{
-  --bg: white;
-  --bg-raised: #ffffff;
-  --text: #0d1b2a;
-  --text-muted: #4f566b;
-  --card-bg: #ffffff;
-  --border: rgba(13,27,58,.12);
-  --line: #0d1b3a;
-  --royal-soft: #dfe6ff;
-  --footer-bg: #ffffff;
-  --hero-text: #f5f7ff;
-  --hero-muted: rgba(245,247,255,.75);
-  --input-bg: #ffffff;
-  /* Must match :root. This block wins over :root, and the old .22 here
-     silently undid the black input edge. */
-  --input-border: #0d1b2a;
-  --input-text: #0d1b2a;
 }
 
 /* ================================================================
@@ -306,6 +325,10 @@ body{
 html, body{
   overflow-x: clip;
 }
+
+/* Anything scrolled to by id (in-page anchors, the router's fragment
+   scrolling) stops below the sticky navbar instead of under it. */
+[id]{ scroll-margin-top: 96px; }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6{
@@ -370,9 +393,8 @@ input, textarea, select{
   font-size: var(--text-base);
   color: var(--input-text);
   background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 8px;
-  outline: none;
+  border: var(--edge-w) solid var(--input-border);
+  border-radius: var(--radius-sm);
   transition: border-color .15s ease, box-shadow .15s ease;
 }
 
@@ -384,8 +406,18 @@ textarea::placeholder{
 input:focus,
 textarea:focus{
   border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / .12);
 }
+
+/* ── Focus ring ───────────────────────────────────────────────────
+   One ring for every interactive element: a real outline, never just a
+   shadow change (shadows are decoration here, so they cannot also be the
+   focus signal). :where() keeps specificity at 0 so a component can still
+   move the offset. --accent is 4.8:1 on white. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible{
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+:where(input, select, textarea):focus-visible{ outline-offset: 2px; }
 
 /* ================================================================
    THEME TRANSITION (safe, not global wildcard)
@@ -453,6 +485,42 @@ body, .siteHeader, .siteFooter, .resume__viewer{
   color: var(--text-soft);
 }
 
+/* ── Page head (v2) ─────────────────────────────────────────────
+   The top of every inner page: the same .sectionHead markup (index,
+   H1, note) on a navy clay slab (add .clay-slab for colour/edge/shadow).
+   One soft disc in the corner gives the slab depth and carries no content. */
+.sectionHead.pageHead{
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-7) var(--space-8);
+  margin-bottom: var(--space-7);
+}
+.pageHead::after{
+  content: "";
+  position: absolute;
+  right: -70px;
+  top: -70px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: var(--royal);
+  box-shadow: inset 10px 10px 24px rgba(255,255,255,.12), inset -14px -14px 30px rgba(0,0,0,.45);
+  pointer-events: none;
+}
+.pageHead > *{ position: relative; z-index: 1; }
+.pageHead .sectionHead__index{ color: var(--hero-accent); }
+.pageHead .sectionHead__title{
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -0.02em;
+  color: var(--hero-text);
+}
+.pageHead .sectionHead__note{ color: var(--hero-muted); }
+.pageHead a:focus-visible,
+.pageHead button:focus-visible{ outline-color: var(--hero-accent); }
+
 /* ── Action link ────────────────────────────────────────────────
    The site's only "button" shape outside forms: a label on a rule.
    min-height keeps the hit area at/over the 24px WCAG 2.2 minimum. */
@@ -460,7 +528,7 @@ body, .siteHeader, .siteFooter, .resume__viewer{
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 32px;
+  min-height: var(--tap);
   padding: var(--space-1) 0;
   border-bottom: 1px solid var(--border-strong);
   font-size: var(--text-sm);
@@ -504,25 +572,99 @@ button.actionLink{
    otherwise strip the fill and border off a <button> carrying this modifier —
    which is exactly what happened to the Resume download button. */
 .actionLink.actionLink--primary{
-  padding: var(--space-3) var(--space-5);
-  border: 0;
-  border-radius: var(--r-clay);
+  padding: 0 var(--space-5);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-sm);
   background: var(--royal-deep);
   color: #ffffff;
   box-shadow: var(--clay);
-  transition: background .18s var(--ease-out), box-shadow .15s var(--ease-out),
-              transform .1s var(--ease-out);
+  transition: box-shadow .15s var(--ease-out), transform .15s var(--ease-out);
 }
 
 .actionLink.actionLink--primary:hover{
-  background: var(--royal);
   color: #ffffff;
+  transform: translate(-1px, -1px);
+  box-shadow: var(--clay-hover);
 }
 
+/* Into its 4px hard shadow: -1 (hover) → +3 is the full 4px travel. */
 .actionLink.actionLink--primary:active{
-  transform: translateY(2px);
+  transform: translate(3px, 3px);
   box-shadow: var(--clay-press);
 }
+
+/* ── Buttons (v2) ───────────────────────────────────────────────
+   Four looks, one shape: 44px tall, --radius-sm, 2px edge, uppercase mono.
+     --clay    navy, the one primary action in a view
+     --raised  white, secondary actions ("All projects", "Visit site")
+     --onNavy  white with a black hard shadow, for actions ON a navy slab
+               (a navy button would vanish there)
+     --text    underlined label, tertiary ("Source", "Résumé" in a row)
+   Hover lifts 1px; :active travels the rest of the way into the hard
+   shadow, so the button lands where its shadow was. */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  padding: 0 var(--space-5);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .15s var(--ease-out), box-shadow .15s var(--ease-out);
+}
+.btn:hover .actionLink__arrow{ transform: translateX(3px); }
+.btn[disabled]{ opacity: .55; cursor: not-allowed; transform: none; }
+
+.btn--clay{ background: var(--royal-deep); color: #ffffff; box-shadow: var(--clay); }
+.btn--clay:hover:not([disabled]){ color: #ffffff; transform: translate(-1px, -1px); box-shadow: var(--clay-hover); }
+.btn--clay:active:not([disabled]){ transform: translate(3px, 3px); box-shadow: var(--clay-press); }
+
+.btn--raised{ background: var(--bg-raised); color: var(--text); box-shadow: var(--raised); }
+.btn--raised:hover:not([disabled]){ color: var(--text); transform: translate(-1px, -1px); box-shadow: var(--raised-hover); }
+.btn--raised:active:not([disabled]){ transform: translate(2px, 2px); box-shadow: var(--pressed); }
+
+.btn--onNavy{ background: #ffffff; color: var(--royal-deep); box-shadow: 3px 3px 0 #000000; }
+.btn--onNavy:hover{ color: var(--royal-deep); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000000; }
+.btn--onNavy:active{ transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000000; }
+
+.btn--text{
+  padding: 0 var(--space-1);
+  border: 0;
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+.btn--text:hover{ color: inherit; text-decoration-color: var(--accent); }
+
+/* Cards and rows that are one big target: lift on hover, press on click.
+   Pair with .neu-raised (or any surface using --raised). */
+.pressable{ transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+.pressable:hover{ transform: translate(-1px, -1px); box-shadow: var(--raised-hover); }
+.pressable:active{ transform: translate(2px, 2px); box-shadow: var(--pressed); }
+
+/* Shared text input: pressed into the page, white once focused. */
+.input{
+  width: 100%;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-4);
+  border: var(--edge-w) solid var(--input-border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-sunken);
+  box-shadow: var(--inset);
+  color: var(--input-text);
+}
+.input:focus{ background: var(--input-bg); }
 
 [data-theme='dark'] .actionLink,
 [data-theme='dark'] .actionLink:hover{ text-decoration: none; }
@@ -549,6 +691,49 @@ button.actionLink{
   color: var(--text-faint);
 }
 
+/* ── Surfaces (v2) ──────────────────────────────────────────────
+   The five depth treatments as classes, so templates opt in instead of
+   each component re-declaring background + edge + radius + shadow. They set
+   no layout and no hover: interaction belongs to the component using them. */
+.neu-raised{
+  background: var(--bg-raised);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--raised);
+}
+.neu-inset{
+  background: var(--bg-sunken);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-md);
+  box-shadow: var(--inset);
+}
+.clay{
+  background: var(--royal-deep);
+  color: #ffffff;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--clay);
+}
+.clay-slab{
+  background: var(--royal-deep);
+  color: var(--hero-text);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--clay-slab);
+}
+.pill{
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--r-pill);
+  background: var(--bg-raised);
+  box-shadow: var(--pill);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
 .sr-only, .srOnly{
   position: absolute;
   width: 1px; height: 1px;
@@ -567,14 +752,17 @@ button.actionLink{
 }
 
 /* Reusable page wrapper */
+/* Transform only. This used to start at opacity 0, which hid the page
+   content until the animation ran (a content-hiding entrance, and a later
+   first paint for the largest text on the page). */
 .page{
   padding: 18px 0 60px;
-  animation: pageFade .25s ease both;
+  animation: pageIn .25s ease both;
 }
 
-@keyframes pageFade{
-  from{ opacity: 0; transform: translateY(4px); }
-  to{ opacity: 1; transform: translateY(0); }
+@keyframes pageIn{
+  from{ transform: translateY(4px); }
+  to{ transform: none; }
 }
 
 /* Removed with the redesign, all at zero references:
@@ -594,6 +782,18 @@ button.actionLink{
   :root{ --text-xs: 12px; }
 }
 
+/* Smaller depth on phones: big blurred shadows cost paint time on cheap
+   GPUs and crowd a narrow screen. Hard offsets shrink by one step. */
+@media (max-width: 700px){
+  :root:not([data-theme='dark']){
+    --raised:       2px 2px 0 var(--edge), 4px 5px 10px rgba(13,27,42,.12);
+    --raised-hover: 3px 3px 0 var(--edge), 5px 6px 12px rgba(13,27,42,.16);
+    --clay:         3px 3px 0 var(--edge), inset 2px 2px 5px rgba(255,255,255,.22), inset -3px -3px 7px rgba(0,0,0,.45);
+    --clay-hover:   3px 3px 0 var(--edge), inset 2px 2px 5px rgba(255,255,255,.26), inset -3px -3px 7px rgba(0,0,0,.45);
+    --clay-slab:    4px 4px 0 var(--edge), inset 4px 4px 10px rgba(255,255,255,.12), inset -6px -6px 14px rgba(0,0,0,.4);
+  }
+}
+
 @media (max-width: 700px){
   /* One column, reordered to title → note → action. In source the action
      precedes the note so it can sit top-right on wide screens. */
@@ -603,11 +803,14 @@ button.actionLink{
   }
   .sectionHead > *{ grid-column: 1; }
   .sectionHead__note{ order: 1; }
-  .sectionHead > .actionLink{ order: 2; justify-self: start; }
+  .sectionHead > .actionLink,
+  .sectionHead > .btn{ order: 2; justify-self: start; }
 }
 
 @media (max-width: 520px){
   .page{ padding: 12px 0 60px; }
+  .sectionHead.pageHead{ padding: var(--space-6) var(--space-5); margin-bottom: var(--space-6); }
+  .pageHead::after{ width: 160px; height: 160px; right: -50px; top: -50px; }
 }
 
 /* ================================================================
