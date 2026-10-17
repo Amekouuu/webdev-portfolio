@@ -402,10 +402,11 @@
 .term__cmd{
   min-height: 30px;
   padding: var(--space-1) var(--space-3);
-  border: 1px solid rgba(255, 255, 255, .16);
-  border-radius: var(--r-xs);
+  border: var(--edge-w) solid #ffffff;
+  border-radius: var(--r-sm);
   background: none;
-  color: rgba(245, 247, 255, .74);
+  color: #ffffff;
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, .45);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   cursor: pointer;
@@ -419,14 +420,16 @@
 }
 
 .term__cmd:hover{
-  color: #ffffff;
-  border-color: var(--hero-accent);
+  background: rgba(255, 255, 255, .1);
 }
 
+/* Selected flips to navy-on-white: the inverse of the page's selected filter. */
 .term__cmd.isActive{
-  background: var(--hero-accent);
-  border-color: var(--hero-accent);
+  background: #ffffff;
+  border-color: #ffffff;
   color: var(--royal-deep);
+  font-weight: var(--weight-bold);
+  box-shadow: inset 2px 2px 5px rgba(15, 31, 74, .35);
 }
 
 .term__cmd.isActive::before{ opacity: .65; }

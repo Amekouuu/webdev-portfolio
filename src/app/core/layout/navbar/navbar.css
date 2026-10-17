@@ -31,14 +31,10 @@
   gap: 16px;
   min-height: 62px;
   padding: 10px 14px;
-  border-top: 2px solid rgba(13,27,58,.18);
-  border-bottom: 2px solid rgba(13,27,58,.18);
-  background:
-    radial-gradient(closest-side at 18% 0%, rgb(var(--accent-rgb) / .10), transparent 62%),
-    radial-gradient(closest-side at 82% 0%, rgba(24,47,104,.10), transparent 62%),
-    rgba(255,255,255,.70);
-  border-radius: var(--r-md);
-  box-shadow: 0 18px 40px rgba(0,0,0,.06);
+  border: var(--edge-w) solid var(--edge);
+  background: #ffffff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--lift);
 }
 
 .brand{
@@ -104,12 +100,19 @@
   align-items:center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-clay);
   text-decoration:none;
   color: #fff;
   background: var(--royal-deep);
-  border: 1px solid rgba(15,31,74,.22);
-  transition: background .18s var(--ease-out), border-color .18s var(--ease-out);
+  border: 0;
+  box-shadow: var(--clay);
+  transition: background .18s var(--ease-out), box-shadow .15s var(--ease-out),
+              transform .1s var(--ease-out);
+}
+
+.ctaBtn:active{
+  transform: translateY(2px);
+  box-shadow: var(--clay-press);
 }
 
 .ctaBtn__label{
@@ -119,8 +122,7 @@
 }
 
 .ctaBtn:hover{
-  background: #0b1736;
-  border-color: var(--accent);
+  background: var(--royal);
 }
 
 .ctaBtn:focus-visible{
@@ -176,18 +178,23 @@
   gap: 10px;
   min-height: 42px;
   padding: 0 12px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 999px;
+  background: #ffffff;
+  border: var(--edge-w) solid var(--edge);
+  border-radius: var(--r-lg);
   cursor:pointer;
   color: var(--text);
-  transition: background .18s ease, transform .18s ease, border-color .18s ease;
+  box-shadow: var(--lift);
+  transition: background .18s ease, transform .18s ease, box-shadow .15s ease;
 }
 
 .menuBtn:hover{
-  background: var(--royal-soft);
-  border-color: var(--border-strong);
+  box-shadow: var(--lift-hover);
   transform: translateY(-1px);
+}
+
+.menuBtn:active{
+  transform: translateY(1px);
+  box-shadow: var(--sink);
 }
 
 .menuBtn:active{ transform: translateY(0); }
