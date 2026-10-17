@@ -210,6 +210,12 @@ export class About implements AfterViewInit, OnDestroy {
       expires: '2027-09-25',
     },
     {
+      name: 'What is Software Development?',
+      issuer: 'Simplilearn SkillUp',
+      url: 'https://simpli-web.app.link/e/VtoTUbkRi7b',
+      issued: '2026-10-17',
+    },
+    {
       name: 'Full-Stack Development 101',
       issuer: 'Simplilearn SkillUp',
       url: 'https://simpli-web.app.link/e/PqtsZiaPi7b',
