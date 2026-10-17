@@ -173,6 +173,15 @@ export class About implements AfterViewInit, OnDestroy {
   /** Every credential, expired or not. `certGroups` holds the ones still valid. */
   readonly allCerts: Cert[] = [
     {
+      // Named exactly as AWS issues it. This is the AWS Academy course badge
+      // ("TRAINED"), not the proctored AWS Certified Cloud Practitioner exam,
+      // and the name must not let a reader confuse the two.
+      name: 'AWS Academy Graduate - Cloud Foundations',
+      issuer: 'Amazon Web Services',
+      url: 'https://www.credly.com/badges/4e813299-f093-4037-98a6-fa43fa10b966',
+      issued: '2026-03-12',
+    },
+    {
       name: 'Google Analytics Certified',
       issuer: 'Google',
       url: 'https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/176814946',
