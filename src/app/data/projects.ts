@@ -78,13 +78,13 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'coffee-shop-dashboard',
-    name: 'Mock Coffee Shop Blog Site (HTML + CSS)',
+    name: 'CafeCrawl — Coffee Shop Blog Site (HTML + CSS)',
     tag: 'Academic HTML/CSS + JavaScript Case Study',
-    description: 'Mock coffee shop blog site with a focus on clean design and responsive layout made to simulate a real-world experience.',
+    description: 'Blog site for a mock coffee shop, focused on clean design and a responsive layout that simulates a real-world experience.',
     tools: ['HTML', 'CSS', 'JavaScript'],
     yearStart: 2023,
     images: [
-      { src: '/assets/images/cafe-crawl-background.png', webp: '/assets/images/cafe-crawl-background.webp', alt: 'Cafe Crawl Blog Site Screenshot' },
+      { src: '/assets/images/cafe-crawl-background.png', webp: '/assets/images/cafe-crawl-background.webp', alt: 'CafeCrawl coffee shop blog site screenshot' },
     ],
     liveUrl: 'https://cafe-crawl.netlify.app/',
     repoUrl: 'https://github.com/Amekouuu/IntroWeb',
@@ -129,7 +129,6 @@ export const PROJECTS: Project[] = [
 
 export const FEATURED_PROJECTS = PROJECTS.filter(p => p.featured).slice(0, 3);
 
-/** 2025 -> "2025–26". These are school years, so a single year would misstate them. */
 /**
  * Where the card itself points. The live site wins; without one the repo
  * stands in, so a card is never a dead anchor.
@@ -147,6 +146,7 @@ export function projectLinkLabel(p: Project): string {
   return p.liveUrl ? 'Visit site' : 'View source';
 }
 
+/** 2025 -> "2025–26". These are school years, so a single year would misstate them. */
 export function academicYear(p: Project): string {
   return `${p.yearStart}–${String(p.yearStart + 1).slice(-2)}`;
 }
