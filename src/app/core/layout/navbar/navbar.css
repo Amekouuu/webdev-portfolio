@@ -77,14 +77,6 @@
   text-transform: uppercase;
 }
 
-.brand__sub{
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
 /* ── Right actions ────────────────────────────────────── */
 .navActions{
   display:flex;
@@ -368,7 +360,7 @@
    opacity:0 + animation and iOS Chrome failed to run it forwards, leaving the
    links permanently invisible. Visible by default; motion is transform-only. */
 .menuLink__label{
-  font-family: var(--font-display, Fraunces, Georgia, serif);
+  font-family: var(--font-serif);
   font-size: clamp(38px, 5.6vw, 68px);
   font-weight: var(--weight-black);
   line-height: .95;
@@ -422,8 +414,6 @@
     padding-right: 12px;
   }
 
-  .brand__sub{ display:none; }
-
   .menuPanel{
     position: fixed;
     top: 0; bottom: 0; right: 0;
@@ -471,13 +461,6 @@
     line-height: .98;
     letter-spacing: -0.6px;
     padding: 6px 0;
-  }
-
-  .menuGrid{
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    max-height: calc(100dvh - 160px);
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
 

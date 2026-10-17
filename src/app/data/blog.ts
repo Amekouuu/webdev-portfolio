@@ -124,5 +124,3 @@ export const BLOG_POSTS: BlogPost[] = [
     `,
   },
 ];
-
-export const FEATURED_POSTS = BLOG_POSTS.filter(p => p.featured);

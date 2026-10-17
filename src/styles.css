@@ -51,14 +51,6 @@
 
   /* ── Cards ────────────────────────────────────────────────── */
   --card-bg:      #ffffff;
-  --card-bg-alt:  #f8faff;
-  --card-border:  rgba(13,27,58,.12);
-  --card-shadow:
-    0 1px 2px rgba(2,10,30,.04),
-    0 8px 24px rgba(2,10,30,.08);
-  --card-shadow-hover:
-    0 2px 6px rgba(2,10,30,.06),
-    0 18px 44px rgba(2,10,30,.14);
 
   /* ── Inputs ───────────────────────────────────────────────── */
   --input-bg:          #ffffff;
@@ -68,7 +60,6 @@
   --input-focus:       var(--royal);
 
   /* ── Hero section (always dark surface) ───────────────────── */
-  --hero-bg:      var(--royal-deep);
   --hero-text:    #f5f7ff;
   --hero-muted:   rgba(245,247,255,.75);
   /* This surface is dark in BOTH themes, so its accent is always the pale blue.
@@ -76,44 +67,19 @@
      name in the hero title was barely legible. */
   --hero-accent:  #9EC5E8;   /* 8.8:1 on --royal-deep */
 
-  /* Logo */
-  --logo-outer-stroke: rgba(255,255,255,.90);
-  --logo-inner-fill:   rgba(255,255,255,.08);
-
-  /* ── Nav ──────────────────────────────────────────────────── */
-  --nav-bg:       rgba(255,255,255,.92);
-  --nav-border:   rgba(13,27,58,.10);
-  --nav-text:     var(--royal-deep);
-  --navlink:      var(--royal);
-
   /* ── Footer ───────────────────────────────────────────────── */
   --footer-bg:    #ffffff;
   --footer-text:  var(--text);
   --footer-muted: var(--text-muted);
-  --footer-border:rgba(13,27,58,.10);
 
-  /* ✅ ADDED: footer UI tokens (chips/pills/links) */
-  --footer-surface: rgba(255,255,255,.72);
-  --footer-hover:   rgba(24,47,104,.10);
-  --footer-accent:  rgb(var(--accent-rgb) / .10);
   --footer-title:   rgba(13,27,58,.92);
   --footer-link:    rgba(13,27,58,.72);
-  --footer-shadow:  0 12px 26px rgba(0,0,0,.06);
-
-  /* ── Buttons ──────────────────────────────────────────────── */
-  --btn-ghost-border: rgba(13,27,58,.22);
-  --btn-ghost-text:   var(--royal);
-  --btn-ghost-hover:  var(--royal);
 
   /* ── Misc ─────────────────────────────────────────────────── */
-  --grid:         rgba(255,255,255,.19);
   /* --accent is declared once, in the Brand block above. A stale
      `--accent: var(--royal)` used to sit here and, being later in the same
      rule, silently won the cascade — so light mode painted navy while
      --accent-rgb stayed steel blue and the two disagreed everywhere. */
-  --accentText:   #ffffff;
-  --cta:          var(--accent);
-  --muted:        var(--text-muted);
 
   /* ── Typography ───────────────────────────────────────────── */
   --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
@@ -296,13 +262,10 @@
   --text: #0d1b2a;
   --text-muted: #4f566b;
   --card-bg: #ffffff;
-  --card-border: rgba(13,27,58,.12);
   --border: rgba(13,27,58,.12);
   --line: #0d1b3a;
   --royal-soft: #dfe6ff;
-  --nav-bg: rgba(255,255,255,.92);
   --footer-bg: #ffffff;
-  --hero-bg: var(--royal-deep);
   --hero-text: #f5f7ff;
   --hero-muted: rgba(245,247,255,.75);
   --input-bg: #ffffff;
@@ -310,7 +273,6 @@
      silently undid the black input edge. */
   --input-border: #0d1b2a;
   --input-text: #0d1b2a;
-  --muted: #4f566b;
 }
 
 /* ================================================================
@@ -396,9 +358,6 @@ a:hover{ color: var(--accent-deep); }
   border-radius: 6px;
 }
 
-a.u-accentLink{ color: var(--accent); }
-a.u-accentLink:hover{ color: var(--accent-soft); }
-
 img{
   max-width: 100%;
   height: auto;
@@ -431,7 +390,7 @@ textarea:focus{
 /* ================================================================
    THEME TRANSITION (safe, not global wildcard)
 ================================================================ */
-body, .siteHeader, .siteFooter, .pc, .blog__item, .resume__viewer, .pageCard{
+body, .siteHeader, .siteFooter, .resume__viewer{
   transition:
     background-color .25s ease,
     color .20s ease,
@@ -629,13 +588,6 @@ button.actionLink{
 /* ================================================================
    RESPONSIVE
 ================================================================ */
-@media (max-width: 900px){
-  .page__grid{ grid-template-columns: 1fr; gap: 22px; }
-  .pageIntro{ position: static; top: auto; }
-  .pageIntro__title{ font-size: 36px; }
-  .pageIntro__rule{ width: 160px; }
-}
-
 @media (max-width: 700px){
   /* One column, reordered to title → note → action. In source the action
      precedes the note so it can sit top-right on wide screens. */
