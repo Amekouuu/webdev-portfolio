@@ -33,7 +33,10 @@
 
   <link rel="icon" type="image/svg+xml" href="/assets/amekou-logo.svg">
   <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)">
+  <!-- Dark mode is off (see DARK_MODE_ENABLED below). Restore this with it, or
+       phones in dark mode would paint a navy address bar over a light page.
   <meta name="theme-color" content="#070c18" media="(prefers-color-scheme: dark)">
+  -->
 
   <!-- Applies the saved/OS theme before first paint. Prerendered HTML ships with
        no data-theme, so without this a dark-mode visitor sees a light flash
@@ -44,11 +47,14 @@
       // this so prerendered HTML is visible to crawlers and no-JS visitors.
       document.documentElement.classList.add('js');
       try {
+        // Keep in sync with ThemeService.DARK_MODE_ENABLED.
+        var DARK_MODE_ENABLED = false;
         var k = 'portfolio-theme';
         var t = localStorage.getItem(k);
         if (t !== 'light' && t !== 'dark') {
           t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
+        if (!DARK_MODE_ENABLED) t = 'light';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) {
         /* private mode / storage blocked — fall through to CSS defaults */

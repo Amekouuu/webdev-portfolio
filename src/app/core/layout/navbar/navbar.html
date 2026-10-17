@@ -30,8 +30,9 @@
       <!-- RIGHT: Actions -->
       <div class="navActions">
 
-        <!-- Dark / Light toggle -->
+        <!-- Dark / Light toggle. Hidden while ThemeService.DARK_MODE_ENABLED is false. -->
         <button
+          *ngIf="themeService.enabled"
           class="themeToggle"
           type="button"
           (click)="themeService.toggle()"
