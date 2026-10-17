@@ -217,7 +217,7 @@
 
 .workGrid{
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
   margin: var(--space-6) 0 0;
   padding: 0;
@@ -231,7 +231,6 @@
   overflow: hidden;
 }
 
-.workCard--lead{ grid-row: span 2; }
 
 /* aspect-ratio reserves the box before the file lands, so cards do not jump:
    these screenshots have very different intrinsic sizes. */
@@ -256,6 +255,31 @@
 }
 
 .workCard--lead .workCard__shot img{ aspect-ratio: 4 / 3; }
+
+/* Lead card: a full-width row on top (screenshot left, text right), with the
+   other two side by side below. It used to span two rows beside them, so its
+   height depended on theirs: a longer description on the right left a blank
+   gap above the lead card's buttons, or a badly cropped screenshot. */
+@media (min-width: 901px){
+  .workCard--lead{
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .workCard--lead .workCard__shot{
+    flex: 1.25 1 0;
+    min-width: 0;
+    margin: var(--space-3) 0 var(--space-3) var(--space-3);
+  }
+  .workCard--lead .workCard__shot img{ height: 100%; aspect-ratio: 16 / 10; }
+  .workCard--lead .workCard__body{
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+  .workCard--lead .workCard__links{ margin-top: var(--space-2); }
+}
 .workCard:hover .workCard__shot img{ transform: scale(1.03); }
 
 /* Clay number badge on the screenshot. */
