@@ -20,7 +20,7 @@
     </figure>
 
     <div class="intro__body">
-      <span class="intro__kicker">SEO · Front-end · Performance</span>
+      <span class="intro__kicker">Front-end · Full-stack · Web apps</span>
 
       <!-- Carries the full name, not just "Micko" — this is the second
       strongest name signal on the site after the homepage H1. -->
@@ -37,8 +37,9 @@
         <p class="intro__para">{{ p }}</p>
       }
 
+
       <dl class="quickFacts">
-        @for (f of quickFacts; track f) {
+        @for (f of quickFacts; track f.label) {
           <div class="quickFact">
             <dt class="quickFact__label">{{ f.label }}</dt>
             <dd class="quickFact__value">{{ f.value }}</dd>

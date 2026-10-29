@@ -55,7 +55,7 @@ type EducationItem = {
  * Named here rather than inline so a rename in `certs` is one edit, not two —
  * see isOpenByDefault() for why this issuer.
  */
-const PREFERRED_ISSUER = 'HubSpot Academy';
+const PREFERRED_ISSUER = 'Amazon Web Services';
 
 /** One command in the fun-facts terminal. */
 type TermCommand = {
@@ -76,22 +76,23 @@ export class About implements AfterViewInit, OnDestroy {
 
   profile = {
     name: 'Micko Alberto',
-    role: 'SEO-Focused Front-End Developer',
+    role: 'Web Developer',
     imageUrl: 'assets/images/about-profile-transparent.png',
     imageWebp: 'assets/images/about-profile-transparent.webp',
     imageAlt: 'Micko Alberto',
   };
 
   introParagraphs: string[] = [
-    "I aspire to build clean, fast, and easy-to-navigate websites — with practical SEO so the site doesn't just look good, it gets found.",
-    "I focus on readable structure, performance basics, and details that don't feel distracting.",
+    "I make web apps, mostly with React and Angular, and I handle the backend side too. Some of them started as school projects, and one I built for CIAC during my OJT.",
+    "I use AI tools to help me work faster, but I still go through everything myself and make sure I understand how it works before it goes live.",
   ];
 
+  /** Four facts a reviewer scans first: experience, school, stack, availability. */
   quickFacts = [
-    { label: 'Based',  value: 'Pampanga, PH' },
-    { label: 'School', value: 'Holy Angel University' },
-    { label: 'Focus',  value: 'Front-End + SEO' },
-    { label: 'Style',  value: 'Clean + Simple UI' },
+    { label: 'Experience', value: 'OJT · CIAC (2026)' },
+    { label: 'Studying',   value: 'BSIT, Holy Angel University' },
+    { label: 'Main stack', value: 'React · Angular · Express' },
+    { label: 'Open to',    value: 'Internships & freelance' },
   ];
 
   socials: Social[] = [
@@ -122,7 +123,7 @@ export class About implements AfterViewInit, OnDestroy {
       program: 'BS Information Technology (Web Development)',
       highlights: [
         'Developing scalable front-end solutions with attention to UI clarity, accessibility, and performance.',
-        'Applying technical SEO fundamentals and structured content strategies in academic and client-based projects.',
+        'Working on full-stack projects for school, for clients, and during my OJT.',
       ],
     },
     {
@@ -131,8 +132,9 @@ export class About implements AfterViewInit, OnDestroy {
       program: '',
       highlights: [
         "Dean's Lister (2023-2025)",
-        'SEO Case Study: M&J Quality Used Cars',
-        'Vue.JS Case Study: DoMore Student Planner',
+        'Lead developer: CIAC Risk Management Information System (OJT, 2026)',
+        'Client project: Life Saver Care Circle booking & pharmacy system',
+        'Full-stack (MEAN) case study: LoFu Lost & Found',
       ],
     },
   ];
@@ -272,7 +274,7 @@ export class About implements AfterViewInit, OnDestroy {
       cmd: 'whoami',
       lines: [
         'Micko Alberto — IT student in Mabalacat City, Pampanga.',
-        'Front-end development with an SEO focus. Online, I go by "Amekou".',
+        'IT student and web developer from Pampanga. Online, I go by "Amekou".',
       ],
     },
     {
@@ -299,7 +301,7 @@ export class About implements AfterViewInit, OnDestroy {
 
   constructor() {
     this.seo.set({
-      title: 'About Micko Alberto — Front-End Developer & SEO',
+      title: 'About Micko Alberto — Web Developer',
       description:
         'About Micko Alberto — an IT student in Pampanga, Philippines. Education, tech stack, certifications, and the story behind the "Amekou" handle.',
     });
@@ -427,9 +429,10 @@ export class About implements AfterViewInit, OnDestroy {
   /**
    * Which issuer group starts expanded when the page loads.
    *
-   * HubSpot Academy by name, because those are the SEO and content credentials
-   * that back the "SEO-focused" claim the rest of the site makes — the group
-   * worth reading without a click. Deliberately *not* "whichever group is
+   * Amazon Web Services by name: the most widely recognised credential here,
+   * and the one closest to the full-stack work the site now leads with — the
+   * group worth reading without a click. (It was HubSpot while the site was
+   * pitched as SEO-focused.) Deliberately *not* "whichever group is
    * largest": that would quietly change on its own as certificates expire,
    * eventually promoting a group nobody chose.
    *

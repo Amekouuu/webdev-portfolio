@@ -39,7 +39,7 @@ export class Home implements OnInit, OnDestroy {
   private seo = inject(SeoService);
 
   name    = 'Micko Alberto';
-  role    = 'IT Student — Web Development · SEO-focused';
+  role    = 'IT Student — Web Developer';
   tagline = 'still learning, still building';
 
   intro = `<span class="u-accent">I build clean, simple websites</span> and optimize content for search.
@@ -57,8 +57,8 @@ export class Home implements OnInit, OnDestroy {
   now: NowLine[] = [
     { label: 'Based in',      value: 'Mabalacat City, Pampanga' },
     { label: 'Local time',    value: '', isTime: true },
-    { label: 'Current focus', value: 'SEO-focused front-end development' },
-    { label: 'Building',      value: 'Portfolio v2' },
+    { label: 'Current focus', value: 'Web development' },
+    { label: 'Building',      value: 'Life Saver Care Circle' },
     {
       label: 'Listening to',
       value: 'Hip-hop & R&B',
@@ -93,9 +93,9 @@ export class Home implements OnInit, OnDestroy {
 
   constructor() {
     this.seo.set({
-      title: 'Micko Alberto — Web Developer & SEO | Portfolio',
+      title: 'Micko Alberto — Web Developer | Portfolio',
       description:
-        'Portfolio of Micko Alberto, an IT student in Pampanga, Philippines building Angular web projects with an SEO focus.',
+        'Portfolio of Micko Alberto, an IT student and web developer in Pampanga, Philippines building full-stack web apps with React, Angular and Express.',
     });
   }
 

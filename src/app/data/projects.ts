@@ -47,7 +47,6 @@ export const PROJECTS: Project[] = [
     // The API is on Render free tier, which sleeps when idle, so the first
     // load after a quiet spell waits on a cold start before items appear.
     liveUrl: 'https://lofu-webapplication.vercel.app',
-    repoUrl: 'https://github.com/Amekouuu/lofu_webapp',
     featured: true,
     type: 'web',
     imgPos: 'center',
@@ -81,8 +80,9 @@ export const PROJECTS: Project[] = [
     images: [
       { src: '/assets/images/mjqualitycars-background.jpg', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
-    liveUrl: 'https://www.mjqualitycars.com/',
-    repoUrl: 'https://github.com/Jex-beep/done-WSEA',
+    // Link hidden (2026-10-29): the live host is compromised and being cleaned
+    // up. Restore when fixed: liveUrl: 'https://www.mjqualitycars.com/',
+    internal: 'Site is currently being updated. Link coming back soon.',
     featured: true,
     type: 'web',
     imgPos: 'center',
@@ -116,7 +116,6 @@ export const PROJECTS: Project[] = [
       { src: '/assets/images/domore-background.jpg', webp: '/assets/images/domore-background.webp', alt: 'Do More Student Planner Screenshot' },
     ],
     liveUrl: 'https://domore-student-planner.netlify.app/login',
-    repoUrl: 'https://github.com/Amekouuu/DoMore-student-planner.git',
     featured: false,
     type: 'web',
     imgPos: '50% 35%',
@@ -132,7 +131,6 @@ export const PROJECTS: Project[] = [
       { src: '/assets/images/cafe-crawl-background.jpg', webp: '/assets/images/cafe-crawl-background.webp', alt: 'CafeCrawl coffee shop blog site screenshot' },
     ],
     liveUrl: 'https://cafe-crawl.netlify.app/',
-    repoUrl: 'https://github.com/Amekouuu/IntroWeb',
     featured: false,
     type: 'web',
     imgPos: 'center top',
