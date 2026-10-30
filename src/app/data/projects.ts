@@ -80,9 +80,10 @@ export const PROJECTS: Project[] = [
     images: [
       { src: '/assets/images/mjqualitycars-background.jpg', webp: '/assets/images/mjqualitycars-background.webp', alt: 'M&J Quality Used Cars Website Screenshot' },
     ],
-    // Link hidden (2026-10-29): the live host is compromised and being cleaned
-    // up. Restore when fixed: liveUrl: 'https://www.mjqualitycars.com/',
-    internal: 'Site is currently being updated. Link coming back soon.',
+    // Portfolio copy on Vercel (noindex), redeployed after the original host
+    // was compromised. Switch back to https://www.mjqualitycars.com/ once the
+    // client's own domain is clean again.
+    liveUrl: 'https://mjqualitycars.vercel.app/',
     featured: true,
     type: 'web',
     imgPos: 'center',
